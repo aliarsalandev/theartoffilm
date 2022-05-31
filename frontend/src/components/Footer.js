@@ -10,7 +10,7 @@ export default function Footer(props) {
       {/* !userInfo.isAdmin && */}
       {userInfo && <ChatBox userInfo={userInfo} />}
       <div className="container footer-top">
-        <div className="row">
+        <div className="row top">
           <div className="col md-3">
             <h5 className="mb-3">Get In Touch</h5>
             <div className="icon-with-text mb-1">

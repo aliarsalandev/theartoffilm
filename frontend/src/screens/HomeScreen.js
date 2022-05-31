@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { listTopSellers } from '../actions/userActions';
 import { Link } from 'react-router-dom';
+import HeroSection from '../sections/HeroSection';
+import WelcomeSection from '../sections/WelcomeSection';
+import HowItWorkSection from '../sections/HowItWorkSection';
+import ShowcaseSection from '../sections/ShowcaseSection';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -27,7 +31,27 @@ export default function HomeScreen() {
   }, [dispatch]);
   return (
     <div>
-      <h2>Top Sellers</h2>
+      <HeroSection />
+      <WelcomeSection />
+      <HowItWorkSection />
+      <ShowcaseSection />
+      <h2>Featured Products</h2>
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
+        <>
+          {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+          <div className="row start">
+            {products.map((product) => (
+              <Product key={product._id} product={product}></Product>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* <h2>Top Sellers</h2>
       {loadingSellers ? (
         <LoadingBox></LoadingBox>
       ) : errorSellers ? (
@@ -46,22 +70,7 @@ export default function HomeScreen() {
             ))}
           </Carousel>
         </>
-      )}
-      <h2>Featured Products</h2>
-      {loading ? (
-        <LoadingBox></LoadingBox>
-      ) : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-        <>
-          {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-          <div className="row center">
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
-            ))}
-          </div>
-        </>
-      )}
+      )} */}
     </div>
   );
 }
