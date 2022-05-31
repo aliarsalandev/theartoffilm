@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap');
 :root {
-  --base-color: #000000;
-  --light-dark-color: #222831;
+  --base-color: #0d1117;
+  --light-dark-color: #161b22;
   --accent-color: #fab702;
   --text-color: #eeeeee;
 }
@@ -37,6 +37,11 @@ a,
 }
 
 /* Layout */
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .grid-container {
   display: grid;
   grid-template-areas:
@@ -44,7 +49,7 @@ a,
     'main'
     'footer';
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 5rem;
+  grid-template-rows: 5rem 1fr auto;
   height: 100%;
 }
 .ml-3 {
@@ -58,18 +63,22 @@ a,
 }
 
 header {
-  grid-area: header;
   background-color: var(--light-dark-color);
+  grid-area: header;
+  padding-left: 10rem;
+  padding-right: 10rem;
 }
 main {
   grid-area: main;
-  padding: 1rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
 }
 footer {
   grid-area: footer;
   background-color: var(--light-dark-color);
   color: var(--text-color);
 }
+
 /* Common */
 h1 {
   font-size: 1.8rem;

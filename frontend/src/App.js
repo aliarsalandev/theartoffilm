@@ -30,7 +30,7 @@ import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
-import ChatBox from './components/ChatBox';
+import Footer from './components/Footer';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -313,10 +313,7 @@ function App() {
             <Route path="/" element={<HomeScreen />} exact></Route>
           </Routes>
         </main>
-        <footer className="row center">
-          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          <div>All right reserved</div>{' '}
-        </footer>
+        <Footer userInfo={userInfo} />
       </div>
     </BrowserRouter>
   );
