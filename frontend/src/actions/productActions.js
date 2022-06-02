@@ -15,9 +15,35 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_SUCCESS,
+  //
   PRODUCT_CATEGORY_LIST_SUCCESS,
   PRODUCT_CATEGORY_LIST_REQUEST,
   PRODUCT_CATEGORY_LIST_FAIL,
+  //
+  PRODUCT_DIRECTOR_LIST_SUCCESS,
+  PRODUCT_DIRECTOR_LIST_REQUEST,
+  PRODUCT_DIRECTOR_LIST_FAIL,
+  //
+  PRODUCT_CAST_LIST_SUCCESS,
+  PRODUCT_CAST_LIST_REQUEST,
+  PRODUCT_CAST_LIST_FAIL,
+  //
+  PRODUCT_ARTIST_LIST_SUCCESS,
+  PRODUCT_ARTIST_LIST_REQUEST,
+  PRODUCT_ARTIST_LIST_FAIL,
+  //
+  PRODUCT_ORIGIN_LIST_SUCCESS,
+  PRODUCT_ORIGIN_LIST_REQUEST,
+  PRODUCT_ORIGIN_LIST_FAIL,
+  //
+  PRODUCT_FORMAT_LIST_SUCCESS,
+  PRODUCT_FORMAT_LIST_REQUEST,
+  PRODUCT_FORMAT_LIST_FAIL,
+  //
+  PRODUCT_ROLLEDFOLDED_LIST_SUCCESS,
+  PRODUCT_ROLLEDFOLDED_LIST_REQUEST,
+  PRODUCT_ROLLEDFOLDED_LIST_FAIL,
+  //
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
@@ -29,6 +55,12 @@ export const listProducts =
     seller = '',
     name = '',
     category = '',
+    director = '',
+    cast = '',
+    artist = '',
+    origin = '',
+    format = '',
+    rolledFolded = '',
     order = '',
     min = 0,
     max = 0,
@@ -40,7 +72,7 @@ export const listProducts =
     });
     try {
       const { data } = await Axios.get(
-        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&director=${director}&cast=${cast}&artist=${artist}&origin=${origin}&format=${format}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -57,6 +89,77 @@ export const listProductCategories = () => async (dispatch) => {
     dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+  }
+};
+export const listProductDirectors = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_DIRECTOR_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/directors`);
+    dispatch({ type: PRODUCT_DIRECTOR_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_DIRECTOR_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductCasts = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_CAST_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/casts`);
+    dispatch({ type: PRODUCT_CAST_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_CAST_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductArtists = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_ARTIST_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/artists`);
+    dispatch({ type: PRODUCT_ARTIST_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_ARTIST_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductOrigins = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_ORIGIN_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/origins`);
+    dispatch({ type: PRODUCT_ORIGIN_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_ORIGIN_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductFormats = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_FORMAT_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/formats`);
+    dispatch({ type: PRODUCT_FORMAT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_FORMAT_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductRolledFoldeds = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_ROLLEDFOLDED_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/rolledFoldeds`);
+    dispatch({ type: PRODUCT_ROLLEDFOLDED_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_ROLLEDFOLDED_LIST_FAIL, payload: error.message });
   }
 };
 
@@ -136,6 +239,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: message });
   }
 };
+
 export const createReview =
   (productId, review) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_REVIEW_CREATE_REQUEST });

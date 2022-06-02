@@ -17,9 +17,36 @@ const {
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_RESET,
+  //
   PRODUCT_CATEGORY_LIST_REQUEST,
   PRODUCT_CATEGORY_LIST_SUCCESS,
   PRODUCT_CATEGORY_LIST_FAIL,
+  //
+  PRODUCT_DIRECTOR_LIST_REQUEST,
+  PRODUCT_DIRECTOR_LIST_SUCCESS,
+  PRODUCT_DIRECTOR_LIST_FAIL,
+  //
+  PRODUCT_CAST_LIST_REQUEST,
+  PRODUCT_CAST_LIST_SUCCESS,
+  PRODUCT_CAST_LIST_FAIL,
+  //
+  PRODUCT_ARTIST_LIST_REQUEST,
+  PRODUCT_ARTIST_LIST_SUCCESS,
+  PRODUCT_ARTIST_LIST_FAIL,
+  //
+  PRODUCT_ORIGIN_LIST_REQUEST,
+  PRODUCT_ORIGIN_LIST_SUCCESS,
+  PRODUCT_ORIGIN_LIST_FAIL,
+  //
+  PRODUCT_FORMAT_LIST_REQUEST,
+  PRODUCT_FORMAT_LIST_SUCCESS,
+  PRODUCT_FORMAT_LIST_FAIL,
+  //
+  PRODUCT_ROLLEDFOLDED_LIST_REQUEST,
+  PRODUCT_ROLLEDFOLDED_LIST_SUCCESS,
+  PRODUCT_ROLLEDFOLDED_LIST_FAIL,
+  //
+
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
@@ -63,6 +90,102 @@ export const productCategoryListReducer = (
   }
 };
 
+export const productDirectorListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_DIRECTOR_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_DIRECTOR_LIST_SUCCESS:
+      return { loading: false, directors: action.payload };
+    case PRODUCT_DIRECTOR_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productCastListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_CAST_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_CAST_LIST_SUCCESS:
+      return { loading: false, casts: action.payload };
+    case PRODUCT_CAST_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productArtistListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_ARTIST_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_ARTIST_LIST_SUCCESS:
+      return { loading: false, artists: action.payload };
+    case PRODUCT_ARTIST_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productOriginListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_ORIGIN_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_ORIGIN_LIST_SUCCESS:
+      return { loading: false, origins: action.payload };
+    case PRODUCT_ORIGIN_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productFormatListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_FORMAT_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_FORMAT_LIST_SUCCESS:
+      return { loading: false, formats: action.payload };
+    case PRODUCT_FORMAT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productRolledFoldedListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_ROLLEDFOLDED_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_ROLLEDFOLDED_LIST_SUCCESS:
+      return { loading: false, rolledFoldeds: action.payload };
+    case PRODUCT_ROLLEDFOLDED_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const productDetailsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
@@ -75,6 +198,7 @@ export const productDetailsReducer = (state = { loading: true }, action) => {
       return state;
   }
 };
+
 export const productCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_CREATE_REQUEST:

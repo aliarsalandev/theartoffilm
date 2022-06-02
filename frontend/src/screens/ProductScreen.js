@@ -81,11 +81,49 @@ export default function ProductScreen(props) {
                     numReviews={product.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : ${product.price}</li>
+                <li>
+                  <div className="row">
+                    <div>Directors</div>
+                    <div className="director-label">{product.director}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Casts</div>
+                    <div className="cast-label">{product.cast}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Artists</div>
+                    <div className="artist-label">{product.artist}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Origin</div>
+                    <div className="origin-label">{product.origin}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Formats</div>
+                    <div className="format-label">{product.format}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Rolled / Folded</div>
+                    <div className="rolledFolded-label">
+                      {product.rolledFolded}
+                    </div>
+                  </div>
+                </li>
                 <li>
                   Description:
                   <p>{product.description}</p>
                 </li>
+                <li>Pirce : ${product.price}</li>
               </ul>
             </div>
             <div className="col-1">

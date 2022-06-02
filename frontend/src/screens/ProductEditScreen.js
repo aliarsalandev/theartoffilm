@@ -12,11 +12,17 @@ export default function ProductEditScreen(props) {
   const params = useParams();
   const { id: productId } = params;
   const [name, setName] = useState('');
+  const [brand, setBrand] = useState('');
+  const [category, setCategory] = useState('');
+  const [director, setDirector] = useState('');
+  const [cast, setCast] = useState('');
+  const [artist, setArtist] = useState('');
+  const [origin, setOrigin] = useState('');
+  const [format, setFormat] = useState('');
+  const [rolledFolded, setRolledFolded] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
-  const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
-  const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -41,9 +47,15 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
       setBrand(product.brand);
+      setCategory(product.category);
+      setDirector(product.director);
+      setCast(product.cast);
+      setArtist(product.artist);
+      setOrigin(product.origin);
+      setFormat(product.format);
+      setRolledFolded(product.rolledFolded);
+      setCountInStock(product.countInStock);
       setDescription(product.description);
     }
   }, [product, dispatch, productId, successUpdate, navigate]);
@@ -56,8 +68,14 @@ export default function ProductEditScreen(props) {
         name,
         price,
         image,
-        category,
         brand,
+        category,
+        director,
+        cast,
+        artist,
+        origin,
+        format,
+        rolledFolded,
         countInStock,
         description,
       })
@@ -113,16 +131,6 @@ export default function ProductEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="price">Price</label>
-              <input
-                id="price"
-                type="text"
-                placeholder="Enter price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></input>
-            </div>
-            <div>
               <label htmlFor="image">Image</label>
               <input
                 id="image"
@@ -144,6 +152,66 @@ export default function ProductEditScreen(props) {
               {errorUpload && (
                 <MessageBox variant="danger">{errorUpload}</MessageBox>
               )}
+            </div>
+            <div>
+              <label htmlFor="director">Directors</label>
+              <input
+                id="director"
+                type="text"
+                placeholder="Enter Directors Name [name1 - name2 - name3]"
+                value={director}
+                onChange={(e) => setDirector(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="cast">Casts</label>
+              <input
+                id="cast"
+                type="text"
+                placeholder="Enter Casts Name [name1 - name2 - name3]"
+                value={cast}
+                onChange={(e) => setCast(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="artist">Artists</label>
+              <input
+                id="artist"
+                type="text"
+                placeholder="Enter Artists Name [name1 - name2 - name3]"
+                value={artist}
+                onChange={(e) => setArtist(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="origin">Origin</label>
+              <input
+                id="origin"
+                type="text"
+                placeholder="Enter Origin/Country"
+                value={origin}
+                onChange={(e) => setOrigin(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="rolledFolded">Rolled / Folded</label>
+              <input
+                id="rolledFolded"
+                type="text"
+                placeholder="Enter Format"
+                value={rolledFolded}
+                onChange={(e) => setRolledFolded(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="price">Price</label>
+              <input
+                id="price"
+                type="text"
+                placeholder="Enter price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              ></input>
             </div>
             <div>
               <label htmlFor="category">Category</label>

@@ -14,6 +14,12 @@ productRouter.get(
     const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';
+    const director = req.query.director || '';
+    const cast = req.query.cast || '';
+    const artist = req.query.artist || '';
+    const origin = req.query.origin || '';
+    const format = req.query.format || '';
+    const rolledFolded = req.query.rolledFolded || '';
     const seller = req.query.seller || '';
     const order = req.query.order || '';
     const min =
@@ -27,7 +33,15 @@ productRouter.get(
 
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
+    //
     const categoryFilter = category ? { category } : {};
+    const directorFilter = director ? { director } : {};
+    const castFilter = cast ? { cast } : {};
+    const artistFilter = artist ? { artist } : {};
+    const originFilter = origin ? { origin } : {};
+    const formatFilter = format ? { format } : {};
+    const rolledFoldedFilter = rolledFolded ? { rolledFolded } : {};
+    //
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
@@ -42,6 +56,12 @@ productRouter.get(
       ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
+      ...directorFilter,
+      ...castFilter,
+      ...artistFilter,
+      ...originFilter,
+      ...formatFilter,
+      ...rolledFoldedFilter,
       ...priceFilter,
       ...ratingFilter,
     });
@@ -49,6 +69,12 @@ productRouter.get(
       ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
+      ...directorFilter,
+      ...castFilter,
+      ...artistFilter,
+      ...originFilter,
+      ...formatFilter,
+      ...rolledFoldedFilter,
       ...priceFilter,
       ...ratingFilter,
     })
@@ -65,6 +91,53 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const categories = await Product.find().distinct('category');
     res.send(categories);
+  })
+);
+
+productRouter.get(
+  '/directors',
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct('director');
+    res.send(categories);
+  })
+);
+productRouter.get(
+  '/casts',
+  expressAsyncHandler(async (req, res) => {
+    const casts = await Product.find().distinct('cast');
+    res.send(casts);
+  })
+);
+
+productRouter.get(
+  '/artists',
+  expressAsyncHandler(async (req, res) => {
+    const artists = await Product.find().distinct('artist');
+    res.send(artists);
+  })
+);
+
+productRouter.get(
+  '/origins',
+  expressAsyncHandler(async (req, res) => {
+    const origins = await Product.find().distinct('origin');
+    res.send(origins);
+  })
+);
+
+productRouter.get(
+  '/formats',
+  expressAsyncHandler(async (req, res) => {
+    const formats = await Product.find().distinct('format');
+    res.send(formats);
+  })
+);
+
+productRouter.get(
+  '/rolledFoldeds',
+  expressAsyncHandler(async (req, res) => {
+    const rolledFoldeds = await Product.find().distinct('rolledFolded');
+    res.send(rolledFoldeds);
   })
 );
 
@@ -112,10 +185,17 @@ productRouter.post(
       name: 'sample name ' + Date.now(),
       seller: req.user._id,
       image: '/images/p1.jpg',
-      price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
+      brand: 'NaN',
+      category: 'NaN',
+      director: 'NaN',
+      cast: 'NaN',
+      artist: 'NaN',
+      origin: 'NaN',
+      format: 'NaN',
+      rolledFolded: 'NaN',
       countInStock: 0,
+      price: 0,
+      //
       rating: 0,
       numReviews: 0,
       description: 'sample description',
@@ -133,11 +213,17 @@ productRouter.put(
     const product = await Product.findById(productId);
     if (product) {
       product.name = req.body.name;
-      product.price = req.body.price;
       product.image = req.body.image;
-      product.category = req.body.category;
       product.brand = req.body.brand;
+      product.category = req.body.category;
+      product.director = req.body.director;
+      product.cast = req.body.cast;
+      product.artist = req.body.artist;
+      product.origin = req.body.origin;
+      product.format = req.body.format;
+      product.rolledFolded = req.body.rolledFolded;
       product.countInStock = req.body.countInStock;
+      product.price = req.body.price;
       product.description = req.body.description;
       const updatedProduct = await product.save();
       res.send({ message: 'Product Updated', product: updatedProduct });
