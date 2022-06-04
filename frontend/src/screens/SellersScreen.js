@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import { detailsUser } from '../actions/userActions';
+import { detailsUser, listUsers } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
@@ -16,20 +16,15 @@ export default function SellersScreen(props) {
 
 
   const [currentProduct, setCurrentProduct] = React.useState(null);
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
 
-  const productList = useSelector((state) => state.productList);
-  const {
-    loading: loadingProducts,
-    error: errorProducts,
-    products,
-  } = productList;
+  const { loading, error, users } = useSelector((state) => state.userList);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(detailsUser(sellerId));
     dispatch(listProducts({ seller: sellerId }));
+    dispatch(listUsers())
   }, [dispatch, sellerId]);
   const navigate = useNavigate();
 
@@ -44,16 +39,19 @@ export default function SellersScreen(props) {
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <ul className="card card-body">
+          users.map((user) => user.isSeller && <ul className="card card-body">
             <li>
               <div className="row start">
-                <div className="p-1">
-                  <img
-                    className="small"
-                    src={user.seller.logo}
-                    alt={user.seller.name}
-                  ></img>
-                </div>
+
+                <Link to={`/seller/${user._id}`}>
+                  <div className="p-1">
+                    <img
+                      className="small"
+                      src={user.seller.logo}
+                      alt={user.seller.name}
+                    ></img>
+                  </div>
+                </Link>
                 <div className="p-1">
                   <h1>{user.seller.name}</h1>
                 </div>
@@ -69,114 +67,10 @@ export default function SellersScreen(props) {
               <a href={`mailto:${user.email}`}>Contact Seller</a>
             </li>
             <li>{user.seller.description}</li>
-          </ul>
+          </ul>)
         )}
       </div>
-      <div className="col-3">
 
-        {loadingProducts ? (
-          <LoadingBox></LoadingBox>
-        ) : errorProducts ? (
-          <MessageBox variant="danger">{errorProducts}</MessageBox>
-        ) : (
-          <>
-            <div>
-
-              <ShowCase products={products.filter((product) => product.visible)} onClick={(product) => {
-                setCurrentProduct(product);
-              }} />
-            </div>
-            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-
-            <div className="row center">
-
-              {
-                currentProduct && (<ul>
-                  <li>
-                    <h1>{currentProduct.name}</h1>
-                  </li>
-                  <li>
-                    <Rating
-                      rating={currentProduct.rating}
-                      numReviews={currentProduct.numReviews}
-                    ></Rating>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Directors</div>
-                      <div className="director-label">{
-                        currentProduct.directors?.map((director) => <span >{director.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Casts</div>
-                      <div className="cast-label">{
-                        currentProduct.casts?.map((cast) => <span >{cast.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Artists</div>
-                      <div className="artist-label">{
-                        currentProduct.artists?.map((artist) => <span >{artist.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Origin</div>
-                      <div className="origin-label">{currentProduct.origin}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Format</div>
-                      <div className="format-label">{currentProduct.format}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Condition</div>
-                      <div className="condition-label">{currentProduct.condition}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Rolled / Folded</div>
-                      <div className="rolledFolded-label">
-                        {currentProduct.rolledFolded}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    Description:
-                    <p>{currentProduct.description}</p>
-                  </li>
-                  <li>Pirce : ${currentProduct.price}</li>
-
-                  <li>
-                    <button
-                      onClick={addToCartHandler}
-                      className="primary block"
-                    >
-                      Add to Cart
-                    </button>
-                  </li>
-                </ul>)
-              }
-            </div>
-
-            {/* <div className="row center">
-              {products.map((product) => (
-                <Product key={product._id} product={product}></Product>
-              ))}
-            </div> */}
-          </>
-        )}
-      </div>
     </div>
   );
 }

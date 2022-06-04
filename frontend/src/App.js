@@ -31,6 +31,7 @@ import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
 import Footer from './components/Footer';
+import SellersScreen from './screens/SellersScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -59,6 +60,12 @@ function App() {
           <div>
             <Link className="brand" to="/">
               theartoffilms
+            </Link>
+          </div>
+
+          <div>
+            <Link to="/sellers">
+              ShowCase
             </Link>
           </div>
 
@@ -175,6 +182,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/seller/:id" element={<SellerScreen />}></Route>
+            <Route path="/sellers" element={<SellersScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/cart/:id" element={<CartScreen />}></Route>
             <Route
