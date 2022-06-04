@@ -12,6 +12,8 @@ export default function RegisterScreen(props) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [isSeller, setisSeller] = useState(false)
+  const [sellerName, setSellerName] = useState()
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
@@ -20,12 +22,17 @@ export default function RegisterScreen(props) {
   const { userInfo, loading, error } = userRegister;
 
   const dispatch = useDispatch();
+
+
+
+
   const submitHandler = (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       alert('Password and confirm password are not match');
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password, sellerName));
     }
   };
   useEffect(() => {
@@ -81,6 +88,33 @@ export default function RegisterScreen(props) {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
         </div>
+
+        <div>
+          <label htmlFor="seller">Become a Seller</label>
+          <input
+            id="isSeller"
+            type="checkbox"
+            checked={isSeller}
+            onChange={(e) => setisSeller(e.target.checked)}
+          ></input>
+        </div>
+        {
+          isSeller && <>
+            <h2>Collection Info</h2>
+            <div>
+              <label htmlFor="_name">Collection Name</label>
+              <input
+                id="_name"
+                type="text"
+                placeholder="Enter Seller Name"
+                onChange={(e) => setSellerName(e.target.value)}
+              ></input>
+            </div>
+
+
+          </>
+        }
+
         <div>
           <label />
           <button className="primary" type="submit">

@@ -100,6 +100,7 @@ export default function ProductListScreen(props) {
               </tr>
             </thead>
             <tbody>
+
               {products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>

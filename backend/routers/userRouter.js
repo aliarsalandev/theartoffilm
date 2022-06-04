@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import data from '../data.js';
 import User from '../models/userModel.js';
-import { generateToken, isAdmin, isAuth } from '../utils.js';
+import { generateToken, isAdmin, isAuth, isSeller } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -54,12 +54,15 @@ userRouter.post(
       name: req.body.name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
+      seller: req.body.seller ?? {},
+      isSeller: req.body.isSeller ?? false,
     });
     const createdUser = await user.save();
     res.send({
       _id: createdUser._id,
       name: createdUser.name,
       email: createdUser.email,
+      seller: createdUser.seller,
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
       token: generateToken(createdUser),
