@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { detailsProduct, updateProduct } from '../actions/productActions';
+import { createProductDirectors, detailsProduct, listProductDirectors, updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
@@ -15,11 +15,11 @@ export default function ProductEditScreen(props) {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
-  const [director, setDirector] = useState('');
   const [cast, setCast] = useState('');
   const [artist, setArtist] = useState('');
   const [origin, setOrigin] = useState('');
   const [format, setFormat] = useState('');
+  const productDirectorsRef = useRef([])
   const [condition, setCondition] = useState('');
   const [rolledFolded, setRolledFolded] = useState('');
   const [price, setPrice] = useState('');
@@ -31,6 +31,22 @@ export default function ProductEditScreen(props) {
   const { loading, error, product } = productDetails;
 
   const productUpdate = useSelector((state) => state.productUpdate);
+
+
+  const directorList = useSelector((state) => state.directorList);
+  const { directors } = directorList;
+
+  useEffect(() => {
+    dispatch(
+      listProductDirectors()
+    );
+  }, [])
+
+  const newDirectorData = useSelector((state) => state.directorCreate);
+  const { director } = newDirectorData;
+
+
+
   const {
     loading: loadingUpdate,
     error: errorUpdate,
@@ -52,7 +68,7 @@ export default function ProductEditScreen(props) {
       setImage(product.image);
       setBrand(product.brand);
       setCategory(product.category);
-      setDirector(product.director);
+      // setDirector(product.director);
       setCast(product.cast);
       setArtist(product.artist);
       setOrigin(product.origin);
@@ -66,6 +82,7 @@ export default function ProductEditScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const director_ids = productDirectorsRef.current.map(({ value }) => value._id);
     // TODO: dispatch update product
     dispatch(
       updateProduct({
@@ -75,7 +92,7 @@ export default function ProductEditScreen(props) {
         image,
         brand,
         category,
-        director,
+        directors: director_ids,
         cast,
         artist,
         origin,
@@ -160,15 +177,34 @@ export default function ProductEditScreen(props) {
               )}
             </div>
             <div>
-              <MultiSelectDropdown />
-              <label htmlFor="director">Directors</label>
+
+
+              <MultiSelectDropdown defaultValue={product.directors.map(director => ({ value: director, label: director.name }))} directors={directors} onChange={(__directors, { action }) => {
+                switch (action) {
+                  // case 'select-option':
+                  //   break;
+                  // case 'remove-value':
+                  //   break;
+                  case 'create-option':
+                    const director = {
+                      name: __directors[__directors.length - 1].label
+                    }
+                    dispatch(createProductDirectors(director))
+                    break;
+                  default:
+                    break;
+                }
+                productDirectorsRef.current = __directors;
+
+              }} />
+              {/* <label htmlFor="director">Directors</label>
               <input
                 id="director"
                 type="text"
                 placeholder="Enter Directors Name [name1 - name2 - name3]"
                 value={director}
-                onChange={(e) => setDirector(e.target.value)}
-              ></input>
+              onChange={(e) => setDirector(e.target.value)}
+              ></input> */}
             </div>
             <div>
               <label htmlFor="cast">Casts</label>

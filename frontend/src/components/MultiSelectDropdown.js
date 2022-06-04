@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import propTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
+import CreatableSelect from "react-select/creatable";
 import makeAnimated from 'react-select/animated';
+import { createProductDirectors, listProductDirectors } from '../actions/productActions';
 const animatedComponents = makeAnimated();
-const Countries = [
-  { label: 'Albania', value: 355 },
-  { label: 'Argentina', value: 54 },
-  { label: 'Austria', value: 43 },
-  { label: 'Cocos Islands', value: 61 },
-  { label: 'Kuwait', value: 965 },
-  { label: 'Sweden', value: 46 },
-  { label: 'Venezuela', value: 58 },
-];
-function MultiSelectDropdown(props) {
+
+
+function MultiSelectDropdown({ defaultValue, onChange }) {
+  const dispatch = useDispatch();
+  const directorList = useSelector((state) => state.directorList);
+  const { loading, error, directors } = directorList;
+
+  useEffect(() => {
+    dispatch(
+      listProductDirectors()
+    );
+  }, [])
+
+
+
   return (
     <div>
-      <Select
+
+      <CreatableSelect
+        isClearable
         className="multi-select"
         placeholder="Select Directors"
-        options={Countries}
+        options={directors?.map(director => ({ value: director, label: director.name }))}
+        onChange={onChange}
+        defaultValue={defaultValue}
         components={animatedComponents}
         isMulti
       />
+
+
     </div>
   );
 }
 
+MultiSelectDropdown.propTypes = {
+  onChange: propTypes.func,
+  defaultValue: propTypes.array,
+}
 export default MultiSelectDropdown;

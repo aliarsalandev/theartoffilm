@@ -14,7 +14,7 @@ import {
 import {
   productCategoryListReducer,
   productCreateReducer,
-  productDirectorListReducer,
+  directorListReducer,
   productCastListReducer,
   productArtistListReducer,
   productOriginListReducer,
@@ -26,6 +26,7 @@ import {
   productListReducer,
   productReviewCreateReducer,
   productUpdateReducer,
+  directorCreateReducer,
 } from './reducers/productReducers';
 import {
   userAddressMapReducer,
@@ -71,6 +72,7 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
+  directorCreate: directorCreateReducer,
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
@@ -78,7 +80,7 @@ const reducer = combineReducers({
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
   productCategoryList: productCategoryListReducer,
-  productDirectorList: productDirectorListReducer,
+  directorList: directorListReducer,
   productCastList: productCastListReducer,
   productArtistList: productArtistListReducer,
   productOriginList: productOriginListReducer,

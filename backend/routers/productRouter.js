@@ -51,10 +51,10 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-        ? { price: -1 }
-        : order === 'toprated'
-        ? { rating: -1 }
-        : { _id: -1 };
+          ? { price: -1 }
+          : order === 'toprated'
+            ? { rating: -1 }
+            : { _id: -1 };
     const count = await Product.count({
       ...sellerFilter,
       ...nameFilter,
@@ -98,13 +98,13 @@ productRouter.get(
     res.send(categories);
   })
 );
-productRouter.get(
-  '/directors',
-  expressAsyncHandler(async (req, res) => {
-    const directors = await Product.find().distinct('director');
-    res.send(directors);
-  })
-);
+// productRouter.get(
+//   '/directors',
+//   expressAsyncHandler(async (req, res) => {
+//     const directors = await Product.find().distinct('director');
+//     res.send(directors);
+//   })
+// );
 
 productRouter.get(
   '/casts',
@@ -179,7 +179,7 @@ productRouter.get(
     const product = await Product.findById(req.params.id).populate(
       'seller',
       'seller.name seller.logo seller.rating seller.numReviews'
-    );
+    ).populate('directors');
     if (product) {
       res.send(product);
     } else {
@@ -187,6 +187,7 @@ productRouter.get(
     }
   })
 );
+
 
 productRouter.post(
   '/',
@@ -210,6 +211,7 @@ productRouter.post(
       price: 0,
       rating: 0,
       numReviews: 0,
+      directors: [],
       description: 'sample description',
     });
     const createdProduct = await product.save();
@@ -228,7 +230,6 @@ productRouter.put(
       product.image = req.body.image;
       product.brand = req.body.brand;
       product.category = req.body.category;
-      product.director = req.body.director;
       product.cast = req.body.cast;
       product.artist = req.body.artist;
       product.origin = req.body.origin;
@@ -238,6 +239,7 @@ productRouter.put(
       product.countInStock = req.body.countInStock;
       product.price = req.body.price;
       product.description = req.body.description;
+      product.directors = req.body.directors;
       const updatedProduct = await product.save();
       res.send({ message: 'Product Updated', product: updatedProduct });
     } else {

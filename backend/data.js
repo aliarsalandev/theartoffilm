@@ -108,5 +108,21 @@ const data = {
       numReviews: 0,
     },
   ],
+  directors: [
+    {
+      name: 'Steven Spielberg',
+    }, {
+      name: 'Quentin Tarantino',
+    },
+    {
+      name: 'James Cameron',
+    }, {
+      name: 'Martin Scorsese',
+    }, {
+      name: 'Christopher Nolan',
+    }, {
+      name: 'Ridley Scott',
+    }
+  ]
 };
 export default data;

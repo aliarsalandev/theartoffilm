@@ -55,6 +55,10 @@ const {
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_RESET,
+  PRODUCT_DIRECTOR_CREATE_REQUEST,
+  PRODUCT_DIRECTOR_CREATE_SUCCESS,
+  PRODUCT_DIRECTOR_CREATE_FAIL,
+  PRODUCT_DIRECTOR_CREATE_RESET,
   //
 } = require('../constants/productConstants');
 
@@ -95,8 +99,8 @@ export const productCategoryListReducer = (
   }
 };
 
-export const productDirectorListReducer = (
-  state = { loading: true, products: [] },
+export const directorListReducer = (
+  state = { loading: true, directors: [] },
   action
 ) => {
   switch (action.type) {
@@ -110,6 +114,27 @@ export const productDirectorListReducer = (
       return state;
   }
 };
+
+
+export const directorCreateReducer = (
+  state = { loading: true, director: {} },
+  action
+) => {
+
+  switch (action.type) {
+    case PRODUCT_DIRECTOR_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_DIRECTOR_CREATE_SUCCESS:
+      return { loading: false, success: true, director: action.payload };
+    case PRODUCT_DIRECTOR_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_DIRECTOR_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+}
+
 
 export const productCastListReducer = (
   state = { loading: true, products: [] },
