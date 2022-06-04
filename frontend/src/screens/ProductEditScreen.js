@@ -33,6 +33,7 @@ export default function ProductEditScreen(props) {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [visible, setVisible] = useState(false);
+  const [forSale, setForSale] = useState(false);
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
 
@@ -90,6 +91,7 @@ export default function ProductEditScreen(props) {
       setCountInStock(product.countInStock);
       setDescription(product.description);
       setVisible(product.visible);
+      setForSale(product.forSale);
     }
   }, [product, dispatch, productId, successUpdate, navigate]);
 
@@ -123,6 +125,7 @@ export default function ProductEditScreen(props) {
         countInStock,
         description,
         visible,
+        forSale
       })
     );
   };
@@ -328,6 +331,16 @@ export default function ProductEditScreen(props) {
                 checked={visible}
                 onChange={(e) => {
                   setVisible(e.target.checked)
+                }}
+              ></input>
+            </div> <div>
+              <label htmlFor="price">For Sale</label>
+              <input
+                id="forSale"
+                type="checkbox"
+                checked={forSale}
+                onChange={(e) => {
+                  setForSale(e.target.checked)
                 }}
               ></input>
             </div>

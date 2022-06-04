@@ -31,6 +31,7 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true },
     numReviews: { type: Number, required: true },
     visible: { type: Boolean, required: true },
+    forSale: { type: Boolean, required: true },
     reviews: [reviewSchema],
     directors: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Director' }],
   },

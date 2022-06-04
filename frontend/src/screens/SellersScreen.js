@@ -10,7 +10,7 @@ import Rating from '../components/Rating';
 import ShowCase from '../components/ShowCase';
 import { useNavigate } from 'react-router-dom';
 
-export default function SellerScreen(props) {
+export default function SellersScreen(props) {
   const params = useParams();
   const { id: sellerId } = params;
 
@@ -157,16 +157,14 @@ export default function SellerScreen(props) {
                   </li>
                   <li>Pirce : ${currentProduct.price}</li>
 
-                  {
-                    currentProduct.forSale && <><li>
-                      <button
-                        onClick={addToCartHandler}
-                        className="primary block"
-                      >
-                        Add to Cart
-                      </button>
-                    </li></>
-                  }
+                  <li>
+                    <button
+                      onClick={addToCartHandler}
+                      className="primary block"
+                    >
+                      Add to Cart
+                    </button>
+                  </li>
                 </ul>)
               }
             </div>

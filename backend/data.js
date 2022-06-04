@@ -50,6 +50,7 @@ const data = {
       rating: 0.0,
       numReviews: 0,
       visible: false,
+      forSale: false,
     },
     {
       name: 'The Silence of the Lambs',
@@ -70,6 +71,8 @@ const data = {
       rating: 0.0,
       numReviews: 0,
       visible: false,
+      forSale: false,
+
     },
     {
       name: 'Rocketeer',
@@ -90,6 +93,8 @@ const data = {
       rating: 0.0,
       numReviews: 0,
       visible: false,
+      forSale: false,
+
     },
     {
       name: 'Singin In The Rain',
@@ -110,6 +115,8 @@ const data = {
       rating: 0.0,
       numReviews: 0,
       visible: false,
+      forSale: false,
+
     },
   ],
   directors: [

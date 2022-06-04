@@ -85,6 +85,7 @@ productRouter.get(
       ...ratingFilter,
     })
       .populate('seller', 'seller.name seller.logo')
+      .populate('directors').populate('casts').populate('artists')
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
@@ -208,6 +209,7 @@ productRouter.post(
       numReviews: 0,
       directors: [],
       visible: false,
+      forSale: false,
       description: 'sample description',
     });
     const createdProduct = await product.save();
@@ -237,6 +239,7 @@ productRouter.put(
       product.artists = req.body.artists;
       product.directors = req.body.directors;
       product.visible = req.body.visible;
+      product.forSale = req.body.forSale;
       const updatedProduct = await product.save();
       res.send({ message: 'Product Updated', product: updatedProduct });
     } else {
