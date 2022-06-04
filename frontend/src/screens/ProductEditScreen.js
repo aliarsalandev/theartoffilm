@@ -6,6 +6,7 @@ import { detailsProduct, updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
+import MultiSelectDropdown from '../components/MultiSelectDropdown';
 
 export default function ProductEditScreen(props) {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function ProductEditScreen(props) {
   const [artist, setArtist] = useState('');
   const [origin, setOrigin] = useState('');
   const [format, setFormat] = useState('');
+  const [condition, setCondition] = useState('');
   const [rolledFolded, setRolledFolded] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
@@ -36,6 +38,7 @@ export default function ProductEditScreen(props) {
   } = productUpdate;
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (successUpdate) {
       navigate('/productlist');
@@ -54,11 +57,13 @@ export default function ProductEditScreen(props) {
       setArtist(product.artist);
       setOrigin(product.origin);
       setFormat(product.format);
+      setCondition(product.condition);
       setRolledFolded(product.rolledFolded);
       setCountInStock(product.countInStock);
       setDescription(product.description);
     }
   }, [product, dispatch, productId, successUpdate, navigate]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     // TODO: dispatch update product
@@ -75,6 +80,7 @@ export default function ProductEditScreen(props) {
         artist,
         origin,
         format,
+        condition,
         rolledFolded,
         countInStock,
         description,
@@ -154,6 +160,7 @@ export default function ProductEditScreen(props) {
               )}
             </div>
             <div>
+              <MultiSelectDropdown />
               <label htmlFor="director">Directors</label>
               <input
                 id="director"
@@ -191,6 +198,26 @@ export default function ProductEditScreen(props) {
                 placeholder="Enter Origin/Country"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="format">Format</label>
+              <input
+                id="format"
+                type="text"
+                placeholder="Enter Format"
+                value={format}
+                onChange={(e) => setFormat(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="condition">Condition</label>
+              <input
+                id="condition"
+                type="text"
+                placeholder="Enter condition"
+                value={condition}
+                onChange={(e) => setCondition(e.target.value)}
               ></input>
             </div>
             <div>

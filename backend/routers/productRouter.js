@@ -7,6 +7,7 @@ import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const productRouter = express.Router();
 
+// Filters
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
@@ -19,6 +20,7 @@ productRouter.get(
     const artist = req.query.artist || '';
     const origin = req.query.origin || '';
     const format = req.query.format || '';
+    const condition = req.query.condition || '';
     const rolledFolded = req.query.rolledFolded || '';
     const seller = req.query.seller || '';
     const order = req.query.order || '';
@@ -40,6 +42,7 @@ productRouter.get(
     const artistFilter = artist ? { artist } : {};
     const originFilter = origin ? { origin } : {};
     const formatFilter = format ? { format } : {};
+    const conditionFilter = condition ? { condition } : {};
     const rolledFoldedFilter = rolledFolded ? { rolledFolded } : {};
     //
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -61,6 +64,7 @@ productRouter.get(
       ...artistFilter,
       ...originFilter,
       ...formatFilter,
+      ...conditionFilter,
       ...rolledFoldedFilter,
       ...priceFilter,
       ...ratingFilter,
@@ -74,6 +78,7 @@ productRouter.get(
       ...artistFilter,
       ...originFilter,
       ...formatFilter,
+      ...conditionFilter,
       ...rolledFoldedFilter,
       ...priceFilter,
       ...ratingFilter,
@@ -93,14 +98,14 @@ productRouter.get(
     res.send(categories);
   })
 );
-
 productRouter.get(
   '/directors',
   expressAsyncHandler(async (req, res) => {
-    const categories = await Product.find().distinct('director');
-    res.send(categories);
+    const directors = await Product.find().distinct('director');
+    res.send(directors);
   })
 );
+
 productRouter.get(
   '/casts',
   expressAsyncHandler(async (req, res) => {
@@ -130,6 +135,13 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const formats = await Product.find().distinct('format');
     res.send(formats);
+  })
+);
+productRouter.get(
+  '/conditions',
+  expressAsyncHandler(async (req, res) => {
+    const conditions = await Product.find().distinct('condition');
+    res.send(conditions);
   })
 );
 
@@ -192,10 +204,10 @@ productRouter.post(
       artist: 'NaN',
       origin: 'NaN',
       format: 'NaN',
+      condition: 'NaN',
       rolledFolded: 'NaN',
       countInStock: 0,
       price: 0,
-      //
       rating: 0,
       numReviews: 0,
       description: 'sample description',
@@ -221,6 +233,7 @@ productRouter.put(
       product.artist = req.body.artist;
       product.origin = req.body.origin;
       product.format = req.body.format;
+      product.condition = req.body.condition;
       product.rolledFolded = req.body.rolledFolded;
       product.countInStock = req.body.countInStock;
       product.price = req.body.price;

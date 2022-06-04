@@ -569,6 +569,11 @@ img.mw-80 {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+.multi-select {
+  border-radius: 0 !important;
+  font-family: 'Bebas Neue', 'Poppins';
+  color: var(--light-dark-color);
+}
 /* Sections */
 .showcase-section {
   background-color: var(--base-color);

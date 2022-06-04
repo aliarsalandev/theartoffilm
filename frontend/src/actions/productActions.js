@@ -3,15 +3,19 @@ import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
+  //
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  //
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  //
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  //
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_SUCCESS,
@@ -40,6 +44,10 @@ import {
   PRODUCT_FORMAT_LIST_REQUEST,
   PRODUCT_FORMAT_LIST_FAIL,
   //
+  PRODUCT_CONDITION_LIST_SUCCESS,
+  PRODUCT_CONDITION_LIST_REQUEST,
+  PRODUCT_CONDITION_LIST_FAIL,
+  //
   PRODUCT_ROLLEDFOLDED_LIST_SUCCESS,
   PRODUCT_ROLLEDFOLDED_LIST_REQUEST,
   PRODUCT_ROLLEDFOLDED_LIST_FAIL,
@@ -60,6 +68,7 @@ export const listProducts =
     artist = '',
     origin = '',
     format = '',
+    condition = '',
     rolledFolded = '',
     order = '',
     min = 0,
@@ -72,7 +81,7 @@ export const listProducts =
     });
     try {
       const { data } = await Axios.get(
-        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&director=${director}&cast=${cast}&artist=${artist}&origin=${origin}&format=${format}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&director=${director}&cast=${cast}&artist=${artist}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
@@ -91,6 +100,7 @@ export const listProductCategories = () => async (dispatch) => {
     dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
   }
 };
+
 export const listProductDirectors = () => async (dispatch) => {
   dispatch({
     type: PRODUCT_DIRECTOR_LIST_REQUEST,
@@ -148,6 +158,18 @@ export const listProductFormats = () => async (dispatch) => {
     dispatch({ type: PRODUCT_FORMAT_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_FORMAT_LIST_FAIL, payload: error.message });
+  }
+};
+
+export const listProductConditions = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_CONDITION_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/conditions`);
+    dispatch({ type: PRODUCT_CONDITION_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_CONDITION_LIST_FAIL, payload: error.message });
   }
 };
 

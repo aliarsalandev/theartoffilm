@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const reviewSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -9,6 +10,21 @@ const reviewSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const directorSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'Product',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -21,11 +37,11 @@ const productSchema = new mongoose.Schema(
     artist: { type: String, required: true },
     origin: { type: String, required: true },
     format: { type: String, required: true },
+    condition: { type: String, required: true },
     rolledFolded: { type: String, required: true },
     countInStock: { type: Number, required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
-    //
     rating: { type: Number, required: true },
     numReviews: { type: Number, required: true },
     reviews: [reviewSchema],
@@ -34,6 +50,6 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Product = mongoose.model('Product', productSchema);
 
+const Product = mongoose.model('Product', productSchema);
 export default Product;

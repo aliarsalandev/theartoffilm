@@ -42,6 +42,7 @@ export default function ProductScreen(props) {
   const addToCartHandler = () => {
     navigate(`/cart/${productId}?qty=${qty}`);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (comment && rating) {
@@ -52,6 +53,7 @@ export default function ProductScreen(props) {
       alert('Please enter comment and rating');
     }
   };
+
   return (
     <div>
       {loading ? (
@@ -107,8 +109,14 @@ export default function ProductScreen(props) {
                 </li>
                 <li>
                   <div className="row">
-                    <div>Formats</div>
+                    <div>Format</div>
                     <div className="format-label">{product.format}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
+                    <div>Condition</div>
+                    <div className="condition-label">{product.condition}</div>
                   </div>
                 </li>
                 <li>

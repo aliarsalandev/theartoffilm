@@ -42,15 +42,20 @@ const {
   PRODUCT_FORMAT_LIST_SUCCESS,
   PRODUCT_FORMAT_LIST_FAIL,
   //
+  PRODUCT_CONDITION_LIST_REQUEST,
+  PRODUCT_CONDITION_LIST_SUCCESS,
+  PRODUCT_CONDITION_LIST_FAIL,
+  //
+
   PRODUCT_ROLLEDFOLDED_LIST_REQUEST,
   PRODUCT_ROLLEDFOLDED_LIST_SUCCESS,
   PRODUCT_ROLLEDFOLDED_LIST_FAIL,
   //
-
   PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
   PRODUCT_REVIEW_CREATE_RESET,
+  //
 } = require('../constants/productConstants');
 
 export const productListReducer = (
@@ -153,7 +158,6 @@ export const productOriginListReducer = (
       return state;
   }
 };
-
 export const productFormatListReducer = (
   state = { loading: true, products: [] },
   action
@@ -164,6 +168,22 @@ export const productFormatListReducer = (
     case PRODUCT_FORMAT_LIST_SUCCESS:
       return { loading: false, formats: action.payload };
     case PRODUCT_FORMAT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productConditionListReducer = (
+  state = { loading: true, products: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_CONDITION_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_CONDITION_LIST_SUCCESS:
+      return { loading: false, conditions: action.payload };
+    case PRODUCT_CONDITION_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -241,6 +261,7 @@ export const productDeleteReducer = (state = {}, action) => {
       return state;
   }
 };
+
 export const productReviewCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_REVIEW_CREATE_REQUEST:
