@@ -7,8 +7,8 @@ Built a fully-functional e-commerce website for Films posters collectors to show
 ### 1. Clone repo
 
 ```
-$ git clone git@github.com:aliarsalandev/theartoffilm.git
-$ cd theartoffilm
+git clone git@github.com:aliarsalandev/theartoffilm.git
+cd theartoffilm
 ```
 
 ### 2. Setup MongoDB
@@ -25,8 +25,8 @@ $ cd theartoffilm
 ### 3. Run Backend
 
 ```
-$ npm install
-$ npm start
+npm install
+npm start
 ```
 
 ### 4. Run Frontend
@@ -40,14 +40,23 @@ $ npm start
 
 ### 5. Seed Users and Products
 
-- Run this on chrome: http://localhost:5000/api/users/seed
+- Run this on chrome: <http://localhost:5000/api/users/seed>
 - It returns admin email and password
-- Run this on chrome: http://localhost:5000/api/products/seed
+- Run this on chrome: <http://localhost:5000/api/products/seed>
 - It creates 4 sample products
+
+### 6. Seed Directors, Casts, and Artists
+
+- Run this on chrome: <http://localhost:5000/api/directors/seed>
+- It returns all directors
+- Run this on chrome: <http://localhost:5000/api/casts/seed>
+- It returns all casts
+- Run this on chrome: <http://localhost:5000/api/artists/seed>
+- It returns all artists
 
 ### 6. Admin Login
 
-- Run http://localhost:3000/signin
+- Run <http://localhost:3000/signin>
 - Enter admin email and password and click signin
 
 ## Support
