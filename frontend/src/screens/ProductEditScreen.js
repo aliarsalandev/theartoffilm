@@ -2,28 +2,37 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createProductDirectors, detailsProduct, listProductDirectors, updateProduct } from '../actions/productActions';
+import { createProductArtist, createProductCasts, createProductDirectors, detailsProduct, listProductArtists, listProductCasts, listProductDirectors, updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 import MultiSelectDropdown from '../components/MultiSelectDropdown';
+import Select from 'react-select'
 
 export default function ProductEditScreen(props) {
+  const countries = [
+    { name: 'United States', code: 'US' },
+    { name: 'Canada', code: 'CA' },
+    { name: 'United Kingdom', code: 'UK' },
+    { name: 'France', code: 'FR' },
+    { name: 'Germany', code: 'DE' },
+  ];
   const navigate = useNavigate();
   const params = useParams();
   const { id: productId } = params;
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
-  const [cast, setCast] = useState('');
-  const [artist, setArtist] = useState('');
   const [origin, setOrigin] = useState('');
   const [format, setFormat] = useState('');
   const productDirectorsRef = useRef([])
+  const productCastsRef = useRef([])
+  const productArtistsRef = useRef([])
   const [condition, setCondition] = useState('');
   const [rolledFolded, setRolledFolded] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
+  const [visible, setVisible] = useState(false);
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
 
@@ -31,19 +40,18 @@ export default function ProductEditScreen(props) {
   const { loading, error, product } = productDetails;
 
   const productUpdate = useSelector((state) => state.productUpdate);
-
-
-  const directorList = useSelector((state) => state.directorList);
-  const { directors } = directorList;
+  const { directors } = useSelector((state) => state.directorList);
+  const { casts } = useSelector((state) => state.castList);
+  const { artists } = useSelector((state) => state.artistList);
 
   useEffect(() => {
-    dispatch(
-      listProductDirectors()
-    );
+    dispatch(listProductDirectors());
+    dispatch(listProductCasts())
+    dispatch(listProductArtists())
   }, [])
 
-  const newDirectorData = useSelector((state) => state.directorCreate);
-  const { director } = newDirectorData;
+  // const newDirectorData = useSelector((state) => state.directorCreate);
+  // const { director } = newDirectorData;
 
 
 
@@ -63,26 +71,39 @@ export default function ProductEditScreen(props) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));
     } else {
+      productDirectorsRef.current = product.directors;
+      productCastsRef.current = product.casts;
+      productArtistsRef.current = product.artists;
+
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
       setBrand(product.brand);
       setCategory(product.category);
       // setDirector(product.director);
-      setCast(product.cast);
-      setArtist(product.artist);
+      // setCast(product.cast);
+      // setArtist(product.artist);
       setOrigin(product.origin);
       setFormat(product.format);
       setCondition(product.condition);
       setRolledFolded(product.rolledFolded);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setVisible(product.visible);
     }
   }, [product, dispatch, productId, successUpdate, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const director_ids = productDirectorsRef.current.map(({ value }) => value._id);
+
+    console.log(productDirectorsRef.current)
+    console.log(productCastsRef.current)
+    console.log(productArtistsRef.current)
+    const director_ids = productDirectorsRef.current.map(({ _id }) => _id);
+    const cast_ids = productCastsRef.current.map(({ _id }) => _id);
+    const artist_ids = productArtistsRef.current.map(({ _id }) => _id);
+
+
     // TODO: dispatch update product
     dispatch(
       updateProduct({
@@ -93,14 +114,15 @@ export default function ProductEditScreen(props) {
         brand,
         category,
         directors: director_ids,
-        cast,
-        artist,
+        casts: cast_ids,
+        artists: artist_ids,
         origin,
         format,
         condition,
         rolledFolded,
         countInStock,
         description,
+        visible,
       })
     );
   };
@@ -179,91 +201,134 @@ export default function ProductEditScreen(props) {
             <div>
 
 
-              <MultiSelectDropdown defaultValue={product.directors.map(director => ({ value: director, label: director.name }))} directors={directors} onChange={(__directors, { action }) => {
-                switch (action) {
-                  // case 'select-option':
-                  //   break;
-                  // case 'remove-value':
-                  //   break;
-                  case 'create-option':
-                    const director = {
-                      name: __directors[__directors.length - 1].label
-                    }
-                    dispatch(createProductDirectors(director))
-                    break;
-                  default:
-                    break;
-                }
-                productDirectorsRef.current = __directors;
+              <MultiSelectDropdown
+                placeholder={"Select Director"}
+                defaultValue={product.directors.map(director => ({ value: director, label: director.name }))}
+                options={directors?.map(director => ({ value: director, label: director.name }))}
+                onChange={(__directors, { action }) => {
+                  switch (action) {
+                    case 'create-option':
+                      const _director = {
+                        name: __directors[__directors.length - 1].label
+                      }
+                      dispatch(createProductDirectors(_director))
+                      break;
+                    default:
+                      break;
+                  }
+                  productDirectorsRef.current = __directors;
+                }} />
+            </div>
 
-              }} />
-              {/* <label htmlFor="director">Directors</label>
-              <input
-                id="director"
-                type="text"
-                placeholder="Enter Directors Name [name1 - name2 - name3]"
-                value={director}
-              onChange={(e) => setDirector(e.target.value)}
-              ></input> */}
-            </div>
             <div>
-              <label htmlFor="cast">Casts</label>
-              <input
-                id="cast"
-                type="text"
-                placeholder="Enter Casts Name [name1 - name2 - name3]"
-                value={cast}
-                onChange={(e) => setCast(e.target.value)}
-              ></input>
+
+              <MultiSelectDropdown
+                placeholder={"Select Cast"}
+                defaultValue={product.casts.map(cast => ({ value: cast, label: cast.name }))}
+                options={casts?.map(cast => ({ value: cast, label: cast.name }))}
+                onChange={(__casts, { action }) => {
+                  switch (action) {
+                    case 'create-option':
+                      const _cast = {
+                        name: __casts[__casts.length - 1].label
+                      }
+                      dispatch(createProductCasts(_cast))
+                      break;
+                    default:
+                      break;
+                  }
+                  productCastsRef.current = __casts;
+                }} />
+
             </div>
+
             <div>
-              <label htmlFor="artist">Artists</label>
-              <input
-                id="artist"
-                type="text"
-                placeholder="Enter Artists Name [name1 - name2 - name3]"
-                value={artist}
-                onChange={(e) => setArtist(e.target.value)}
-              ></input>
+
+              <MultiSelectDropdown
+                placeholder={"Select Artist"}
+                defaultValue={product.artists.map(artist => ({ value: artist, label: artist.name }))}
+                options={artists?.map(artist => ({ value: artist, label: artist.name }))}
+                onChange={(__artists, { action }) => {
+                  switch (action) {
+                    case 'create-option':
+                      const _artist = {
+                        name: __artists[__artists.length - 1].label
+                      }
+                      dispatch(createProductArtist(_artist))
+                      break;
+                    default:
+                      break;
+                  }
+                  productArtistsRef.current = __artists;
+                }} />
+
             </div>
+
+
+
             <div>
               <label htmlFor="origin">Origin</label>
-              <input
-                id="origin"
-                type="text"
-                placeholder="Enter Origin/Country"
-                value={origin}
-                onChange={(e) => setOrigin(e.target.value)}
-              ></input>
+
+              <Select
+                className="multi-select"
+                placeholder={"Select Country"}
+                defaultValue={{ value: product.origin, label: product.origin }}
+                options={countries?.map(country => ({ value: country.code, label: country.name }))}
+                onChange={(__origin, { action }) => {
+                  setOrigin(__origin.value)
+                }}
+              />
             </div>
+
+
+
+
             <div>
               <label htmlFor="format">Format</label>
-              <input
-                id="format"
-                type="text"
-                placeholder="Enter Format"
-                value={format}
-                onChange={(e) => setFormat(e.target.value)}
-              ></input>
+
+              <Select
+                className="multi-select"
+                placeholder={"Select Format"}
+                defaultValue={{ value: product.format, label: product.format }}
+                options={[{ value: "Good", label: "Good" }, { value: "Bad", label: "Bad" }, { value: "Normal", label: "Normal" }]}
+                onChange={(__format, { action }) => {
+                  setFormat(__format.value)
+                }}
+              />
             </div>
             <div>
               <label htmlFor="condition">Condition</label>
-              <input
-                id="condition"
-                type="text"
-                placeholder="Enter condition"
-                value={condition}
-                onChange={(e) => setCondition(e.target.value)}
-              ></input>
+              <Select
+                className="multi-select"
+                placeholder={"Select Format"}
+                defaultValue={{ value: product.condition, label: product.condition }}
+                options={[{ value: "Good", label: "Good" }, { value: "Bad", label: "Bad" }, { value: "Normal", label: "Normal" }]}
+                onChange={(__condition, { action }) => {
+                  setCondition(__condition.value)
+                }}
+              />
             </div>
             <div>
               <label htmlFor="rolledFolded">Rolled / Folded</label>
+              <Select
+                className="multi-select"
+                placeholder={"Select Rolled/Folded"}
+                defaultValue={{ value: product.rolledFolded, label: product.rolledFolded }}
+                options={[{ value: "Rolled", label: "Rolled" }, { value: "Folded", label: "Folded" }]}
+                onChange={(__rolledFolded, { action }) => {
+                  setRolledFolded(__rolledFolded.value)
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="price">Visibility</label>
               <input
-                id="rolledFolded"
-                type="text"
-                placeholder="Enter Format"
-                value={rolledFolded}
-                onChange={(e) => setRolledFolded(e.target.value)}
+                id="visible"
+                type="checkbox"
+                checked={visible}
+                onChange={(e) => {
+                  setVisible(e.target.checked)
+                }}
               ></input>
             </div>
             <div>

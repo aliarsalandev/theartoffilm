@@ -14,17 +14,17 @@ export default function Footer(props) {
           <div className="col md-3">
             <h5 className="mb-3">Get In Touch</h5>
             <div className="icon-with-text mb-1">
-              <i class="fa-solid fa-location-dot"></i>
+              <i className="fa-solid fa-location-dot"></i>
               <span>London, UK</span>
             </div>
             <div className=" icon-with-text mb-3 mt-1">
-              <i class="fa-solid fa-envelope"></i>
+              <i className="fa-solid fa-envelope"></i>
               <span>henry@theartoffilm.co.uk</span>
             </div>
             <div className="social-icons mb-3">
-              <i class="fa-brands fa-facebook"></i>
-              <i class="fa-brands fa-instagram"></i>
-              <i class="fa-brands fa-youtube"></i>
+              <i className="fa-brands fa-facebook"></i>
+              <i className="fa-brands fa-instagram"></i>
+              <i className="fa-brands fa-youtube"></i>
             </div>
           </div>
           <div className="col md-3">

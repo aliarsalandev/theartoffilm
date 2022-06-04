@@ -5,22 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from 'react-select/animated';
-import { createProductDirectors, listProductDirectors } from '../actions/productActions';
+import { listProductDirectors } from '../actions/productActions';
 const animatedComponents = makeAnimated();
 
 
-function MultiSelectDropdown({ defaultValue, onChange }) {
-  const dispatch = useDispatch();
-  const directorList = useSelector((state) => state.directorList);
-  const { loading, error, directors } = directorList;
-
-  useEffect(() => {
-    dispatch(
-      listProductDirectors()
-    );
-  }, [])
-
-
+function MultiSelectDropdown({ placeholder, defaultValue, options, onChange }) {
 
   return (
     <div>
@@ -28,9 +17,11 @@ function MultiSelectDropdown({ defaultValue, onChange }) {
       <CreatableSelect
         isClearable
         className="multi-select"
-        placeholder="Select Directors"
-        options={directors?.map(director => ({ value: director, label: director.name }))}
-        onChange={onChange}
+        placeholder={placeholder}
+        options={options}
+        onChange={(value, action) => {
+          onChange(value.map(v => v.value), action);
+        }}
         defaultValue={defaultValue}
         components={animatedComponents}
         isMulti
@@ -42,7 +33,9 @@ function MultiSelectDropdown({ defaultValue, onChange }) {
 }
 
 MultiSelectDropdown.propTypes = {
-  onChange: propTypes.func,
-  defaultValue: propTypes.array,
+  onChange: propTypes.func.isRequired,
+  options: propTypes.array.isRequired,
+  defaultValue: propTypes.array.isRequired,
+  placeholder: propTypes.string.isRequired
 }
 export default MultiSelectDropdown;

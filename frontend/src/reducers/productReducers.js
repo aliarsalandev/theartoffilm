@@ -59,6 +59,14 @@ const {
   PRODUCT_DIRECTOR_CREATE_SUCCESS,
   PRODUCT_DIRECTOR_CREATE_FAIL,
   PRODUCT_DIRECTOR_CREATE_RESET,
+  PRODUCT_CAST_CREATE_REQUEST,
+  PRODUCT_CAST_CREATE_SUCCESS,
+  PRODUCT_CAST_CREATE_FAIL,
+  PRODUCT_CAST_CREATE_RESET,
+  PRODUCT_ARTIST_CREATE_REQUEST,
+  PRODUCT_ARTIST_CREATE_SUCCESS,
+  PRODUCT_ARTIST_CREATE_FAIL,
+  PRODUCT_ARTIST_CREATE_RESET,
   //
 } = require('../constants/productConstants');
 
@@ -115,6 +123,22 @@ export const directorListReducer = (
   }
 };
 
+export const castListReducer = (
+  state = { loading: true, casts: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_CAST_LIST_REQUEST:
+      return { loading: true };
+    case PRODUCT_CAST_LIST_SUCCESS:
+      return { loading: false, casts: action.payload };
+    case PRODUCT_CAST_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 
 export const directorCreateReducer = (
   state = { loading: true, director: {} },
@@ -135,25 +159,27 @@ export const directorCreateReducer = (
   }
 }
 
-
-export const productCastListReducer = (
-  state = { loading: true, products: [] },
+export const castCreateReducer = (
+  state = { loading: true, cast: {} },
   action
 ) => {
+
   switch (action.type) {
-    case PRODUCT_CAST_LIST_REQUEST:
+    case PRODUCT_CAST_CREATE_REQUEST:
       return { loading: true };
-    case PRODUCT_CAST_LIST_SUCCESS:
-      return { loading: false, casts: action.payload };
-    case PRODUCT_CAST_LIST_FAIL:
+    case PRODUCT_CAST_CREATE_SUCCESS:
+      return { loading: false, success: true, cast: action.payload };
+    case PRODUCT_CAST_CREATE_FAIL:
       return { loading: false, error: action.payload };
+    case PRODUCT_CAST_CREATE_RESET:
+      return {};
     default:
       return state;
   }
-};
+}
 
-export const productArtistListReducer = (
-  state = { loading: true, products: [] },
+export const artistListReducer = (
+  state = { loading: true, artists: [] },
   action
 ) => {
   switch (action.type) {
@@ -167,6 +193,27 @@ export const productArtistListReducer = (
       return state;
   }
 };
+
+
+export const artistCreateReducer = (
+  state = { loading: true, artist: {} },
+  action
+) => {
+
+  switch (action.type) {
+    case PRODUCT_ARTIST_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_ARTIST_CREATE_SUCCESS:
+      return { loading: false, success: true, artist: action.payload };
+    case PRODUCT_ARTIST_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_ARTIST_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+}
+
 
 export const productOriginListReducer = (
   state = { loading: true, products: [] },

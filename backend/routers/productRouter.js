@@ -44,6 +44,7 @@ productRouter.get(
     const formatFilter = format ? { format } : {};
     const conditionFilter = condition ? { condition } : {};
     const rolledFoldedFilter = rolledFolded ? { rolledFolded } : {};
+
     //
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
@@ -114,13 +115,7 @@ productRouter.get(
   })
 );
 
-productRouter.get(
-  '/artists',
-  expressAsyncHandler(async (req, res) => {
-    const artists = await Product.find().distinct('artist');
-    res.send(artists);
-  })
-);
+
 
 productRouter.get(
   '/origins',
@@ -179,7 +174,7 @@ productRouter.get(
     const product = await Product.findById(req.params.id).populate(
       'seller',
       'seller.name seller.logo seller.rating seller.numReviews'
-    ).populate('directors');
+    ).populate('directors').populate('casts').populate('artists');
     if (product) {
       res.send(product);
     } else {
@@ -212,6 +207,7 @@ productRouter.post(
       rating: 0,
       numReviews: 0,
       directors: [],
+      visible: false,
       description: 'sample description',
     });
     const createdProduct = await product.save();
@@ -230,8 +226,7 @@ productRouter.put(
       product.image = req.body.image;
       product.brand = req.body.brand;
       product.category = req.body.category;
-      product.cast = req.body.cast;
-      product.artist = req.body.artist;
+      product.casts = req.body.casts;
       product.origin = req.body.origin;
       product.format = req.body.format;
       product.condition = req.body.condition;
@@ -239,7 +234,9 @@ productRouter.put(
       product.countInStock = req.body.countInStock;
       product.price = req.body.price;
       product.description = req.body.description;
+      product.artists = req.body.artists;
       product.directors = req.body.directors;
+      product.visible = req.body.visible;
       const updatedProduct = await product.save();
       res.send({ message: 'Product Updated', product: updatedProduct });
     } else {

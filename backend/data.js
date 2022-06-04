@@ -49,6 +49,7 @@ const data = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at accumsan mauris. Quisque felis turpis, hendrerit id euismod id, faucibus non mi.',
       rating: 0.0,
       numReviews: 0,
+      visible: false,
     },
     {
       name: 'The Silence of the Lambs',
@@ -68,6 +69,7 @@ const data = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at accumsan mauris. Quisque felis turpis, hendrerit id euismod id, faucibus non mi.',
       rating: 0.0,
       numReviews: 0,
+      visible: false,
     },
     {
       name: 'Rocketeer',
@@ -87,6 +89,7 @@ const data = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at accumsan mauris. Quisque felis turpis, hendrerit id euismod id, faucibus non mi.',
       rating: 0.0,
       numReviews: 0,
+      visible: false,
     },
     {
       name: 'Singin In The Rain',
@@ -106,6 +109,7 @@ const data = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at accumsan mauris. Quisque felis turpis, hendrerit id euismod id, faucibus non mi.',
       rating: 0.0,
       numReviews: 0,
+      visible: false,
     },
   ],
   directors: [
@@ -122,6 +126,25 @@ const data = {
       name: 'Christopher Nolan',
     }, {
       name: 'Ridley Scott',
+    }
+  ],
+  casts: [
+    {
+      name: 'Steven Spielberg',
+    }, {
+      name: 'Quentin Tarantino',
+    },
+    {
+      name: 'James Cameron',
+    },
+  ],
+  artists: [
+    {
+      name: 'Steven Spielberg',
+    }, {
+      name: 'Quentin Tarantino',
+    }, {
+      name: 'James Cameron',
     }
   ]
 };
