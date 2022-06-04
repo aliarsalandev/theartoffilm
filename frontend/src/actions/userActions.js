@@ -24,6 +24,9 @@ import {
   USER_TOPSELLERS_LIST_REQUEST,
   USER_TOPSELLERS_LIST_SUCCESS,
   USER_TOPSELLERS_LIST_FAIL,
+  SELLER_LIST_REQUEST,
+  SELLER_LIST_SUCCESS,
+  SELLER_LIST_FAIL,
 } from '../constants/userConstants';
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -148,6 +151,22 @@ export const listUsers = () => async (dispatch, getState) => {
     dispatch({ type: USER_LIST_FAIL, payload: message });
   }
 };
+
+export const listSellers = () => async (dispatch, getState) => {
+  dispatch({ type: SELLER_LIST_REQUEST });
+  try {
+
+    const { data } = await Axios.get('/api/sellers');
+    dispatch({ type: SELLER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: SELLER_LIST_FAIL, payload: message });
+  }
+};
+
 export const deleteUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: USER_DELETE_REQUEST, payload: userId });
   const {

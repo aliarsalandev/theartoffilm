@@ -31,6 +31,7 @@ import {
   artistCreateReducer,
 } from './reducers/productReducers';
 import {
+  sellerListReducer,
   userAddressMapReducer,
   userDeleteReducer,
   userDetailsReducer,
@@ -84,6 +85,7 @@ const reducer = combineReducers({
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
   userList: userListReducer,
+  sellerList: sellerListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
   productCategoryList: productCategoryListReducer,

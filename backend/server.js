@@ -11,6 +11,7 @@ import uploadRouter from './routers/uploadRouter.js';
 import directorRouter from './routers/directorRouter.js';
 import castRouter from './routers/castRouter.js';
 import artistRouter from './routers/artistRouter.js';
+import sellerRouter from './routers/sellerRouter.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ mongoose.connect(
 );
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
+app.use('/api/sellers', sellerRouter);
 app.use('/api/products', productRouter);
 app.use('/api/directors', directorRouter);
 app.use('/api/casts', castRouter);

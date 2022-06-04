@@ -1,4 +1,7 @@
 import {
+  SELLER_LIST_FAIL,
+  SELLER_LIST_REQUEST,
+  SELLER_LIST_SUCCESS,
   USER_ADDRESS_MAP_CONFIRM,
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -107,6 +110,18 @@ export const userListReducer = (state = { loading: true }, action) => {
     case USER_LIST_SUCCESS:
       return { loading: false, users: action.payload };
     case USER_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const sellerListReducer = (state = { loading: true, sellers: [] }, action) => {
+  switch (action.type) {
+    case SELLER_LIST_REQUEST:
+      return { loading: true };
+    case SELLER_LIST_SUCCESS:
+      return { loading: false, sellers: action.payload };
+    case SELLER_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
