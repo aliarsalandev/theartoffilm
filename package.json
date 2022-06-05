@@ -1,6 +1,5 @@
 {
   "name": "theartoffilm",
-  "type": "module",
   "version": "1.0.0",
   "description": "Ecommerce website!",
   "main": "index.js",
