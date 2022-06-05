@@ -4,8 +4,8 @@
   "description": "# Lessons",
   "main": "index.js",
   "scripts": {
-    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
-    "start": "node backend/server.js",
+    "build": "cd frontend && npm install --force && npm run build",
+    "start": "nodemon --watch backend --exec node --experiemental-modules  backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,6 +16,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/basir/theartoffilm/issues"
+  },
+  "engines": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
   },
   "homepage": "https://github.com/basir/theartoffilm#readme"
 }
