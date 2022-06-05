@@ -33,8 +33,8 @@ const data = {
   products: [
     {
       name: 'Raiders of the Lost Ark',
-      brand: 'NaN',
-      category: 'Filme Poster',
+      // brand: 'NaN',
+      // category: 'Filme Poster',
       image: '/images/posters/Raiders-of-the-Lost-Ark.jpg',
       director: 'NaN',
       cast: 'NaN',
@@ -54,8 +54,8 @@ const data = {
     },
     {
       name: 'The Silence of the Lambs',
-      brand: 'NaN',
-      category: 'Filme Poster',
+      // brand: 'NaN',
+      // category: 'Filme Poster',
       image: '/images/posters/SilenceoftheLambs.jpg',
       director: 'NaN',
       cast: 'NaN',
@@ -72,12 +72,11 @@ const data = {
       numReviews: 0,
       visible: false,
       forSale: false,
-
     },
     {
       name: 'Rocketeer',
-      brand: 'NaN',
-      category: 'Filme Poster',
+      // brand: 'NaN',
+      // category: 'Filme Poster',
       image: '/images/posters/Rocketeer.jpg',
       director: 'NaN',
       cast: 'NaN',
@@ -94,12 +93,11 @@ const data = {
       numReviews: 0,
       visible: false,
       forSale: false,
-
     },
     {
       name: 'Singin In The Rain',
-      brand: 'NaN',
-      category: 'Filme Poster',
+      // brand: 'NaN',
+      // category: 'Filme Poster',
       image: '/images/posters/SinginintheRain.jpg',
       director: 'NaN',
       cast: 'NaN',
@@ -116,29 +114,33 @@ const data = {
       numReviews: 0,
       visible: false,
       forSale: false,
-
     },
   ],
   directors: [
     {
       name: 'Steven Spielberg',
-    }, {
+    },
+    {
       name: 'Quentin Tarantino',
     },
     {
       name: 'James Cameron',
-    }, {
+    },
+    {
       name: 'Martin Scorsese',
-    }, {
+    },
+    {
       name: 'Christopher Nolan',
-    }, {
+    },
+    {
       name: 'Ridley Scott',
-    }
+    },
   ],
   casts: [
     {
       name: 'Steven Spielberg',
-    }, {
+    },
+    {
       name: 'Quentin Tarantino',
     },
     {
@@ -148,11 +150,13 @@ const data = {
   artists: [
     {
       name: 'Steven Spielberg',
-    }, {
+    },
+    {
       name: 'Quentin Tarantino',
-    }, {
+    },
+    {
       name: 'James Cameron',
-    }
-  ]
+    },
+  ],
 };
 export default data;

@@ -11,13 +11,13 @@ const productRouter = express.Router();
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 3;
+    const pageSize = 4;
     const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
-    const category = req.query.category || '';
-    const director = req.query.director || '';
-    const cast = req.query.cast || '';
-    const artist = req.query.artist || '';
+    // const category = req.query.category || '';
+    const director = req.query.directors || '';
+    const cast = req.query.casts || '';
+    const artist = req.query.artists || '';
     const origin = req.query.origin || '';
     const format = req.query.format || '';
     const condition = req.query.condition || '';
@@ -36,7 +36,7 @@ productRouter.get(
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     //
-    const categoryFilter = category ? { category } : {};
+    // const categoryFilter = category ? { category } : {};
     const directorFilter = director ? { director } : {};
     const castFilter = cast ? { cast } : {};
     const artistFilter = artist ? { artist } : {};
@@ -52,14 +52,14 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-          ? { price: -1 }
-          : order === 'toprated'
-            ? { rating: -1 }
-            : { _id: -1 };
+        ? { price: -1 }
+        : order === 'toprated'
+        ? { rating: -1 }
+        : { _id: -1 };
     const count = await Product.count({
       ...sellerFilter,
       ...nameFilter,
-      ...categoryFilter,
+      // ...categoryFilter,
       ...directorFilter,
       ...castFilter,
       ...artistFilter,
@@ -73,7 +73,7 @@ productRouter.get(
     const products = await Product.find({
       ...sellerFilter,
       ...nameFilter,
-      ...categoryFilter,
+      // ...categoryFilter,
       ...directorFilter,
       ...castFilter,
       ...artistFilter,
@@ -85,7 +85,9 @@ productRouter.get(
       ...ratingFilter,
     })
       .populate('seller', 'seller.name seller.logo')
-      .populate('directors').populate('casts').populate('artists')
+      .populate('directors')
+      .populate('casts')
+      .populate('artists')
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
@@ -93,13 +95,13 @@ productRouter.get(
   })
 );
 
-productRouter.get(
-  '/categories',
-  expressAsyncHandler(async (req, res) => {
-    const categories = await Product.find().distinct('category');
-    res.send(categories);
-  })
-);
+// productRouter.get(
+//   '/categories',
+//   expressAsyncHandler(async (req, res) => {
+//     const categories = await Product.find().distinct('category');
+//     res.send(categories);
+//   })
+// );
 // productRouter.get(
 //   '/directors',
 //   expressAsyncHandler(async (req, res) => {
@@ -108,15 +110,13 @@ productRouter.get(
 //   })
 // );
 
-productRouter.get(
-  '/casts',
-  expressAsyncHandler(async (req, res) => {
-    const casts = await Product.find().distinct('cast');
-    res.send(casts);
-  })
-);
-
-
+// productRouter.get(
+//   '/casts',
+//   expressAsyncHandler(async (req, res) => {
+//     const casts = await Product.find().distinct('cast');
+//     res.send(casts);
+//   })
+// );
 
 productRouter.get(
   '/origins',
@@ -172,10 +172,14 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id).populate(
-      'seller',
-      'seller.name seller.logo seller.rating seller.numReviews'
-    ).populate('directors').populate('casts').populate('artists');
+    const product = await Product.findById(req.params.id)
+      .populate(
+        'seller',
+        'seller.name seller.logo seller.rating seller.numReviews'
+      )
+      .populate('directors')
+      .populate('casts')
+      .populate('artists');
     if (product) {
       res.send(product);
     } else {
@@ -183,7 +187,6 @@ productRouter.get(
     }
   })
 );
-
 
 productRouter.post(
   '/',
@@ -194,8 +197,8 @@ productRouter.post(
       name: 'sample name ' + Date.now(),
       seller: req.user._id,
       image: '/images/p1.jpg',
-      brand: 'NaN',
-      category: 'NaN',
+      // brand: 'NaN',
+      // category: 'NaN',
       director: 'NaN',
       cast: 'NaN',
       artist: 'NaN',
@@ -226,8 +229,8 @@ productRouter.put(
     if (product) {
       product.name = req.body.name;
       product.image = req.body.image;
-      product.brand = req.body.brand;
-      product.category = req.body.category;
+      // product.brand = req.body.brand;
+      // product.category = req.body.category;
       product.casts = req.body.casts;
       product.origin = req.body.origin;
       product.format = req.body.format;

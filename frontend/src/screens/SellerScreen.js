@@ -5,7 +5,6 @@ import { listProducts } from '../actions/productActions';
 import { detailsUser } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import Product from '../components/Product';
 import Rating from '../components/Rating';
 import ShowCase from '../components/ShowCase';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 export default function SellerScreen(props) {
   const params = useParams();
   const { id: sellerId } = params;
-
 
   const [currentProduct, setCurrentProduct] = React.useState(null);
   const userDetails = useSelector((state) => state.userDetails);
@@ -37,13 +35,138 @@ export default function SellerScreen(props) {
     navigate(`/cart/${currentProduct._id}?qty=1}`);
   };
   return (
-    <div className="row top">
-      <div className="col-1">
-        {loading ? (
+    <div className="row">
+      <div className="col-3">
+        {loadingProducts ? (
           <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
+        ) : errorProducts ? (
+          <MessageBox variant="danger">{errorProducts}</MessageBox>
         ) : (
+          <>
+            <div>
+              <ShowCase
+                products={products.filter((product) => product.visible)}
+                onClick={(product) => {
+                  setCurrentProduct(product);
+                }}
+              />
+            </div>
+
+            {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
+
+            <div className="row center">
+              {currentProduct && (
+                <ul>
+                  <li>
+                    <h1>{currentProduct.name}</h1>
+                  </li>
+                  <li>
+                    <Rating
+                      rating={currentProduct.rating}
+                      numReviews={currentProduct.numReviews}
+                    ></Rating>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Directors</div>
+                      <div className="director-label">
+                        {currentProduct.directors?.map((director) => (
+                          <span>{director.name} | </span>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Casts</div>
+                      <div className="cast-label">
+                        {currentProduct.casts?.map((cast) => (
+                          <span>{cast.name} | </span>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Artists</div>
+                      <div className="artist-label">
+                        {currentProduct.artists?.map((artist) => (
+                          <span>{artist.name} | </span>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Origin</div>
+                      <div className="origin-label">
+                        {currentProduct.origin}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Format</div>
+                      <div className="format-label">
+                        {currentProduct.format}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Condition</div>
+                      <div className="condition-label">
+                        {currentProduct.condition}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Rolled / Folded</div>
+                      <div className="rolledFolded-label">
+                        {currentProduct.rolledFolded}
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    Description:
+                    <p>{currentProduct.description}</p>
+                  </li>
+                  <li>Pirce : ${currentProduct.price}</li>
+
+                  {currentProduct.forSale && (
+                    <>
+                      <li>
+                        <div className="row">
+                          <button
+                            onClick={addToCartHandler}
+                            className="primary showcase"
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              )}
+            </div>
+
+            {/* <div className="row center">
+              {products.map((product) => (
+                <Product key={product._id} product={product}></Product>
+              ))}
+            </div> */}
+          </>
+        )}
+      </div>
+
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
+        <div className="col-1">
           <ul className="card card-body">
             <li>
               <div className="row start">
@@ -70,115 +193,10 @@ export default function SellerScreen(props) {
             </li>
             <li>{user.seller.description}</li>
           </ul>
-        )}
-      </div>
-      <div className="col-3">
+        </div>
+      )}
 
-        {loadingProducts ? (
-          <LoadingBox></LoadingBox>
-        ) : errorProducts ? (
-          <MessageBox variant="danger">{errorProducts}</MessageBox>
-        ) : (
-          <>
-            <div>
-
-              <ShowCase products={products.filter((product) => product.visible)} onClick={(product) => {
-                setCurrentProduct(product);
-              }} />
-            </div>
-            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-
-            <div className="row center">
-
-              {
-                currentProduct && (<ul>
-                  <li>
-                    <h1>{currentProduct.name}</h1>
-                  </li>
-                  <li>
-                    <Rating
-                      rating={currentProduct.rating}
-                      numReviews={currentProduct.numReviews}
-                    ></Rating>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Directors</div>
-                      <div className="director-label">{
-                        currentProduct.directors?.map((director) => <span >{director.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Casts</div>
-                      <div className="cast-label">{
-                        currentProduct.casts?.map((cast) => <span >{cast.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Artists</div>
-                      <div className="artist-label">{
-                        currentProduct.artists?.map((artist) => <span >{artist.name} | </span>)
-                      }</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Origin</div>
-                      <div className="origin-label">{currentProduct.origin}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Format</div>
-                      <div className="format-label">{currentProduct.format}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Condition</div>
-                      <div className="condition-label">{currentProduct.condition}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div>Rolled / Folded</div>
-                      <div className="rolledFolded-label">
-                        {currentProduct.rolledFolded}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    Description:
-                    <p>{currentProduct.description}</p>
-                  </li>
-                  <li>Pirce : ${currentProduct.price}</li>
-
-                  {
-                    currentProduct.forSale && <><li>
-                      <button
-                        onClick={addToCartHandler}
-                        className="primary block"
-                      >
-                        Add to Cart
-                      </button>
-                    </li></>
-                  }
-                </ul>)
-              }
-            </div>
-
-            {/* <div className="row center">
-              {products.map((product) => (
-                <Product key={product._id} product={product}></Product>
-              ))}
-            </div> */}
-          </>
-        )}
-      </div>
+      {/*  */}
     </div>
   );
 }

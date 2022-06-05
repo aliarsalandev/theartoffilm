@@ -86,19 +86,31 @@ export default function ProductScreen(props) {
                 <li>
                   <div className="row">
                     <div>Directors</div>
-                    <div className="director-label">{product.director}</div>
+                    <div className="director-label">
+                      {product.directors?.map((director) => (
+                        <span>{director.name} | </span>
+                      ))}
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
                     <div>Casts</div>
-                    <div className="cast-label">{product.cast}</div>
+                    <div className="cast-label">
+                      {product.casts?.map((cast) => (
+                        <span>{cast.name} | </span>
+                      ))}
+                    </div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
                     <div>Artists</div>
-                    <div className="artist-label">{product.artist}</div>
+                    <div className="artist-label">
+                      {product.artists?.map((artist) => (
+                        <span>{artist.name} | </span>
+                      ))}
+                    </div>
                   </div>
                 </li>
                 <li>
@@ -188,14 +200,18 @@ export default function ProductScreen(props) {
                           </div>
                         </div>
                       </li>
-                      <li>
-                        <button
-                          onClick={addToCartHandler}
-                          className="primary block"
-                        >
-                          Add to Cart
-                        </button>
-                      </li>
+                      {product.forSale && (
+                        <>
+                          <li>
+                            <button
+                              onClick={addToCartHandler}
+                              className="primary block"
+                            >
+                              Add to Cart
+                            </button>
+                          </li>
+                        </>
+                      )}
                     </>
                   )}
                 </ul>

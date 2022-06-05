@@ -12,7 +12,7 @@ import {
   orderSummaryReducer,
 } from './reducers/orderReducers';
 import {
-  productCategoryListReducer,
+  // productCategoryListReducer,
   productCreateReducer,
   directorListReducer,
   productOriginListReducer,
@@ -88,7 +88,7 @@ const reducer = combineReducers({
   sellerList: sellerListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
-  productCategoryList: productCategoryListReducer,
+  // productCategoryList: productCategoryListReducer,
 
   productOriginList: productOriginListReducer,
   productFormatList: productFormatListReducer,

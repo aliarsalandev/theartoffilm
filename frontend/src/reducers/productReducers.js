@@ -18,9 +18,9 @@ const {
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_RESET,
   //
-  PRODUCT_CATEGORY_LIST_REQUEST,
-  PRODUCT_CATEGORY_LIST_SUCCESS,
-  PRODUCT_CATEGORY_LIST_FAIL,
+  // PRODUCT_CATEGORY_LIST_REQUEST,
+  // PRODUCT_CATEGORY_LIST_SUCCESS,
+  // PRODUCT_CATEGORY_LIST_FAIL,
   //
   PRODUCT_DIRECTOR_LIST_REQUEST,
   PRODUCT_DIRECTOR_LIST_SUCCESS,
@@ -91,21 +91,21 @@ export const productListReducer = (
   }
 };
 
-export const productCategoryListReducer = (
-  state = { loading: true, products: [] },
-  action
-) => {
-  switch (action.type) {
-    case PRODUCT_CATEGORY_LIST_REQUEST:
-      return { loading: true };
-    case PRODUCT_CATEGORY_LIST_SUCCESS:
-      return { loading: false, categories: action.payload };
-    case PRODUCT_CATEGORY_LIST_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+// export const productCategoryListReducer = (
+//   state = { loading: true, products: [] },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case PRODUCT_CATEGORY_LIST_REQUEST:
+//       return { loading: true };
+//     case PRODUCT_CATEGORY_LIST_SUCCESS:
+//       return { loading: false, categories: action.payload };
+//     case PRODUCT_CATEGORY_LIST_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
 
 export const directorListReducer = (
   state = { loading: true, directors: [] },
@@ -139,12 +139,10 @@ export const castListReducer = (
   }
 };
 
-
 export const directorCreateReducer = (
   state = { loading: true, director: {} },
   action
 ) => {
-
   switch (action.type) {
     case PRODUCT_DIRECTOR_CREATE_REQUEST:
       return { loading: true };
@@ -157,13 +155,12 @@ export const directorCreateReducer = (
     default:
       return state;
   }
-}
+};
 
 export const castCreateReducer = (
   state = { loading: true, cast: {} },
   action
 ) => {
-
   switch (action.type) {
     case PRODUCT_CAST_CREATE_REQUEST:
       return { loading: true };
@@ -176,7 +173,7 @@ export const castCreateReducer = (
     default:
       return state;
   }
-}
+};
 
 export const artistListReducer = (
   state = { loading: true, artists: [] },
@@ -194,12 +191,10 @@ export const artistListReducer = (
   }
 };
 
-
 export const artistCreateReducer = (
   state = { loading: true, artist: {} },
   action
 ) => {
-
   switch (action.type) {
     case PRODUCT_ARTIST_CREATE_REQUEST:
       return { loading: true };
@@ -212,8 +207,7 @@ export const artistCreateReducer = (
     default:
       return state;
   }
-}
-
+};
 
 export const productOriginListReducer = (
   state = { loading: true, products: [] },

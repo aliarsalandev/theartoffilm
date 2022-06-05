@@ -20,9 +20,9 @@ import {
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_SUCCESS,
   //
-  PRODUCT_CATEGORY_LIST_SUCCESS,
-  PRODUCT_CATEGORY_LIST_REQUEST,
-  PRODUCT_CATEGORY_LIST_FAIL,
+  // PRODUCT_CATEGORY_LIST_SUCCESS,
+  // PRODUCT_CATEGORY_LIST_REQUEST,
+  // PRODUCT_CATEGORY_LIST_FAIL,
   //
   PRODUCT_DIRECTOR_LIST_SUCCESS,
   PRODUCT_DIRECTOR_LIST_REQUEST,
@@ -71,10 +71,10 @@ export const listProducts =
     pageNumber = '',
     seller = '',
     name = '',
-    category = '',
-    director = '',
-    cast = '',
-    artist = '',
+    // category = '',
+    directors = [],
+    casts = [],
+    artists = [],
     origin = '',
     format = '',
     condition = '',
@@ -84,31 +84,32 @@ export const listProducts =
     max = 0,
     rating = 0,
   }) =>
-    async (dispatch) => {
-      dispatch({
-        type: PRODUCT_LIST_REQUEST,
-      });
-      try {
-        const { data } = await Axios.get(
-          `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&director=${director}&cast=${cast}&artist=${artist}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
-        );
-        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-      } catch (error) {
-        dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
-      }
-    };
+  async (dispatch) => {
+    dispatch({
+      type: PRODUCT_LIST_REQUEST,
+    });
+    try {
+      const { data } = await Axios.get(
+        // &category=${category}
+        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+      );
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+    }
+  };
 
-export const listProductCategories = () => async (dispatch) => {
-  dispatch({
-    type: PRODUCT_CATEGORY_LIST_REQUEST,
-  });
-  try {
-    const { data } = await Axios.get(`/api/products/categories`);
-    dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
-  }
-};
+// export const listProductCategories = () => async (dispatch) => {
+//   dispatch({
+//     type: PRODUCT_CATEGORY_LIST_REQUEST,
+//   });
+//   try {
+//     const { data } = await Axios.get(`/api/products/categories`);
+//     dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
+//   } catch (error) {
+//     dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+//   }
+// };
 
 export const listProductDirectors = () => async (dispatch) => {
   dispatch({
@@ -116,7 +117,7 @@ export const listProductDirectors = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(`/api/directors`);
-    console.log(data, "the directors list")
+    // console.log(data, 'the directors list');
     dispatch({ type: PRODUCT_DIRECTOR_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_DIRECTOR_LIST_FAIL, payload: error.message });
@@ -129,38 +130,39 @@ export const listProductCasts = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(`/api/casts`);
-    console.log(data, "the casts list")
+    // console.log(data, 'the casts list');
     dispatch({ type: PRODUCT_CAST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_CAST_LIST_FAIL, payload: error.message });
   }
 };
 
-export const createProductDirectors = (director) => async (dispatch, getState) => {
-  dispatch({ type: PRODUCT_DIRECTOR_CREATE_REQUEST });
-  const {
-    userSignin: { userInfo },
-  } = getState();
-  try {
-    const { data } = await Axios.post(
-      `/api/directors`,
-      { director },
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
-    dispatch({
-      type: PRODUCT_DIRECTOR_CREATE_SUCCESS,
-      payload: data.director,
-    });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({ type: PRODUCT_DIRECTOR_CREATE_FAIL, payload: message });
-  }
-};
+export const createProductDirectors =
+  (director) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_DIRECTOR_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        `/api/directors`,
+        { director },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: PRODUCT_DIRECTOR_CREATE_SUCCESS,
+        payload: data.director,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: PRODUCT_DIRECTOR_CREATE_FAIL, payload: message });
+    }
+  };
 
 export const createProductCasts = (cast) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CAST_CREATE_REQUEST });
@@ -188,21 +190,18 @@ export const createProductCasts = (cast) => async (dispatch, getState) => {
   }
 };
 
-
-
 export const listProductArtists = () => async (dispatch) => {
   dispatch({
     type: PRODUCT_ARTIST_LIST_REQUEST,
   });
   try {
     const { data } = await Axios.get(`/api/artists`);
-    console.log(data, "the artists list")
+    // console.log(data, 'the artists list');
     dispatch({ type: PRODUCT_ARTIST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_ARTIST_LIST_FAIL, payload: error.message });
   }
 };
-
 
 export const createProductArtist = (artist) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_ARTIST_CREATE_REQUEST });
@@ -229,7 +228,6 @@ export const createProductArtist = (artist) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_ARTIST_CREATE_FAIL, payload: message });
   }
 };
-
 
 export const listProductOrigins = () => async (dispatch) => {
   dispatch({

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Carousel } from 'react-responsive-carousel';
 import Product from '../components/Product';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import { listTopSellers } from '../actions/userActions';
-import { Link } from 'react-router-dom';
+// import { listTopSellers } from '../actions/userActions';
+// import { Link } from 'react-router-dom';
+// import { Carousel } from 'react-responsive-carousel';
 import HeroSection from '../sections/HeroSection';
 import WelcomeSection from '../sections/WelcomeSection';
 import HowItWorkSection from '../sections/HowItWorkSection';
@@ -18,16 +18,16 @@ export default function HomeScreen() {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
-  const userTopSellersList = useSelector((state) => state.userTopSellersList);
-  const {
-    loading: loadingSellers,
-    error: errorSellers,
-    users: sellers,
-  } = userTopSellersList;
+  // const userTopSellersList = useSelector((state) => state.userTopSellersList);
+  // const {
+  //   loading: loadingSellers,
+  //   error: errorSellers,
+  //   users: sellers,
+  // } = userTopSellersList;
 
   useEffect(() => {
     dispatch(listProducts({}));
-    dispatch(listTopSellers());
+    // dispatch(listTopSellers());
   }, [dispatch]);
   return (
     <div>
@@ -35,14 +35,14 @@ export default function HomeScreen() {
       <WelcomeSection />
       <HowItWorkSection />
       <ShowcaseSection />
-      <h2>Featured Products</h2>
+      <h2>Featured Posters</h2>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+          {products.length === 0 && <MessageBox>No Posters Found</MessageBox>}
           <div className="row start">
             {products.map((product) => (
               <Product key={product._id} product={product}></Product>

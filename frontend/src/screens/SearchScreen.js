@@ -12,7 +12,7 @@ export default function SearchScreen(props) {
   const navigate = useNavigate();
   const {
     name = 'all',
-    category = 'all',
+    // category = 'all',
     min = 0,
     max = 0,
     rating = 0,
@@ -23,35 +23,38 @@ export default function SearchScreen(props) {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
-  const productCategoryList = useSelector((state) => state.productCategoryList);
-  const {
-    loading: loadingCategories,
-    error: errorCategories,
-    categories,
-  } = productCategoryList;
+  // const productCategoryList = useSelector((state) => state.productCategoryList);
+  // const {
+  //   loading: loadingCategories,
+  //   error: errorCategories,
+  //   categories,
+  // } = productCategoryList;
+
   useEffect(() => {
     dispatch(
       listProducts({
         pageNumber,
         name: name !== 'all' ? name : '',
-        category: category !== 'all' ? category : '',
+        // category: category !== 'all' ? category : '',
         min,
         max,
         rating,
         order,
       })
     );
-  }, [category, dispatch, max, min, name, order, rating, pageNumber]);
+  }, [dispatch, max, min, name, order, rating, pageNumber]);
+  // category
 
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
-    const filterCategory = filter.category || category;
+    // const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const filterRating = filter.rating || rating;
     const sortOrder = filter.order || order;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
+    return `/search/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
+    // /category/${filterCategory}
   };
   return (
     <div>
@@ -80,7 +83,7 @@ export default function SearchScreen(props) {
       </div>
       <div className="row top">
         <div className="col-1">
-          <h3>Department</h3>
+          {/* <h3>Department</h3>
           <div>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
@@ -108,7 +111,7 @@ export default function SearchScreen(props) {
                 ))}
               </ul>
             )}
-          </div>
+          </div> */}
           <div>
             <h3>Price</h3>
             <ul>
@@ -142,6 +145,7 @@ export default function SearchScreen(props) {
             </ul>
           </div>
         </div>
+
         <div className="col-3">
           {loading ? (
             <LoadingBox></LoadingBox>
@@ -150,7 +154,7 @@ export default function SearchScreen(props) {
           ) : (
             <>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <MessageBox>No Poster Found</MessageBox>
               )}
               <div className="row center">
                 {products.map((product) => (

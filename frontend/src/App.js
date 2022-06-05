@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { signout } from './actions/userActions';
@@ -24,9 +24,9 @@ import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
 import SearchBox from './components/SearchBox';
 import SearchScreen from './screens/SearchScreen';
-import { listProductCategories } from './actions/productActions';
-import LoadingBox from './components/LoadingBox';
-import MessageBox from './components/MessageBox';
+// import { listProductCategories } from './actions/productActions';
+// import LoadingBox from './components/LoadingBox';
+// import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
@@ -35,7 +35,7 @@ import SellersScreen from './screens/SellersScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  // const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -44,14 +44,15 @@ function App() {
     dispatch(signout());
   };
 
-  const productCategoryList = useSelector((state) => state.productCategoryList);
-  const {
-    loading: loadingCategories,
-    error: errorCategories,
-    categories,
-  } = productCategoryList;
+  // const productCategoryList = useSelector((state) => state.productCategoryList);
+  // const {
+  //   loading: loadingCategories,
+  //   error: errorCategories,
+  //   categories,
+  // } = productCategoryList;
+
   useEffect(() => {
-    dispatch(listProductCategories());
+    // dispatch(listProductCategories());
   }, [dispatch]);
   return (
     <BrowserRouter>
@@ -63,33 +64,31 @@ function App() {
             </Link>
           </div>
 
-          <div>
-            <Link to="/sellers">
-              ShowCase
-            </Link>
-          </div>
-
-          <div>
+          <div className="row">
             <SearchBox />
+            <Link to="/searach">Shop</Link>
+            <Link to="/sellers">ShowCase</Link>
           </div>
           <div>
             <Link to="/cart">
-              Cart
+              <i className="fa-solid fa-cart-shopping"></i>
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
+
             {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                  {/* {userInfo.name}  */}
+                  Buying<i className="fa fa-caret-down"></i>{' '}
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/profile">User Profile</Link>
+                    <Link to="/profile">My Profile Profile</Link>
                   </li>
                   <li>
-                    <Link to="/orderhistory">Order History</Link>
+                    <Link to="/orderhistory">Purchase Orders</Link>
                   </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
@@ -101,21 +100,23 @@ function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
+
             {userInfo && userInfo.isSeller && (
               <div className="dropdown">
                 <Link to="#admin">
-                  Seller <i className="fa fa-caret-down"></i>
+                  Selling <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/productlist/seller">Products</Link>
+                    <Link to="/productlist/seller">My Posters</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist/seller">Orders</Link>
+                    <Link to="/orderlist/seller">Customer Orders</Link>
                   </li>
                 </ul>
               </div>
             )}
+
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -126,30 +127,31 @@ function App() {
                     <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
-                    <Link to="/productlist">Products</Link>
+                    <Link to="/productlist">All Posters</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist">Orders</Link>
+                    <Link to="/orderlist">All Orders</Link>
                   </li>
                   <li>
-                    <Link to="/userlist">Users</Link>
+                    <Link to="/userlist">All Users</Link>
                   </li>
                   <li>
-                    <Link to="/support">Support</Link>
+                    <Link to="/support">User Enqueries</Link>
                   </li>
                 </ul>
               </div>
             )}
-            <button
+            {/* <button
               type="button"
               className="open-sidebar"
               onClick={() => setSidebarIsOpen(true)}
             >
               <i className="fa-solid fa-bars"></i>{' '}
-            </button>
+            </button> */}
           </div>
         </header>
-        <aside className={sidebarIsOpen ? 'open' : ''}>
+
+        {/* <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
               <strong>Categories</strong>
@@ -178,7 +180,8 @@ function App() {
               ))
             )}
           </ul>
-        </aside>
+        </aside> */}
+
         <main>
           <Routes>
             <Route path="/seller/:id" element={<SellerScreen />}></Route>

@@ -71,9 +71,9 @@ export default function ProductListScreen(props) {
   return (
     <div>
       <div className="row">
-        <h1>Products</h1>
+        <h1>Posters</h1>
         <button type="button" className="primary" onClick={createHandler}>
-          Create Product
+          Create Posters
         </button>
       </div>
 
@@ -94,20 +94,15 @@ export default function ProductListScreen(props) {
                 <th>ID</th>
                 <th>NAME</th>
                 <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
-
               {products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
                   <td>
                     <button
                       type="button"
