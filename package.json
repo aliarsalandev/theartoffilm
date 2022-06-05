@@ -1,44 +1,21 @@
 {
   "name": "theartoffilm",
   "version": "1.0.0",
-  "description": "Ecommerce website!",
+  "description": "# Lessons",
   "main": "index.js",
   "scripts": {
-    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
     "start": "node backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aliarsalandev/theartoffilm.git"
+    "url": "git+https://github.com/basir/theartoffilm.git"
   },
-  "author": "aliarsalandev",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aliarsalandev/theartoffilm/issues"
+    "url": "https://github.com/basir/theartoffilm/issues"
   },
-  "devDependencies": {
-    "eslint": "^7.9.0",
-    "eslint-plugin-react": "^7.21.2",
-    "nodemon": "^2.0.4"
-  },
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.30.0",
-    "debug": "^4.3.4",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mailgun-js": "^0.22.0",
-    "mongoose": "^6.0.13",
-    "multer": "^1.4.3",
-    "react-router-dom": "^6.3.0",
-    "socket.io": "^4.4.0",
-    "use-reducer-logger": "^1.0.2"
-  },
-  "engines": {
-    "node": "16.14.2",
-    "npm": "8.5.0"
-  }
+  "homepage": "https://github.com/basir/theartoffilm#readme"
 }
