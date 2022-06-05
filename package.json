@@ -8,8 +8,15 @@
     "build": "cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aliarsalandev/theartoffilm.git"
+  },
+  "author": "aliarsalandev",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aliarsalandev/theartoffilm/issues"
+  },
   "devDependencies": {
     "eslint": "^7.9.0",
     "eslint-plugin-react": "^7.21.2",
