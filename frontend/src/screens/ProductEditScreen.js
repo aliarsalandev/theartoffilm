@@ -54,11 +54,8 @@ export default function ProductEditScreen(props) {
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
 
-  useEffect(() => {
-    dispatch(listProductDirectors());
-    dispatch(listProductCasts());
-    dispatch(listProductArtists());
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   // const newDirectorData = useSelector((state) => state.directorCreate);
   // const { director } = newDirectorData;
@@ -72,6 +69,10 @@ export default function ProductEditScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(listProductDirectors());
+    dispatch(listProductCasts());
+    dispatch(listProductArtists());
+
     if (successUpdate) {
       navigate('/productlist');
     }
