@@ -66,7 +66,7 @@ function App() {
 
           <div className="row">
             <SearchBox />
-            <Link to="/searach">Shop</Link>
+            <Link to="/search/name">Shop</Link>
             <Link to="/sellers">ShowCase</Link>
           </div>
           <div>
