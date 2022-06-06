@@ -156,6 +156,7 @@ button.block {
   width: 100%;
   max-width: 50%;
 }
+
 button.showcase {
   width: 100%;
   max-width: 25%;
@@ -319,7 +320,7 @@ img.mw-80 {
   padding: 1rem;
 }
 
-.card-body > * {
+.card-body>* {
   margin-bottom: 0.3rem;
 }
 
@@ -378,7 +379,7 @@ img.mw-80 {
   margin: 0 auto;
 }
 
-.form > div {
+.form>div {
   display: flex;
   flex-direction: column;
   margin: 1rem;
@@ -407,7 +408,7 @@ img.mw-80 {
   /* border-radius: 0.5rem; */
 }
 
-.dropdown-content > li > a {
+.dropdown-content>li>a {
   color: var(--base-color);
 }
 
@@ -416,7 +417,7 @@ img.mw-80 {
 }
 
 /* Checkout Steps */
-.checkout-steps > div {
+.checkout-steps>div {
   border-top: 0.3rem var(--text-color) solid;
   color: var(--text-color);
   flex: 1;
@@ -424,7 +425,7 @@ img.mw-80 {
   font-weight: bold;
 }
 
-.checkout-steps > div.active {
+.checkout-steps>div.active {
   border-top-color: var(--accent-color);
   color: var(--accent-color);
 }
@@ -524,7 +525,7 @@ img.mw-80 {
 
 /* Dashboard */
 
-.summary > li {
+.summary>li {
   border: 0.1rem #c0c0c0 solid;
   margin: 2rem;
   /* border-radius: 0.5rem; */
@@ -664,12 +665,12 @@ img.mw-80 {
   margin-right: 2rem;
 }
 
-.item > img {
+.item>img {
   width: 100%;
   object-fit: cover;
 }
 
-.item > h4 {
+.item>h4 {
   color: var(--accent-color);
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -723,17 +724,17 @@ img.mw-80 {
   padding-right: 1rem;
 }
 
-.section > h1 {
+.section>h1 {
   font-size: 7rem;
   margin-bottom: 1rem;
   animation: glow 2s ease-in-out infinite alternate;
 }
 
-.section > h2 {
+.section>h2 {
   font-size: 3rem;
 }
 
-.section > h2 > span {
+.section>h2>span {
   color: var(--accent-color);
 }
 
@@ -749,4 +750,20 @@ img.mw-80 {
 
 .coverflow__container__1P-xE {
   background-color: transparent !important;
+}
+
+.seller-sidebar {
+  background-color: var(--light-dark-color);
+  padding: 24px 32px;
+}
+
+.avatar {
+  height: 120px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-color);
+  color: var(--light-dark-color);
+  text-align: center;
 }

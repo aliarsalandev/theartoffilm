@@ -52,10 +52,10 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-        ? { price: -1 }
-        : order === 'toprated'
-        ? { rating: -1 }
-        : { _id: -1 };
+          ? { price: -1 }
+          : order === 'toprated'
+            ? { rating: -1 }
+            : { _id: -1 };
     const count = await Product.count({
       ...sellerFilter,
       ...nameFilter,
@@ -196,18 +196,20 @@ productRouter.post(
     const product = new Product({
       name: 'sample name ' + Date.now(),
       seller: req.user._id,
-      image: '/images/p1.jpg',
+      image: '',
       // brand: 'NaN',
       // category: 'NaN',
       director: 'NaN',
       cast: 'NaN',
       artist: 'NaN',
       origin: 'NaN',
+      year: 1930,
       format: 'NaN',
       condition: 'NaN',
       rolledFolded: 'NaN',
       countInStock: 0,
       price: 0,
+      salePrice: 0,
       rating: 0,
       numReviews: 0,
       directors: [],
@@ -227,17 +229,20 @@ productRouter.put(
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if (product) {
+      // const { name, image, brand, category, director, cast, artist, origin, year, format, condition, rolledFolded, countInStock, price, salePrice, rating, numReviews, directors, visible, forSale, description } = req.body;
       product.name = req.body.name;
       product.image = req.body.image;
       // product.brand = req.body.brand;
       // product.category = req.body.category;
       product.casts = req.body.casts;
       product.origin = req.body.origin;
+      product.year = req.body.year;
       product.format = req.body.format;
       product.condition = req.body.condition;
       product.rolledFolded = req.body.rolledFolded;
       product.countInStock = req.body.countInStock;
       product.price = req.body.price;
+      product.salePrice = req.body.salePrice;
       product.description = req.body.description;
       product.artists = req.body.artists;
       product.directors = req.body.directors;

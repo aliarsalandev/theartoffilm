@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { listSellers } from '../actions/userActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import Rating from '../components/Rating';
+import React, { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listSellers } from "../actions/userActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import Rating from "../components/Rating";
 
 export default function SellersScreen(props) {
   const params = useParams();
@@ -25,44 +25,66 @@ export default function SellersScreen(props) {
 
   return (
     <div className="">
-      <div className="row">
+      <div className="row start">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          sellers.map((seller) => (
-            <ul className="card card-body">
-              <li>
-                <div className="row start">
-                  <Link to={`/seller/${seller._id}`}>
-                    <div className="p-1">
-                      <img
-                        className="small"
-                        src={seller.seller.logo}
-                        alt={seller.seller.name}
-                      ></img>
+          sellers.map(
+            (seller) =>
+              seller.seller.logo && (
+                <ul className="card card-body">
+                  <li>
+                    <div className="row start">
+                      <Link to={`/seller/${seller._id}`}>
+                        <div
+                          className="p-1"
+                          title={seller.seller.name}
+                          style={{
+                            height: "120px",
+                            width: "120px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <img
+                            style={{
+                              width: "120px",
+                              height: "120px",
+                              objectFit: "contain",
+                              overflow: "hidden",
+                            }}
+                            className="small"
+                            src={seller.seller.logo}
+                            alt={seller.seller.name}
+                          ></img>
+                        </div>
+                      </Link>
+                      <div className="p-1">
+                        <Link to={`/seller/${seller._id}`}>
+                          <h1>{seller.seller.name}</h1>
+                        </Link>
+                      </div>
                     </div>
-                  </Link>
-                  <div className="p-1">
+                  </li>
+                  <li>
+                    <Rating
+                      rating={seller.seller.rating}
+                      numReviews={seller.seller.numReviews}
+                    ></Rating>
+                  </li>
+                  <li>
+                    <a href={`mailto:${seller.email}`}>Contact Seller</a>
+                  </li>
+                  <li>{seller.seller.description}</li>
+                  <li className="p-3" style={{ textAlign: "end" }}>
                     <Link to={`/seller/${seller._id}`}>
-                      <h1>{seller.seller.name}</h1>
+                      View ShowCase
                     </Link>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <Rating
-                  rating={seller.seller.rating}
-                  numReviews={seller.seller.numReviews}
-                ></Rating>
-              </li>
-              <li>
-                <a href={`mailto:${seller.email}`}>Contact Seller</a>
-              </li>
-              <li>{seller.seller.description}</li>
-            </ul>
-          ))
+                  </li>
+                </ul>
+              )
+          )
         )}
       </div>
     </div>

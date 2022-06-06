@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Product from '../components/Product';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-// import { listTopSellers } from '../actions/userActions';
-// import { Link } from 'react-router-dom';
-// import { Carousel } from 'react-responsive-carousel';
-import HeroSection from '../sections/HeroSection';
-import WelcomeSection from '../sections/WelcomeSection';
-import HowItWorkSection from '../sections/HowItWorkSection';
-import ShowcaseSection from '../sections/ShowcaseSection';
+import React, { useEffect } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
+import HeroSection from "../sections/HeroSection";
+import WelcomeSection from "../sections/WelcomeSection";
+import HowItWorkSection from "../sections/HowItWorkSection";
+import ShowcaseSection from "../sections/ShowcaseSection";
+import Carousel from "react-elastic-carousel";
+
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -44,12 +43,29 @@ export default function HomeScreen() {
         <>
           {products.length === 0 && <MessageBox>No Posters Found</MessageBox>}
           <div className="row start">
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
-            ))}
+
+            <Carousel breakPoints={[
+              { width: 1, itemsToShow: 1 },
+              { width: 550, itemsToShow: 4, itemsToScroll: 4 },
+              { width: 768, itemsToShow: 6 },
+              { width: 1200, itemsToShow: 6 }
+            ]}>
+              {products.map(
+                (product) => {
+                  const show =
+                    (product.image.length > 0) &
+                    product.visible &
+                    (product.price > 0);
+                  return show === 1 && (
+                    <Product key={product._id} product={product}></Product>
+                  )
+                }
+              )}
+            </Carousel>
           </div>
         </>
-      )}
+      )
+      }
 
       {/* <h2>Top Sellers</h2>
       {loadingSellers ? (
@@ -71,6 +87,6 @@ export default function HomeScreen() {
           </Carousel>
         </>
       )} */}
-    </div>
+    </div >
   );
 }
