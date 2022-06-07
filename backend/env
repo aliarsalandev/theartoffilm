@@ -1,0 +1,8 @@
+JWT_SECRET=MIIBOgIBAAJBAI0fsqrucsvXpwgtsAPHS2Jz56GQ8+lUSZgcNzX5p5C5d/iMxvuT
+PAYPAL_CLIENT_ID=AX2vaOdKOXYUCUOr4uiDrTAGRNCVzVKCbHcceKXPNnbDhy7tnEQzrInq7t5jgY4XowxAcjouKZ7GDhP6
+MONGODA_URI=mongodb://localhost/artoffilms
+MONGODA_URL_ATLAS=mongodb+srv://aliarsalandev:DojWixpseipvty55@cluster0.qjxzx.mongodb.net/artoffilms?retryWrites=true&w=majority
+CLOUDINARY_CLOUD_NAME=theartoffilms
+CLOUDINARY_API_KEY=563822985559768
+CLOUDINARY_URL=cloudinary://563822985559768:u9PT2614sk7pwSpATGDQvWiVhg0@theartoffilms
+CLOUDINARY_API_SECRET=u9PT2614sk7pwSpATGDQvWiVhg0
