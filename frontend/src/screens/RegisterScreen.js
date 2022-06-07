@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { register } from '../actions/userActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { register } from "../actions/userActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [isSeller, setisSeller] = useState(false)
-  const [sellerName, setSellerName] = useState()
+  const [isSeller, setisSeller] = useState(false);
+  const [sellerName, setSellerName] = useState();
   const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
 
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
 
   const dispatch = useDispatch();
 
-
-
-
   const submitHandler = (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
-      alert('Password and confirm password are not match');
+      alert("Password and confirm password are not match");
     } else {
-      dispatch(register(name, email, password, sellerName));
+      dispatch(register(name, email, password, sellerName, isSeller));
     }
   };
   useEffect(() => {
@@ -98,8 +94,8 @@ export default function RegisterScreen(props) {
             onChange={(e) => setisSeller(e.target.checked)}
           ></input>
         </div>
-        {
-          isSeller && <>
+        {isSeller && (
+          <>
             <h2>Collection Info</h2>
             <div>
               <label htmlFor="_name">Collection Name</label>
@@ -110,10 +106,8 @@ export default function RegisterScreen(props) {
                 onChange={(e) => setSellerName(e.target.value)}
               ></input>
             </div>
-
-
           </>
-        }
+        )}
 
         <div>
           <label />
@@ -124,7 +118,7 @@ export default function RegisterScreen(props) {
         <div>
           <label />
           <div>
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
           </div>
         </div>

@@ -2,6 +2,23 @@ import {
   SELLER_LIST_FAIL,
   SELLER_LIST_REQUEST,
   SELLER_LIST_SUCCESS,
+  SUBSCRIPTION_CREATE_FAIL,
+  SUBSCRIPTION_CREATE_REQUEST,
+  SUBSCRIPTION_CREATE_SUCCESS,
+  SUBSCRIPTION_DELETE_FAIL,
+  SUBSCRIPTION_DELETE_REQUEST,
+  SUBSCRIPTION_DELETE_RESET,
+  SUBSCRIPTION_DELETE_SUCCESS,
+  SUBSCRIPTION_DETAILS_FAIL,
+  SUBSCRIPTION_DETAILS_REQUEST,
+  SUBSCRIPTION_DETAILS_SUCCESS,
+  SUBSCRIPTION_LIST_FAIL,
+  SUBSCRIPTION_LIST_REQUEST,
+  SUBSCRIPTION_LIST_SUCCESS,
+  SUBSCRIPTION_UPDATE_FAIL,
+  SUBSCRIPTION_UPDATE_REQUEST,
+  SUBSCRIPTION_UPDATE_RESET,
+  SUBSCRIPTION_UPDATE_SUCCESS,
   USER_ADDRESS_MAP_CONFIRM,
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -32,7 +49,7 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_RESET,
   USER_UPDATE_SUCCESS,
-} from '../constants/userConstants';
+} from "../constants/userConstants";
 
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
@@ -115,7 +132,10 @@ export const userListReducer = (state = { loading: true }, action) => {
       return state;
   }
 };
-export const sellerListReducer = (state = { loading: true, sellers: [] }, action) => {
+export const sellerListReducer = (
+  state = { loading: true, sellers: [] },
+  action
+) => {
   switch (action.type) {
     case SELLER_LIST_REQUEST:
       return { loading: true };
@@ -158,6 +178,87 @@ export const userAddressMapReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_ADDRESS_MAP_CONFIRM:
       return { address: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const listSubscriptionReducer = (
+  state = { loading: true, subscriptions: [] },
+  action
+) => {
+  switch (action.type) {
+    case SUBSCRIPTION_LIST_REQUEST:
+      return { loading: true };
+    case SUBSCRIPTION_LIST_SUCCESS:
+      return { loading: false, subscriptions: action.payload };
+    case SUBSCRIPTION_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const subscriptionCreateReducer = (
+  state = { loading: true, subscription: {} },
+  action
+) => {
+  switch (action.type) {
+    case SUBSCRIPTION_CREATE_REQUEST:
+      return { loading: true };
+    case SUBSCRIPTION_CREATE_SUCCESS:
+      return { loading: false, subscription: action.payload };
+    case SUBSCRIPTION_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const subscriptionUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SUBSCRIPTION_UPDATE_REQUEST:
+      return { loading: true };
+    case SUBSCRIPTION_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case SUBSCRIPTION_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case SUBSCRIPTION_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const subscriptionDeleteReducer = (
+  state = { loading: true, subscription: {} },
+  action
+) => {
+  switch (action.type) {
+    case SUBSCRIPTION_DELETE_REQUEST:
+      return { loading: true };
+    case SUBSCRIPTION_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case SUBSCRIPTION_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case SUBSCRIPTION_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const subscriptionDetailsReducer = (
+  state = { loading: true },
+  action
+) => {
+  switch (action.type) {
+    case SUBSCRIPTION_DETAILS_REQUEST:
+      return { loading: true };
+    case SUBSCRIPTION_DETAILS_SUCCESS:
+      return { loading: false, subscription: action.payload };
+    case SUBSCRIPTION_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

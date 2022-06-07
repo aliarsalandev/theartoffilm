@@ -11,7 +11,6 @@ import HowItWorkSection from "../sections/HowItWorkSection";
 import ShowcaseSection from "../sections/ShowcaseSection";
 import Carousel from "react-elastic-carousel";
 
-
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
@@ -43,29 +42,29 @@ export default function HomeScreen() {
         <>
           {products.length === 0 && <MessageBox>No Posters Found</MessageBox>}
           <div className="row start">
-
-            <Carousel breakPoints={[
-              { width: 1, itemsToShow: 1 },
-              { width: 550, itemsToShow: 4, itemsToScroll: 4 },
-              { width: 768, itemsToShow: 6 },
-              { width: 1200, itemsToShow: 6 }
-            ]}>
-              {products.map(
-                (product) => {
-                  const show =
-                    (product.image.length > 0) &
-                    product.visible &
-                    (product.price > 0);
-                  return show === 1 && (
+            <Carousel
+              breakPoints={[
+                { width: 1, itemsToShow: 1 },
+                { width: 550, itemsToShow: 4, itemsToScroll: 4 },
+                { width: 768, itemsToShow: 6 },
+                { width: 1200, itemsToShow: 6 },
+              ]}
+            >
+              {products.map((product) => {
+                const show =
+                  (product.image.length > 0) &
+                  product.visible &
+                  (product.price > 0);
+                return (
+                  show === 1 && (
                     <Product key={product._id} product={product}></Product>
                   )
-                }
-              )}
+                );
+              })}
             </Carousel>
           </div>
         </>
-      )
-      }
+      )}
 
       {/* <h2>Top Sellers</h2>
       {loadingSellers ? (
@@ -87,6 +86,6 @@ export default function HomeScreen() {
           </Carousel>
         </>
       )} */}
-    </div >
+    </div>
   );
 }

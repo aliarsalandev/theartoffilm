@@ -79,7 +79,7 @@ header {
 
 main {
   grid-area: main;
-  padding: 3rem 10rem;
+  /* padding: 3rem 10rem; */
 }
 
 footer {
@@ -192,6 +192,14 @@ a.brand {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+}
+
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
+.column-reverse {
+  flex-direction: column-reverse;
 }
 
 .row.center {
@@ -766,4 +774,30 @@ img.mw-80 {
   background-color: var(--accent-color);
   color: var(--light-dark-color);
   text-align: center;
+}
+
+
+iframe {
+  width: 0;
+  display: none;
+}
+
+.link {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-family: 'Bebas Neue', 'Times New Roman';
+  letter-spacing: 1.2px;
+  background-color: transparent;
+  border: unset;
+  padding: 0px;
+}
+
+.hide {
+  display: none;
+}
+
+.thumbnail {
+  width: 120px;
+  height: 120px;
+  margin: 1rem;
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import './css/footer.css';
-import { Link } from 'react-router-dom';
-import ChatBox from '../components/ChatBox';
+import React from "react";
+import "./css/footer.css";
+import { Link } from "react-router-dom";
+import ChatBox from "../components/ChatBox";
 
 export default function Footer(props) {
   const userInfo = props;
@@ -31,7 +31,7 @@ export default function Footer(props) {
             <h5 className="mb-3">Things to know</h5>
             <div className="footer-links">
               <Link to="/">Our Subscriptions</Link>
-              <Link to="/">Advertise With Us</Link>
+              <Link to="/advertise-with-us">Advertise With Us</Link>
               <Link to="/">Posters Condition Grading</Link>
               <Link to="/">Terms & Conditions</Link>
               <Link to="/">Privacy Policy</Link>
@@ -44,7 +44,7 @@ export default function Footer(props) {
               <Link to="/">About Us</Link>
               <Link to="/">Shop</Link>
               <Link to="/">Showcase</Link>
-              <Link to="/">FAQs</Link>
+              <Link to="/faq">FAQs</Link>
               <Link to="/">Contact</Link>
             </div>
           </div>

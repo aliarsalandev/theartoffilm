@@ -20,6 +20,39 @@ import Select from "react-select";
 import SellerSidebar from "../components/SellerSidebar";
 
 export default function ProductEditScreen(props) {
+  const formats = [
+    { value: "US 1 Sheet", label: "US 1 Sheet" },
+    { value: "US Halfsheet", label: "US Halfsheet" },
+    { value: "US Lobby Se", label: "US Lobby Se" },
+    { value: "US Insert", label: "US Insert" },
+    { value: "US Window Card", lable: "US Window Card" },
+    { value: "German A0", label: "German A0" },
+    { value: "German A1", label: "German A1" },
+    { value: "German A2", label: "German A2" },
+    { value: "German Lobby Cards", label: "German Lobby Cards" },
+    { value: "Japanese B1", label: "Japanese B1" },
+    { value: "Japanese B2", label: "Japanese B2" },
+    { value: "Japanese B3", label: "Japanese B3" },
+    { value: "Japanese B4", label: "Japanese B4" },
+    { value: "Japanese B5", label: "Japanese B5" },
+    { value: "French Grande", label: "French Grande" },
+    { value: "French Half Grande", label: "French Half Grande" },
+    { value: "French Pantalon", label: "French Pantalon" },
+    { value: "French Moyenne", label: "French Moyenne" },
+    { value: "French Petite", label: "French Petite" },
+    { value: "French Lobby Cards", label: "French Lobby Cards" },
+    { value: "Italian Foglio", label: "Italian Foglio" },
+    { value: "Italian 2 Foglio", label: "Italian 2 Foglio" },
+    { value: "Italian 4 Foglio", label: "Italian 4 Foglio" },
+    { value: "Italian Locandina", label: "Italian Locandina" },
+    { value: " Italian Photobusta", label: " Italian Photobusta" },
+    { value: "UK Quad", label: "UK Quad" },
+    { value: "UK 1 Sheet", label: "UK 1 Sheet" },
+    { value: "UK Double Crown", label: "UK Double Crown" },
+    { value: "UK 3 Sheet", label: "UK 3 Sheet" },
+    { value: "UK 6 Sheet", label: "UK 6 Sheet" },
+    { value: "UK Front of House set", label: "UK Front of House set" },
+  ];
   const countries = [
     { name: "United States", code: "US" },
     { name: "Canada", code: "CA" },
@@ -44,6 +77,7 @@ export default function ProductEditScreen(props) {
   const [price, setPrice] = useState(0);
   const [salePrice, setSalePrice] = useState(0);
   const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(false);
   const [forSale, setForSale] = useState(false);
   const [countInStock, setCountInStock] = useState("");
@@ -78,7 +112,6 @@ export default function ProductEditScreen(props) {
 
     if (successUpdate) {
       window.scrollTo(0, 0);
-      // navigate('/productlist');
     }
     if (!product || product._id !== productId || successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -91,6 +124,7 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
+      setImages(product.images ?? []);
       // setBrand(product.brand);
       // setCategory(product.category);
       // setDirector(product.director);
@@ -110,15 +144,30 @@ export default function ProductEditScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    console.log(productDirectorsRef.current);
-    console.log(productCastsRef.current);
-    console.log(productArtistsRef.current);
     const director_ids = productDirectorsRef.current.map(({ _id }) => _id);
     const cast_ids = productCastsRef.current.map(({ _id }) => _id);
     const artist_ids = productArtistsRef.current.map(({ _id }) => _id);
+    console.log({
+      _id: productId,
+      name,
+      price,
+      salePrice,
+      image,
+      images,
+      directors: director_ids,
+      casts: cast_ids,
+      artists: artist_ids,
+      origin,
+      year,
+      format,
+      condition,
+      rolledFolded,
+      countInStock,
+      description,
+      visible,
+      forSale,
+    });
 
-    // TODO: dispatch update product
     dispatch(
       updateProduct({
         _id: productId,
@@ -126,8 +175,7 @@ export default function ProductEditScreen(props) {
         price,
         salePrice,
         image,
-        // brand,
-        // category,
+        images,
         directors: director_ids,
         casts: cast_ids,
         artists: artist_ids,
@@ -148,28 +196,39 @@ export default function ProductEditScreen(props) {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = async (e, forImages = false) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    bodyFormData.append("image", file);
+    bodyFormData.append("file", file);
     setLoadingUpload(true);
     try {
       const { data } = await Axios.post("/api/uploads", bodyFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
+          authorization: `Bearer ${userInfo.token}`,
         },
       });
-      setImage(data);
+      if (forImages) {
+        setImages([...images, data.secure_url]);
+      } else {
+        setImage(data.secure_url);
+      }
       setLoadingUpload(false);
-    } catch (error) {
-      setErrorUpload(error.message);
-      setLoadingUpload(false);
+    } catch (err) {
+      setErrorUpload(err);
+      dispatch({ type: "UPLOAD_FAIL", payload: err });
     }
   };
 
+  const deleteFileHandler = async (fileName, f) => {
+    console.log(fileName, f);
+    console.log(images);
+    console.log(images.filter((x) => x !== fileName));
+    setImages(images.filter((x) => x !== fileName));
+  };
+
   return (
-    <div className={"row top"} >
+    <div className={"row top"}>
       <div className="col-1">
         <SellerSidebar />
       </div>
@@ -186,7 +245,9 @@ export default function ProductEditScreen(props) {
             </div>
           </div>
           {loadingUpdate && <LoadingBox></LoadingBox>}
-          {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
+          {errorUpdate && (
+            <MessageBox variant="danger">{errorUpdate}</MessageBox>
+          )}
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -203,18 +264,24 @@ export default function ProductEditScreen(props) {
                   onChange={(e) => setName(e.target.value)}
                 ></input>
               </div>
-              <div>
-                <label htmlFor="image">Image</label>
-                <input
-                  id="image"
-                  type="text"
-                  placeholder="Enter image"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                ></input>
+
+              <div className={"featured-image"}>
+                <label htmlFor="image">Feature ImageImage</label>
+                <img src={image} alt="product" width={100} height={100} />
+
+                <div className={"hide"}>
+                  <label htmlFor="image">Image</label>
+                  <input
+                    id="image"
+                    type="text"
+                    placeholder="Enter image"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  ></input>
+                </div>
               </div>
-              <div>
-                <label htmlFor="imageFile">Image File</label>
+
+              <div className={"attachement-images"}>
                 <input
                   type="file"
                   id="imageFile"
@@ -225,11 +292,55 @@ export default function ProductEditScreen(props) {
                 {errorUpload && (
                   <MessageBox variant="danger">{errorUpload}</MessageBox>
                 )}
+                <div className="mt-3"></div>
+              </div>
+
+              <div>
+                <div className={"hide"}>
+                  <label htmlFor="image">Images</label>
+                  <input
+                    id="image"
+                    type="text"
+                    disabled={true}
+                    value={image}
+                  ></input>
+                </div>
+              </div>
+              <div className={"col start"}>
+                {images?.length === 0 && <MessageBox>No image</MessageBox>}
+                <ul className={"row start"}>
+                  {images?.map((url) => (
+                    <li key={url}>
+                      <div className="row start top">
+                        <img src={url} alt="product" width={100} height={100} />
+                        <button onClick={() => deleteFileHandler(url)}>
+                          <i className="fa fa-times-circle"></i>
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-3"></div>
               </div>
               <div>
+                <label htmlFor="images">Poster Images</label>
+                <input
+                  type="file"
+                  id="images"
+                  label="Choose Image"
+                  onChange={(e) => uploadFileHandler(e, true)}
+                ></input>
+                {loadingUpload && <LoadingBox></LoadingBox>}
+                {errorUpload && (
+                  <MessageBox variant="danger">{errorUpload}</MessageBox>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="directors">Directors</label>
                 <MultiSelectDropdown
                   placeholder={"Select Director"}
-                  defaultValue={product.directors.map((director) => ({
+                  defaultValue={product.directors?.map((director) => ({
                     value: director,
                     label: director.name,
                   }))}
@@ -253,9 +364,11 @@ export default function ProductEditScreen(props) {
                 />
               </div>
               <div>
+                <label htmlFor="directors">Casts</label>
+
                 <MultiSelectDropdown
                   placeholder={"Select Cast"}
-                  defaultValue={product.casts.map((cast) => ({
+                  defaultValue={product.casts?.map((cast) => ({
                     value: cast,
                     label: cast.name,
                   }))}
@@ -280,9 +393,11 @@ export default function ProductEditScreen(props) {
               </div>
 
               <div>
+                <label htmlFor="directors">Artists</label>
+
                 <MultiSelectDropdown
                   placeholder={"Select Artist"}
-                  defaultValue={product.artists.map((artist) => ({
+                  defaultValue={product.artists?.map((artist) => ({
                     value: artist,
                     label: artist.name,
                   }))}
@@ -311,7 +426,10 @@ export default function ProductEditScreen(props) {
                 <Select
                   className="multi-select"
                   placeholder={"Select Country"}
-                  defaultValue={{ value: product.origin, label: product.origin }}
+                  defaultValue={{
+                    value: product.origin,
+                    label: product.origin,
+                  }}
                   options={countries?.map((country) => ({
                     value: country.code,
                     label: country.name,
@@ -346,12 +464,11 @@ export default function ProductEditScreen(props) {
                 <Select
                   className="multi-select"
                   placeholder={"Select Format"}
-                  defaultValue={{ value: product.format, label: product.format }}
-                  options={[
-                    { value: "Good", label: "Good" },
-                    { value: "Bad", label: "Bad" },
-                    { value: "Normal", label: "Normal" },
-                  ]}
+                  defaultValue={{
+                    value: product.format,
+                    label: product.format,
+                  }}
+                  options={formats}
                   onChange={(__format, { action }) => {
                     setFormat(__format.value);
                   }}
@@ -361,15 +478,18 @@ export default function ProductEditScreen(props) {
                 <label htmlFor="condition">Condition</label>
                 <Select
                   className="multi-select"
-                  placeholder={"Select Format"}
+                  placeholder={"Select Condition"}
                   defaultValue={{
                     value: product.condition,
                     label: product.condition,
                   }}
                   options={[
+                    { value: "Mint", label: "Mint" },
+                    { value: "Near Mint", label: "Near Mint" },
+                    { value: "Very Good", label: "Very Good" },
                     { value: "Good", label: "Good" },
-                    { value: "Bad", label: "Bad" },
-                    { value: "Normal", label: "Normal" },
+                    { value: "Fair", label: "Fair" },
+                    { value: "Poor", label: "Poor" },
                   ]}
                   onChange={(__condition, { action }) => {
                     setCondition(__condition.value);
@@ -430,7 +550,7 @@ export default function ProductEditScreen(props) {
                 <label htmlFor="countInStock">Count In Stock</label>
                 <input
                   id="countInStock"
-                  type="text"
+                  type="number"
                   placeholder="Enter countInStock"
                   value={countInStock}
                   onChange={(e) => setCountInStock(e.target.value)}
@@ -440,7 +560,7 @@ export default function ProductEditScreen(props) {
                 <label htmlFor="price">Price</label>
                 <input
                   id="price"
-                  type="text"
+                  type="number"
                   placeholder="Enter price"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
@@ -450,7 +570,7 @@ export default function ProductEditScreen(props) {
                 <label htmlFor="salePrice">Sale Price</label>
                 <input
                   id="salePrice"
-                  type="text"
+                  type="number"
                   placeholder="Enter Sale Price"
                   value={salePrice}
                   onChange={(e) => setSalePrice(+e.target.value)}

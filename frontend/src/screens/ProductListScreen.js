@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   createProduct,
   deleteProduct,
   listProducts,
-} from '../actions/productActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import SellerSidebar from '../components/SellerSidebar';
+} from "../actions/productActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import SellerSidebar from "../components/SellerSidebar";
 import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
-} from '../constants/productConstants';
+} from "../constants/productConstants";
 
 export default function ProductListScreen(props) {
   const navigate = useNavigate();
   const { pageNumber = 1 } = useParams();
   const { pathname } = useLocation();
-  const sellerMode = pathname.indexOf('/seller') >= 0;
+  const sellerMode = pathname.indexOf("/seller") >= 0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
@@ -48,7 +48,7 @@ export default function ProductListScreen(props) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
     dispatch(
-      listProducts({ seller: sellerMode ? userInfo._id : '', pageNumber })
+      listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber })
     );
   }, [
     createdProduct,
@@ -62,7 +62,7 @@ export default function ProductListScreen(props) {
   ]);
 
   const deleteHandler = (product) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteProduct(product._id));
     }
   };
@@ -79,15 +79,19 @@ export default function ProductListScreen(props) {
           <div className="row">
             <h1>Posters</h1>
             <button type="button" className="primary" onClick={createHandler}>
-              Create Posters
+              Upload Posters
             </button>
           </div>
 
           {loadingDelete && <LoadingBox></LoadingBox>}
-          {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+          {errorDelete && (
+            <MessageBox variant="danger">{errorDelete}</MessageBox>
+          )}
 
           {loadingCreate && <LoadingBox></LoadingBox>}
-          {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
+          {errorCreate && (
+            <MessageBox variant="danger">{errorCreate}</MessageBox>
+          )}
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -109,10 +113,21 @@ export default function ProductListScreen(props) {
                   {products.map((product) => (
                     <tr key={product._id}>
                       <td>
-                        <img width={120} src={product.image} alt={product.name} />
+                        {!product.image ? (
+                          <div className={"avatar"}>{product.name}</div>
+                        ) : (
+                          <img
+                            width={120}
+                            height={120}
+                            src={product.image}
+                            alt={product.name}
+                          />
+                        )}
                       </td>
                       <td>
-                        <Link to={`/product/${product._id}`} target="_blank">{product.name}</Link>
+                        <Link to={`/product/${product._id}`} target="_blank">
+                          {product.name}
+                        </Link>
                       </td>
                       <td>{product.price}</td>
                       <td>{product.visible ? "Visible" : "Not Visible"}</td>
@@ -121,7 +136,9 @@ export default function ProductListScreen(props) {
                         <button
                           type="button"
                           className="small"
-                          onClick={() => navigate(`/product/${product._id}/edit`)}
+                          onClick={() =>
+                            navigate(`/product/${product._id}/edit`)
+                          }
                         >
                           Edit
                         </button>
@@ -140,7 +157,7 @@ export default function ProductListScreen(props) {
               <div className="row center pagination">
                 {[...Array(pages).keys()].map((x) => (
                   <Link
-                    className={x + 1 === page ? 'active' : ''}
+                    className={x + 1 === page ? "active" : ""}
                     key={x + 1}
                     to={`/productlist/pageNumber/${x + 1}`}
                   >

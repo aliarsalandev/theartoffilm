@@ -31,6 +31,8 @@ import SupportScreen from "./screens/SupportScreen";
 import Footer from "./components/Footer";
 import SellersScreen from "./screens/SellersScreen";
 import Header from "./components/Header";
+import AdvertiseWithUs from "./screens/AdvertiseWithUs";
+import FAQScreen from "./screens/FAQScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -87,7 +89,6 @@ function App() {
               element={<SearchScreen />}
               exact
             ></Route>
-
             <Route
               path="/profile"
               element={
@@ -104,7 +105,6 @@ function App() {
                 </PrivateRoute>
               }
             />
-
             <Route
               path="/productlist"
               element={
@@ -113,7 +113,22 @@ function App() {
                 </AdminRoute>
               }
             />
-
+            {/* <Route
+              path="/subscription/:id/edit"
+              element={
+                <AdminRoute>
+                  <SubscriptionEditScreen />
+                </AdminRoute>
+              }
+            />{" "}
+            <Route
+              path="/subscriptions"
+              element={
+                <AdminRoute>
+                  <SubscriptionListScreen />
+                </AdminRoute>
+              }
+            /> */}
             <Route
               path="/productlist/pageNumber/:pageNumber"
               element={
@@ -178,8 +193,12 @@ function App() {
                 </SellerRoute>
               }
             />
-
             <Route path="/" element={<HomeScreen />} exact></Route>
+            <Route
+              path="/advertise-with-us"
+              element={<AdvertiseWithUs />}
+            ></Route>
+            <Route path="/faq" element={<FAQScreen />}></Route>
           </Routes>
         </main>
         <Footer userInfo={userInfo} />

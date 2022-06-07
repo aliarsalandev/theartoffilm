@@ -5,7 +5,6 @@ import { listProducts } from "../actions/productActions";
 import { detailsUser } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Rating from "../components/Rating";
 import ShowCase from "../components/ShowCase";
 import { useNavigate } from "react-router-dom";
 
@@ -57,12 +56,7 @@ export default function SellerScreen(props) {
                 </div>
               </div>
             </li>
-            <li>
-              <Rating
-                rating={user.seller.rating}
-                numReviews={user.seller.numReviews}
-              ></Rating>
-            </li>
+
             <li>
               <a href={`mailto:${user.email}`}>Contact Seller</a>
             </li>
@@ -70,14 +64,14 @@ export default function SellerScreen(props) {
           </ul>
         </div>
       )}
-      <div className="col-3">
+      <div className="col-3 mb-3">
         {loadingProducts ? (
           <LoadingBox></LoadingBox>
         ) : errorProducts ? (
           <MessageBox variant="danger">{errorProducts}</MessageBox>
         ) : (
           <>
-            <div>
+            <div className={""}>
               <ShowCase
                 products={products.filter((product) => product.visible)}
                 onClick={(product) => {
@@ -94,12 +88,7 @@ export default function SellerScreen(props) {
                   <li>
                     <h1>{currentProduct.name}</h1>
                   </li>
-                  <li>
-                    <Rating
-                      rating={currentProduct.rating}
-                      numReviews={currentProduct.numReviews}
-                    ></Rating>
-                  </li>
+
                   <li>
                     <div className="row">
                       <div>Directors</div>
@@ -136,6 +125,12 @@ export default function SellerScreen(props) {
                       <div className="origin-label">
                         {currentProduct.origin}
                       </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row">
+                      <div>Year</div>
+                      <div className="origin-label">{currentProduct.year}</div>
                     </div>
                   </li>
                   <li>

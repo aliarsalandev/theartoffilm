@@ -55,6 +55,7 @@ export default function SearchScreen(props) {
     return `/search/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
     // /category/${filterCategory}
   };
+
   return (
     <div>
       <div className="row">
@@ -63,7 +64,17 @@ export default function SearchScreen(props) {
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <div>{products.length} Results</div>
+          <div>
+            {
+              products.filter(
+                (product) =>
+                  (product.image.length > 0) &
+                  product.visible &
+                  (product.price > 0)
+              ).length
+            }{" "}
+            Results
+          </div>
         )}
         <div>
           Sort by{" "}
@@ -168,15 +179,24 @@ export default function SearchScreen(props) {
                 })}
               </div>
               <div className="row center pagination">
-                {[...Array(pages).keys()].map((x) => (
-                  <Link
-                    className={x + 1 === page ? "active" : ""}
-                    key={x + 1}
-                    to={getFilterUrl({ page: x + 1 })}
-                  >
-                    {x + 1}
-                  </Link>
-                ))}
+                {products.filter(
+                  (product) =>
+                    (product.image.length > 0) &
+                    product.visible &
+                    (product.price > 0)
+                ).length > 4 ? (
+                  [...Array(pages).keys()].map((x) => (
+                    <Link
+                      className={x + 1 === page ? "active" : ""}
+                      key={x + 1}
+                      to={getFilterUrl({ page: x + 1 })}
+                    >
+                      {x + 1}
+                    </Link>
+                  ))
+                ) : (
+                  <></>
+                )}
               </div>
             </>
           )}

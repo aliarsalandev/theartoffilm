@@ -9,6 +9,7 @@ import Rating from "../components/Rating";
 export default function ProductScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = useState("");
 
   const params = useParams();
   const { id: productId } = params;
@@ -38,9 +39,21 @@ export default function ProductScreen() {
             <div className="col-2">
               <img
                 className="large"
-                src={product.image}
+                src={selectedImage || product.image}
                 alt={product.name}
               ></img>
+              <div className="row start">
+                {[product.image, ...product?.images].map((image) => (
+                  <img
+                    className="thumbnail"
+                    src={image}
+                    alt={product.name}
+                    onClick={() => {
+                      setSelectedImage(image);
+                    }}
+                  ></img>
+                ))}
+              </div>
             </div>
             <div className="col-3 mr-3 ml-3">
               <ul>
@@ -91,6 +104,12 @@ export default function ProductScreen() {
                 </li>
                 <li>
                   <div className="row">
+                    <div>Year</div>
+                    <div>{product.year}</div>
+                  </div>
+                </li>
+                <li>
+                  <div className="row">
                     <div>Format</div>
                     <div className="format-label">{product.format}</div>
                   </div>
@@ -113,7 +132,17 @@ export default function ProductScreen() {
                   Description:
                   <p>{product.description}</p>
                 </li>
-                <li>Pirce : ${product.price}</li>
+                <li
+                  className={"price"}
+                  style={{
+                    textDecoration: product.salePrice ? "line-through" : "",
+                  }}
+                >
+                  Pirce : ${product.price}
+                </li>
+                {product.salePrice && (
+                  <li className={"price"}>Sale Price : ${product.salePrice}</li>
+                )}
               </ul>
 
               <div className="card card-body">

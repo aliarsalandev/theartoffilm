@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { directorSchema } from './directorModel.js';
+import mongoose from "mongoose";
+import { directorSchema } from "./directorModel.js";
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -15,12 +15,11 @@ const reviewSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
-    seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+    seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
     image: { type: String, required: false },
-    // brand: { type: String, required: true },
-    // category: { type: String, required: true },
-    casts: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Cast' }],
-    artists: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Artist' }],
+    images: [String],
+    casts: [{ type: mongoose.Schema.Types.ObjectID, ref: "Cast" }],
+    artists: [{ type: mongoose.Schema.Types.ObjectID, ref: "Artist" }],
     origin: { type: String, required: true },
     year: { type: Number, required: true },
     format: { type: String, required: true },
@@ -35,13 +34,13 @@ const productSchema = new mongoose.Schema(
     visible: { type: Boolean, required: true },
     forSale: { type: Boolean, required: true },
     reviews: [reviewSchema],
-    directors: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Director' }],
+    directors: [{ type: mongoose.Schema.Types.ObjectID, ref: "Director" }],
   },
   {
     timestamps: true,
   }
 );
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 export default Product;
