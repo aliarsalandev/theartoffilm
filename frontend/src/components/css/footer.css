@@ -17,13 +17,16 @@
 
 .social-icons {
   display: flex;
-  max-width: fit-content;
+  justify-content: flex-start;
+  width: -webkit-fill-available;
+  flex-direction: row;
+  align-items: flex-start;
 }
-.social-icons > i {
-  margin-right: 10px;
+.social-icons > a {
+  margin-right: 12px;
 }
 .icon-with-text > span {
-  font-family: 'Poppins', 'Times New Roman';
+  font-family: "Poppins", "Times New Roman";
   font-size: 12px;
   margin-left: 10px;
 }
@@ -38,7 +41,7 @@
 
 .footer-links > a {
   color: #eee;
-  font-family: 'Poppins', 'Times New Roman';
+  font-family: "Poppins", "Times New Roman";
   font-size: 12px !important;
   text-decoration: none;
   margin-bottom: 0.5rem;

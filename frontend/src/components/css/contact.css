@@ -1,0 +1,23 @@
+.contact-section {
+  width: 50%;
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+
+.contact-form-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+  margin: 23px 0px;
+}
+
+.contact-form {
+  width: -webkit-fill-available;
+}

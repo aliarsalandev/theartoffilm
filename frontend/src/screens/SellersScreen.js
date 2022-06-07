@@ -24,8 +24,8 @@ export default function SellersScreen(props) {
   }, [dispatch, sellerId]);
 
   return (
-    <div className="">
-      <div className="row start">
+    <div className="mt-2">
+      <div className="row center">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -78,9 +78,7 @@ export default function SellersScreen(props) {
                   </li>
                   <li>{seller.seller.description}</li>
                   <li className="p-3" style={{ textAlign: "end" }}>
-                    <Link to={`/seller/${seller._id}`}>
-                      View ShowCase
-                    </Link>
+                    <Link to={`/seller/${seller._id}`}>View ShowCase</Link>
                   </li>
                 </ul>
               )

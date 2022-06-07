@@ -33,7 +33,9 @@ export default function ProductScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Back to result</Link>
+          <div className="p-2">
+            <Link to="/">Back to result</Link>
+          </div>
           <div className="mb-3"></div>
           <div className="row top">
             <div className="col-2">

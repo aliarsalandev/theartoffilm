@@ -31,7 +31,7 @@ export default function SellerScreen(props) {
   const navigate = useNavigate();
 
   const addToCartHandler = () => {
-    navigate(`/cart/${currentProduct._id}?qty=1}`);
+    navigate(`/cart/${currentProduct._id}?qty=1`);
   };
   return (
     <div className="row start top">
@@ -82,7 +82,7 @@ export default function SellerScreen(props) {
 
             {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
 
-            <div className="row center">
+            <div className="row center poster-details">
               {currentProduct && (
                 <ul>
                   <li>

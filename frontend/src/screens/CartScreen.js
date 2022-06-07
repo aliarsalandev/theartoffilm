@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import { addToCart, removeFromCart } from '../actions/cartActions';
-import MessageBox from '../components/MessageBox';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { addToCart, removeFromCart } from "../actions/cartActions";
+import MessageBox from "../components/MessageBox";
 
 export default function CartScreen(props) {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function CartScreen(props) {
   const { id: productId } = params;
 
   const { search } = useLocation();
-  const qtyInUrl = new URLSearchParams(search).get('qty');
+  const qtyInUrl = new URLSearchParams(search).get("qty");
   const qty = qtyInUrl ? Number(qtyInUrl) : 1;
 
   const cart = useSelector((state) => state.cart);
@@ -28,7 +28,7 @@ export default function CartScreen(props) {
   };
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping');
+    navigate("/signin?redirect=/shipping");
   };
   return (
     <div className="row top">
@@ -40,7 +40,7 @@ export default function CartScreen(props) {
             Cart is empty. <Link to="/">Go Shopping</Link>
           </MessageBox>
         ) : (
-          <ul>
+          <ul className={"p-2"}>
             {cartItems.map((item) => (
               <li key={item.product}>
                 <div className="row">
@@ -51,7 +51,7 @@ export default function CartScreen(props) {
                       className="small"
                     ></img>
                   </div>
-                  <div className="min-30">
+                  <div className="">
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
                   <div>

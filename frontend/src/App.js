@@ -33,6 +33,7 @@ import SellersScreen from "./screens/SellersScreen";
 import Header from "./components/Header";
 import AdvertiseWithUs from "./screens/AdvertiseWithUs";
 import FAQScreen from "./screens/FAQScreen";
+import ContactScreen from "./screens/ContactScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -40,9 +41,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="grid-container">
+      <div className="">
         <Header />
-        <main>
+        <main className={"p-2"}>
           <Routes>
             <Route path="/seller/:id" element={<SellerScreen />}></Route>
             <Route path="/sellers" element={<SellersScreen />}></Route>
@@ -199,6 +200,7 @@ function App() {
               element={<AdvertiseWithUs />}
             ></Route>
             <Route path="/faq" element={<FAQScreen />}></Route>
+            <Route path="/contact" element={<ContactScreen />}></Route>
           </Routes>
         </main>
         <Footer userInfo={userInfo} />

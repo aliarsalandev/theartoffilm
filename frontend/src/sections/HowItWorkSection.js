@@ -1,7 +1,7 @@
-import React from 'react';
-import HowOneImage from '../assets/images/How-1.jpg';
-import HowTwoImage from '../assets/images/How-2.png';
-import HowThreeImage from '../assets/images/How-3.jpg';
+import React from "react";
+import HowOneImage from "../assets/images/How-1.jpg";
+import HowTwoImage from "../assets/images/How-2.png";
+import HowThreeImage from "../assets/images/How-3.jpg";
 
 function HowItWorkSection() {
   return (

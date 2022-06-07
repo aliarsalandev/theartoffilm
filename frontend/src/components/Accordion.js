@@ -13,14 +13,14 @@ function Accordion({ title, text }) {
   const styles = {
     //if open is true, change color of title
     accordionTitle: {
-      color: open ? "#10d6f5" : "#fff",
+      color: open ? "#10d6f5" : "var(--accent-color)",
     },
   };
   //open animation with react spring
 
   const openAnimation = useSpring({
-    from: { opacity: "0", maxHeight: "25px" },
-    to: { opacity: "1", maxHeight: open ? "200px" : "25px" },
+    from: { opacity: "0", maxHeight: "64px" },
+    to: { opacity: "1", maxHeight: open ? "200px" : "64px" },
     config: { duration: "300" },
   });
 

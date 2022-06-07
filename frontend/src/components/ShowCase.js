@@ -4,25 +4,18 @@ import Coverflow from "react-coverflow";
 import { StyleRoot } from "radium";
 
 import propTypes from "prop-types";
+import { isMobile } from "react-device-detect";
 
 function ShowCase({ products, onClick }) {
   return (
     <StyleRoot>
       <Coverflow
         className={"coverflow"}
-        displayQuantityOfSide={2}
+        displayQuantityOfSide={isMobile ? 1 : 2}
         navigation
         enableHeading
-        media={{
-          "@media (max-width: 900px)": {
-            width: "600px",
-            height: "400px",
-          },
-          "@media (min-width: 900px)": {
-            width: "960px",
-            height: "600px",
-          },
-        }}
+        currentFigureScale={2}
+        otherFigureScale={1}
       >
         {products.map((product, index) => (
           <img

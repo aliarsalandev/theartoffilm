@@ -22,9 +22,29 @@ export default function Footer(props) {
               <span>henry@theartoffilm.co.uk</span>
             </div>
             <div className="social-icons mb-3">
-              <i className="fa-brands fa-facebook"></i>
-              <i className="fa-brands fa-instagram"></i>
-              <i className="fa-brands fa-youtube"></i>
+              <a
+                href="https://www.facebook.com/Henry4film/"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                <i className="fa-brands fa-facebook"></i>
+              </a>
+
+              <a
+                href="https://www.instagram.com/the_artoffilm/?utm_medium=copy_link"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                <i className="fa-brands fa-instagram"></i>
+              </a>
+
+              <a
+                href="https://www.youtube.com/channel/UCYDDoM6EPQryVyCzW9G-Ryg"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                <i className="fa-brands fa-youtube"></i>
+              </a>
             </div>
           </div>
           <div className="col md-3">

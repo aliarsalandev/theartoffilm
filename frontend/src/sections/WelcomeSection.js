@@ -1,6 +1,6 @@
-import React from 'react';
-import ShowcaseImage from '../assets/images/Showcase.png';
-import SellImage from '../assets/images/Sell.png';
+import React from "react";
+import ShowcaseImage from "../assets/images/Showcase.png";
+import SellImage from "../assets/images/Sell.png";
 
 function WelcomeSection() {
   return (
@@ -14,7 +14,7 @@ function WelcomeSection() {
         collection as well as sell movie posters and memorabilia.
       </p>
 
-      <div className="row mt-2">
+      <div className="row mt-2 center">
         <div>
           <img src={ShowcaseImage} alt="" />
           <p>Showcase your movie poster collection</p>

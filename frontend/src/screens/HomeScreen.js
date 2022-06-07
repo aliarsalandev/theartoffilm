@@ -29,7 +29,7 @@ export default function HomeScreen() {
   }, [dispatch]);
   return (
     <div>
-      <HeroSection />
+      <HeroSection showSearch={true} />
       <WelcomeSection />
       <HowItWorkSection />
       <ShowcaseSection />
@@ -44,7 +44,7 @@ export default function HomeScreen() {
           <div className="row start">
             <Carousel
               breakPoints={[
-                { width: 1, itemsToShow: 1 },
+                { width: 2, itemsToShow: 1 },
                 { width: 550, itemsToShow: 4, itemsToScroll: 4 },
                 { width: 768, itemsToShow: 6 },
                 { width: 1200, itemsToShow: 6 },
@@ -57,7 +57,9 @@ export default function HomeScreen() {
                   (product.price > 0);
                 return (
                   show === 1 && (
-                    <Product key={product._id} product={product}></Product>
+                    <div style={{ padding: "12px" }}>
+                      <Product key={product._id} product={product}></Product>
+                    </div>
                   )
                 );
               })}
