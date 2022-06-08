@@ -11,13 +11,6 @@
   flex-direction: column;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  width: -webkit-fill-available;
-  margin: 23px 0px;
-}
-
 .contact-form {
   width: -webkit-fill-available;
 }

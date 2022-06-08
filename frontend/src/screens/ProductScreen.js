@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { detailsProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Rating from "../components/Rating";
 
 export default function ProductScreen() {
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ export default function ProductScreen() {
             <Link to="/">Back to result</Link>
           </div>
           <div className="mb-3"></div>
-          <div className="row top">
+          <div className="flex top">
             <div className="col-2">
               <img
                 className="large"
@@ -62,12 +61,7 @@ export default function ProductScreen() {
                 <li>
                   <h1>{product.name}</h1>
                 </li>
-                <li>
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  ></Rating>
-                </li>
+
                 <li>
                   <div className="row">
                     <div>Directors</div>
@@ -140,9 +134,9 @@ export default function ProductScreen() {
                     textDecoration: product.salePrice ? "line-through" : "",
                   }}
                 >
-                  Pirce : ${product.price}
+                  Pirce : ₤{product.price}
                 </li>
-                {product.salePrice && (
+                {product.salePrice > 0 && (
                   <li className={"price"}>Sale Price : ${product.salePrice}</li>
                 )}
               </ul>

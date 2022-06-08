@@ -68,7 +68,7 @@ const {
   PRODUCT_ARTIST_CREATE_FAIL,
   PRODUCT_ARTIST_CREATE_RESET,
   //
-} = require('../constants/productConstants');
+} = require("../constants/productConstants");
 
 export const productListReducer = (
   state = { loading: true, products: [] },
@@ -139,10 +139,7 @@ export const castListReducer = (
   }
 };
 
-export const directorCreateReducer = (
-  state = { loading: true, director: {} },
-  action
-) => {
+export const directorCreateReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case PRODUCT_DIRECTOR_CREATE_REQUEST:
       return { loading: true };

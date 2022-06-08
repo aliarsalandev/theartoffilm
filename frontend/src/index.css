@@ -19,7 +19,6 @@ html {
 
 body {
   margin: 0;
-  height: 100vh;
   font-size: 1.6rem;
   color: var(--text-color);
   background-color: var(--base-color);
@@ -82,11 +81,6 @@ header {
   height: max-content;
 }
 
-main {
-  grid-area: main;
-  /* padding: 3rem 10rem; */
-}
-
 footer {
   grid-area: footer;
   background-color: var(--light-dark-color);
@@ -101,6 +95,11 @@ footer {
 a {
   color: var(--accent-color);
   text-decoration: none;
+}
+
+.link {
+  color: var(--accent-color);
+  cursor: pointer;
 }
 
 a:hover {
@@ -577,7 +576,8 @@ img.mw-80 {
 }
 
 /* Pagination */
-.pagination a {
+.pagination a,
+.pagination span {
   padding: 1rem;
   margin: 0.5rem;
   /* border-radius: 0.5rem; */
@@ -586,9 +586,14 @@ img.mw-80 {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: pointer;
 }
 
-.pagination a.active {
+.pagination {
+  justify-content: center;
+}
+
+.pagination .active {
   font-weight: bold;
 }
 
@@ -962,4 +967,11 @@ iframe {
     max-width: 80%;
     margin: 12px;
   }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+  margin: 23px 0px;
 }

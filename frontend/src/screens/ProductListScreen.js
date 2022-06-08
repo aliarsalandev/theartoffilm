@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import {
-  createProduct,
-  deleteProduct,
-  listProducts,
-} from "../actions/productActions";
+import { deleteProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import SellerSidebar from "../components/SellerSidebar";
+import UploadPoster from "../components/UploadPoster";
 import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
@@ -66,9 +63,7 @@ export default function ProductListScreen(props) {
       dispatch(deleteProduct(product._id));
     }
   };
-  const createHandler = () => {
-    dispatch(createProduct());
-  };
+
   return (
     <div className={"row top"}>
       <div className="col-1">
@@ -78,16 +73,13 @@ export default function ProductListScreen(props) {
         <div>
           <div className="row">
             <h1>Posters</h1>
-            <button type="button" className="primary" onClick={createHandler}>
-              Upload Posters
-            </button>
+            <UploadPoster />
           </div>
 
           {loadingDelete && <LoadingBox></LoadingBox>}
           {errorDelete && (
             <MessageBox variant="danger">{errorDelete}</MessageBox>
           )}
-
           {loadingCreate && <LoadingBox></LoadingBox>}
           {errorCreate && (
             <MessageBox variant="danger">{errorCreate}</MessageBox>

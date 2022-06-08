@@ -161,7 +161,7 @@ export default function SellerScreen(props) {
                     Description:
                     <p>{currentProduct.description}</p>
                   </li>
-                  <li>Pirce : ${currentProduct.price}</li>
+                  <li className={"price"}>Pirce : ₤{currentProduct.price}</li>
 
                   {currentProduct.forSale && (
                     <>

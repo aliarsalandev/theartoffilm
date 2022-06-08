@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   createProductArtist,
   createProductCasts,
@@ -18,49 +18,9 @@ import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import MultiSelectDropdown from "../components/MultiSelectDropdown";
 import Select from "react-select";
 import SellerSidebar from "../components/SellerSidebar";
+import data from "../data";
 
-export default function ProductEditScreen(props) {
-  const formats = [
-    { value: "US 1 Sheet", label: "US 1 Sheet" },
-    { value: "US Halfsheet", label: "US Halfsheet" },
-    { value: "US Lobby Se", label: "US Lobby Se" },
-    { value: "US Insert", label: "US Insert" },
-    { value: "US Window Card", lable: "US Window Card" },
-    { value: "German A0", label: "German A0" },
-    { value: "German A1", label: "German A1" },
-    { value: "German A2", label: "German A2" },
-    { value: "German Lobby Cards", label: "German Lobby Cards" },
-    { value: "Japanese B1", label: "Japanese B1" },
-    { value: "Japanese B2", label: "Japanese B2" },
-    { value: "Japanese B3", label: "Japanese B3" },
-    { value: "Japanese B4", label: "Japanese B4" },
-    { value: "Japanese B5", label: "Japanese B5" },
-    { value: "French Grande", label: "French Grande" },
-    { value: "French Half Grande", label: "French Half Grande" },
-    { value: "French Pantalon", label: "French Pantalon" },
-    { value: "French Moyenne", label: "French Moyenne" },
-    { value: "French Petite", label: "French Petite" },
-    { value: "French Lobby Cards", label: "French Lobby Cards" },
-    { value: "Italian Foglio", label: "Italian Foglio" },
-    { value: "Italian 2 Foglio", label: "Italian 2 Foglio" },
-    { value: "Italian 4 Foglio", label: "Italian 4 Foglio" },
-    { value: "Italian Locandina", label: "Italian Locandina" },
-    { value: " Italian Photobusta", label: " Italian Photobusta" },
-    { value: "UK Quad", label: "UK Quad" },
-    { value: "UK 1 Sheet", label: "UK 1 Sheet" },
-    { value: "UK Double Crown", label: "UK Double Crown" },
-    { value: "UK 3 Sheet", label: "UK 3 Sheet" },
-    { value: "UK 6 Sheet", label: "UK 6 Sheet" },
-    { value: "UK Front of House set", label: "UK Front of House set" },
-  ];
-  const countries = [
-    { name: "United States", code: "US" },
-    { name: "Canada", code: "CA" },
-    { name: "United Kingdom", code: "UK" },
-    { name: "France", code: "FR" },
-    { name: "Germany", code: "DE" },
-  ];
-  const navigate = useNavigate();
+export default function ProductEditScreen() {
   const params = useParams();
   const { id: productId } = params;
   const [name, setName] = useState("");
@@ -86,6 +46,15 @@ export default function ProductEditScreen(props) {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
+  const directorCreateDetails = useSelector((state) => state.directorCreate);
+  const { director } = directorCreateDetails;
+
+  const castsCreateDetails = useSelector((state) => state.castCreate);
+  const { cast } = castsCreateDetails;
+
+  const artistCreateDetails = useSelector((state) => state.artistCreate);
+  const { artist } = artistCreateDetails;
+
   const productUpdate = useSelector((state) => state.productUpdate);
   const { directors } = useSelector((state) => state.directorList);
   const { casts } = useSelector((state) => state.castList);
@@ -110,6 +79,10 @@ export default function ProductEditScreen(props) {
     dispatch(listProductCasts());
     dispatch(listProductArtists());
 
+    productDirectorsRef.current = product?.directors ?? [];
+    productCastsRef.current = product?.casts ?? [];
+    productArtistsRef.current = product?.artists ?? [];
+
     if (successUpdate) {
       window.scrollTo(0, 0);
     }
@@ -117,10 +90,6 @@ export default function ProductEditScreen(props) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));
     } else {
-      productDirectorsRef.current = product.directors;
-      productCastsRef.current = product.casts;
-      productArtistsRef.current = product.artists;
-
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
@@ -140,33 +109,41 @@ export default function ProductEditScreen(props) {
       setForSale(product.forSale);
       setYear(product.year);
     }
-  }, [product, dispatch, productId, successUpdate, navigate]);
+  }, [dispatch, product, productId, successUpdate]);
 
+  useEffect(() => {
+    if (director) {
+      productDirectorsRef.current = [...productDirectorsRef.current, director];
+      console.log(director);
+      console.log(productDirectorsRef.current);
+    }
+    // if (director !== undefined || director !== {})
+    //   productDirectorsRef.current = [...productDirectorsRef.current, director];
+  }, [director]);
+
+  useEffect(() => {
+    if (cast) {
+      productCastsRef.current = [...productCastsRef.current, cast];
+      console.log(cast);
+      console.log(productCastsRef.current);
+    }
+  }, [cast]);
+
+  useEffect(() => {
+    if (artist) {
+      productArtistsRef.current = [...productArtistsRef.current, artist];
+      console.log(artist);
+      console.log(productCastsRef);
+    }
+  }, [artist]);
   const submitHandler = (e) => {
     e.preventDefault();
-    const director_ids = productDirectorsRef.current.map(({ _id }) => _id);
-    const cast_ids = productCastsRef.current.map(({ _id }) => _id);
-    const artist_ids = productArtistsRef.current.map(({ _id }) => _id);
-    console.log({
-      _id: productId,
-      name,
-      price,
-      salePrice,
-      image,
-      images,
-      directors: director_ids,
-      casts: cast_ids,
-      artists: artist_ids,
-      origin,
-      year,
-      format,
-      condition,
-      rolledFolded,
-      countInStock,
-      description,
-      visible,
-      forSale,
-    });
+
+    const the_directors = productDirectorsRef.current.map(
+      (director) => director._id
+    );
+    const the_casts = productCastsRef.current.map((cast) => cast._id);
+    const the_artists = productArtistsRef.current.map((artist) => artist._id);
 
     dispatch(
       updateProduct({
@@ -176,9 +153,9 @@ export default function ProductEditScreen(props) {
         salePrice,
         image,
         images,
-        directors: director_ids,
-        casts: cast_ids,
-        artists: artist_ids,
+        directors: the_directors,
+        casts: the_casts,
+        artists: the_artists,
         origin,
         year,
         format,
@@ -220,10 +197,7 @@ export default function ProductEditScreen(props) {
     }
   };
 
-  const deleteFileHandler = async (fileName, f) => {
-    console.log(fileName, f);
-    console.log(images);
-    console.log(images.filter((x) => x !== fileName));
+  const deleteFileHandler = async (fileName) => {
     setImages(images.filter((x) => x !== fileName));
   };
 
@@ -352,20 +326,26 @@ export default function ProductEditScreen(props) {
                     switch (action) {
                       case "create-option":
                         const _director = {
-                          name: __directors[__directors.length - 1].label,
+                          name: __directors[__directors.length - 1].value,
                         };
                         dispatch(createProductDirectors(_director));
+                        break;
+                      case "remove-value":
+                        break;
+                      case "select-option":
+                        productDirectorsRef.current = [
+                          ...productDirectorsRef.current,
+                          __directors[__directors.length - 1].value,
+                        ];
                         break;
                       default:
                         break;
                     }
-                    productDirectorsRef.current = __directors;
                   }}
                 />
               </div>
               <div>
-                <label htmlFor="directors">Casts</label>
-
+                <label htmlFor="casts">Casts</label>
                 <MultiSelectDropdown
                   placeholder={"Select Cast"}
                   defaultValue={product.casts?.map((cast) => ({
@@ -380,21 +360,27 @@ export default function ProductEditScreen(props) {
                     switch (action) {
                       case "create-option":
                         const _cast = {
-                          name: __casts[__casts.length - 1].label,
+                          name: __casts[__casts.length - 1].value,
                         };
                         dispatch(createProductCasts(_cast));
+                        break;
+                      case "remove-value":
+                        break;
+                      case "select-option":
+                        productCastsRef.current = [
+                          ...productCastsRef.current,
+                          __casts[__casts.length - 1].value,
+                        ];
                         break;
                       default:
                         break;
                     }
-                    productCastsRef.current = __casts;
                   }}
                 />
               </div>
 
               <div>
                 <label htmlFor="directors">Artists</label>
-
                 <MultiSelectDropdown
                   placeholder={"Select Artist"}
                   defaultValue={product.artists?.map((artist) => ({
@@ -409,14 +395,21 @@ export default function ProductEditScreen(props) {
                     switch (action) {
                       case "create-option":
                         const _artist = {
-                          name: __artists[__artists.length - 1].label,
+                          name: __artists[__artists.length - 1].value,
                         };
                         dispatch(createProductArtist(_artist));
+                        break;
+                      case "remove-value":
+                        break;
+                      case "select-option":
+                        productArtistsRef.current = [
+                          ...productArtistsRef.current,
+                          __artists[__artists.length - 1].value,
+                        ];
                         break;
                       default:
                         break;
                     }
-                    productArtistsRef.current = __artists;
                   }}
                 />
               </div>
@@ -430,11 +423,11 @@ export default function ProductEditScreen(props) {
                     value: product.origin,
                     label: product.origin,
                   }}
-                  options={countries?.map((country) => ({
+                  options={data.origins?.map((country) => ({
                     value: country.code,
                     label: country.name,
                   }))}
-                  onChange={(__origin, { action }) => {
+                  onChange={(__origin) => {
                     setOrigin(__origin.value);
                   }}
                 />
@@ -452,7 +445,7 @@ export default function ProductEditScreen(props) {
                     value: year + 1930,
                     label: year + 1930,
                   }))}
-                  onChange={(__year, { action }) => {
+                  onChange={(__year) => {
                     setYear(+__year.value);
                   }}
                 />
@@ -468,8 +461,8 @@ export default function ProductEditScreen(props) {
                     value: product.format,
                     label: product.format,
                   }}
-                  options={formats}
-                  onChange={(__format, { action }) => {
+                  options={data.formats}
+                  onChange={(__format) => {
                     setFormat(__format.value);
                   }}
                 />
@@ -483,15 +476,8 @@ export default function ProductEditScreen(props) {
                     value: product.condition,
                     label: product.condition,
                   }}
-                  options={[
-                    { value: "Mint", label: "Mint" },
-                    { value: "Near Mint", label: "Near Mint" },
-                    { value: "Very Good", label: "Very Good" },
-                    { value: "Good", label: "Good" },
-                    { value: "Fair", label: "Fair" },
-                    { value: "Poor", label: "Poor" },
-                  ]}
-                  onChange={(__condition, { action }) => {
+                  options={data.conditions}
+                  onChange={(__condition) => {
                     setCondition(__condition.value);
                   }}
                 />
@@ -506,11 +492,8 @@ export default function ProductEditScreen(props) {
                     value: product.rolledFolded,
                     label: product.rolledFolded,
                   }}
-                  options={[
-                    { value: "Rolled", label: "Rolled" },
-                    { value: "Folded", label: "Folded" },
-                  ]}
-                  onChange={(__rolledFolded, { action }) => {
+                  options={data.rolledFolded}
+                  onChange={(__rolledFolded) => {
                     setRolledFolded(__rolledFolded.value);
                   }}
                 />

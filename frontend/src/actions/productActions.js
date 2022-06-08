@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_CREATE_REQUEST,
@@ -64,22 +64,22 @@ import {
   PRODUCT_ARTIST_CREATE_REQUEST,
   PRODUCT_ARTIST_CREATE_SUCCESS,
   PRODUCT_ARTIST_CREATE_FAIL,
-} from '../constants/productConstants';
+} from "../constants/productConstants";
 
 export const listProducts =
   ({
-    pageNumber = '',
-    seller = '',
-    name = '',
+    pageNumber = "",
+    seller = "",
+    name = "",
     // category = '',
     directors = [],
     casts = [],
     artists = [],
-    origin = '',
-    format = '',
-    condition = '',
-    rolledFolded = '',
-    order = '',
+    origin = "",
+    format = "",
+    condition = "",
+    rolledFolded = "",
+    order = "",
     min = 0,
     max = 0,
     rating = 0,
@@ -145,7 +145,7 @@ export const createProductDirectors =
     } = getState();
     try {
       const { data } = await Axios.post(
-        `/api/directors`,
+        "/api/directors",
         { director },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -163,7 +163,6 @@ export const createProductDirectors =
       dispatch({ type: PRODUCT_DIRECTOR_CREATE_FAIL, payload: message });
     }
   };
-
 export const createProductCasts = (cast) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CAST_CREATE_REQUEST });
   const {
@@ -299,7 +298,7 @@ export const createProduct = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.post(
-      '/api/products',
+      "/api/products",
       {},
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },

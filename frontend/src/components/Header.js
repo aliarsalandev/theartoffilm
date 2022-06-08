@@ -15,6 +15,8 @@ function Header() {
       <div className={"row"}>
         <div className={"row"}>
           <div>
+            <Link to="/">Home</Link>
+            <Link to="/sellers">FAQs</Link>
             <Link to="/sellers">Collectors</Link>
 
             {userInfo?.isSeller && (

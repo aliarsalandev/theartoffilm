@@ -1,7 +1,7 @@
-import React from 'react';
-import propTypes from 'prop-types';
-import CreatableSelect from 'react-select/creatable';
-import makeAnimated from 'react-select/animated';
+import React from "react";
+import propTypes from "prop-types";
+import CreatableSelect from "react-select/creatable";
+import makeAnimated from "react-select/animated";
 // import { useDispatch, useSelector } from 'react-redux';
 // import Select from 'react-select';
 // import { listProductDirectors } from '../actions/productActions';
@@ -17,10 +17,7 @@ function MultiSelectDropdown({ placeholder, defaultValue, options, onChange }) {
         placeholder={placeholder}
         options={options}
         onChange={(value, action) => {
-          onChange(
-            value.map((v) => v.value),
-            action
-          );
+          onChange(value, action);
         }}
         defaultValue={defaultValue}
         components={animatedComponents}
