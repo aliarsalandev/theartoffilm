@@ -10,6 +10,7 @@ import WelcomeSection from "../sections/WelcomeSection";
 import HowItWorkSection from "../sections/HowItWorkSection";
 import ShowcaseSection from "../sections/ShowcaseSection";
 import Carousel from "react-elastic-carousel";
+import SectionCard from "../components/SectionCard";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -29,65 +30,78 @@ export default function HomeScreen() {
   }, [dispatch]);
   return (
     <div>
-      <HeroSection showSearch={true} />
+      <HeroSection showSearch={true} image={"/images/home.jpg"} />
       <WelcomeSection />
-      <HowItWorkSection />
-      <ShowcaseSection />
-      <h2>Featured Posters</h2>
-      {loading ? (
-        <LoadingBox></LoadingBox>
-      ) : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-        <>
-          {products.length === 0 && <MessageBox>No Posters Found</MessageBox>}
-          <div className="row start">
-            <Carousel
-              breakPoints={[
-                { width: 2, itemsToShow: 1 },
-                { width: 550, itemsToShow: 4, itemsToScroll: 4 },
-                { width: 768, itemsToShow: 6 },
-                { width: 1200, itemsToShow: 6 },
-              ]}
-            >
-              {products.map((product) => {
-                const show =
-                  (product.image.length > 0) &
-                  product.visible &
-                  (product.price > 0);
-                return (
-                  show === 1 && (
-                    <div style={{ padding: "12px" }}>
-                      <Product key={product._id} product={product}></Product>
-                    </div>
-                  )
-                );
-              })}
-            </Carousel>
-          </div>
-        </>
-      )}
+      <div className="p-2">
+        <HowItWorkSection />
+        <ShowcaseSection />
+      </div>
 
-      {/* <h2>Top Sellers</h2>
-      {loadingSellers ? (
-        <LoadingBox></LoadingBox>
-      ) : errorSellers ? (
-        <MessageBox variant="danger">{errorSellers}</MessageBox>
-      ) : (
-        <>
-          {sellers.length === 0 && <MessageBox>No Seller Found</MessageBox>}
-          <Carousel showArrows autoPlay showThumbs={false}>
-            {sellers.map((seller) => (
-              <div key={seller._id}>
-                <Link to={`/seller/${seller._id}`}>
-                  <img src={seller.seller.logo} alt={seller.seller.name} />
-                  <p className="legend">{seller.seller.name}</p>
-                </Link>
-              </div>
-            ))}
-          </Carousel>
-        </>
-      )} */}
+      <div className="mtb-2 secondary ptb-2">
+        <div className="p-2 flex justify-center">
+          <h1 className={"text-center"}>
+            <span className="selection">Featured</span> Posters
+          </h1>
+        </div>
+        {loading ? (
+          <LoadingBox></LoadingBox>
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>
+        ) : (
+          <>
+            {products.length === 0 && <MessageBox>No Posters Found</MessageBox>}
+            <div className="row start p-2">
+              <Carousel
+                breakPoints={[
+                  { width: 2, itemsToShow: 1 },
+                  { width: 550, itemsToShow: 4, itemsToScroll: 4 },
+                  { width: 768, itemsToShow: 6 },
+                  { width: 1200, itemsToShow: 6 },
+                ]}
+              >
+                {products.map((product) => {
+                  const show =
+                    (product.image.length > 0) &
+                    product.visible &
+                    (product.price > 0);
+                  return (
+                    show === 1 && (
+                      <div key={product._id} style={{ padding: "12px" }}>
+                        <Product key={product._id} product={product}></Product>
+                      </div>
+                    )
+                  );
+                })}
+              </Carousel>
+            </div>
+          </>
+        )}
+      </div>
+      <div>
+        <div
+          className="mtb-2 flex column center p-2"
+          style={{ minHeight: "320px" }}
+        >
+          <h1 className={"text-center"}>
+            <span className={"selection"}>Shop</span> FOR MOVIE POSTERS
+          </h1>
+          <div className="flex column column-center">
+            <button className={"button primary"}>VISIT SHOP</button>
+          </div>
+        </div>
+        <div className="mtb-2">
+          <SectionCard
+            before={"SUBSCRIBE"}
+            title={"TO YOU TUBE"}
+            text={
+              "Sign up to The Art of Film YouTube channel today as we regularly upload movie poster related videos content that we know you will love. "
+            }
+            linkText={"SUBSCRIBE"}
+            link={"https://www.youtube.com/watch?v=ofkryTjra7Q"}
+            type={"video"}
+          />
+        </div>
+      </div>
     </div>
   );
 }

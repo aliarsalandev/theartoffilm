@@ -3,7 +3,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -11,10 +11,23 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
+import {
+  allowedToPay,
+  processCheckout,
+  transferToSeller,
+} from "../helpers/payment";
+import { getMessages, sendMessage } from "../helpers/media";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function OrderScreen(props) {
   const params = useParams();
   const { id: orderId } = params;
+
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
+
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
@@ -35,6 +48,7 @@ export default function OrderScreen(props) {
     success: successDeliver,
   } = orderDeliver;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await Axios.get("/api/config/paypal");
@@ -67,11 +81,30 @@ export default function OrderScreen(props) {
     }
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
+  useEffect(() => {
+    getMessages(orderId, userInfo).then((data) => {
+      console.log(data);
+      setMessages(data);
+    });
+    return () => {};
+  }, []);
+
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
   };
+
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
+  };
+  const updateShippingPrice = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const orderId = data.get("_id");
+    const shippingPrice = data.get("shippingPrice");
+    allowedToPay(orderId, shippingPrice, userInfo).then((data) => {
+      console.log(data);
+      navigate("/orderlist");
+    });
   };
 
   return loading ? (
@@ -139,7 +172,9 @@ export default function OrderScreen(props) {
                         </div>
 
                         <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x {symbol}{" "}
+                          {(rates[currency] * item.price).toFixed(2)} = {symbol}
+                          {item.qty * (rates[currency] * item.price).toFixed(2)}
                         </div>
                       </div>
                     </li>
@@ -149,7 +184,59 @@ export default function OrderScreen(props) {
             </li>
           </ul>
         </div>
+
         <div className="col-1">
+          <div className="card">
+            <h3>Chat</h3>
+
+            <div>
+              <ul className="messages">
+                {messages?.map(({ message, read }, index) => (
+                  <li key={index}>
+                    <div className="flex message between">
+                      <span className="message">{message}</span>
+                      <span>
+                        {read ? (
+                          <i className="fas fa-check-circle"></i>
+                        ) : (
+                          <i className="fas fa-check"></i>
+                        )}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div className="form-group">
+                <label>Message</label>
+                <textarea
+                  name={"message"}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                  }}
+                  className="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+              <button
+                onClick={(e) => {
+                  setMessages([
+                    ...messages,
+                    {
+                      message,
+                    },
+                  ]);
+                  sendMessage(order._id, userInfo, message).then((data) => {
+                    console.log(data);
+                  });
+                }}
+                className="btn btn-primary"
+              >
+                Send
+              </button>
+            </div>
+          </div>
           <div className="card card-body">
             <ul>
               <li>
@@ -158,19 +245,45 @@ export default function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${order.itemsPrice.toFixed(2)}</div>
+                  {symbol} {(rates[currency] * order.itemsPrice).toFixed(2)}
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${order.shippingPrice.toFixed(2)}</div>
+                  <div>
+                    {userInfo._id === order.seller ? (
+                      <form
+                        onSubmit={updateShippingPrice}
+                        className={"flex column"}
+                      >
+                        <input type="hidden" name="_id" value={order._id} />
+                        <input
+                          type="number"
+                          name="shippingPrice"
+                          defaultValue={(
+                            rates[currency] * order.shippingPrice
+                          ).toFixed(2)}
+                        />
+                        <button className="btn btn-primary">
+                          Set Shipping Cost
+                        </button>
+                      </form>
+                    ) : (
+                      <span>
+                        {symbol}{" "}
+                        {(rates[currency] * order.shippingPrice).toFixed(2)}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${order.taxPrice.toFixed(2)}</div>
+                  <div>
+                    {symbol} {(rates[currency] * order.taxPrice).toFixed(2)}
+                  </div>
                 </div>
               </li>
               <li>
@@ -179,29 +292,59 @@ export default function OrderScreen(props) {
                     <strong> Order Total</strong>
                   </div>
                   <div>
-                    <strong>${order.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      {symbol} {(rates[currency] * order.totalPrice).toFixed(2)}
+                    </strong>
                   </div>
                 </div>
               </li>
-              {!order.isPaid && (
-                <li>
-                  {!sdkReady ? (
-                    <LoadingBox></LoadingBox>
-                  ) : (
-                    <>
-                      {errorPay && (
-                        <MessageBox variant="danger">{errorPay}</MessageBox>
-                      )}
-                      {loadingPay && <LoadingBox></LoadingBox>}
 
-                      <PayPalButton
-                        amount={order.totalPrice}
-                        onSuccess={successPaymentHandler}
-                      ></PayPalButton>
-                    </>
-                  )}
-                </li>
-              )}
+              <li>
+                {/* <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    transferToSeller(order._id, userInfo);
+                  }}
+                >
+                  Transfer
+                </button> */}
+                {order.allowedToPay && !order.isPaid ? (
+                  <div className="row">
+                    <div>
+                      <strong>Pay</strong>
+                    </div>
+                    <div>
+                      <button
+                        className="button-free s-b"
+                        title={"Get Started"}
+                        onClick={(e) => {
+                          // setLoading(true);
+                          processCheckout(
+                            currency,
+                            order._id,
+                            `${(rates[currency] * order.totalPrice).toFixed(
+                              2
+                            )}`,
+                            "month",
+                            1,
+                            "poster",
+                            order._id
+                          ).then((data) => {
+                            // console.log(JSON.stringify(data));
+                            window.open(data.session.url, "_blank");
+                          });
+                          // setLoading(false);
+                        }}
+                      >
+                        Pay
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </li>
+
               {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <li>
                   {loadingDeliver && <LoadingBox></LoadingBox>}

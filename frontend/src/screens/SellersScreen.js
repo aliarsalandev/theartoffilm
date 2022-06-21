@@ -5,6 +5,7 @@ import { listSellers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
+import HeadingSection from "../components/HeadingSection";
 
 export default function SellersScreen(props) {
   const params = useParams();
@@ -25,6 +26,10 @@ export default function SellersScreen(props) {
 
   return (
     <div className="mt-2">
+      <HeadingSection
+        small="Private Collections"
+        title="Showcase Your poster collection"
+      />
       <div className="row center">
         {loading ? (
           <LoadingBox></LoadingBox>

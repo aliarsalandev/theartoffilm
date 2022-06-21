@@ -50,7 +50,7 @@ export default function Footer(props) {
           <div className="col md-3">
             <h5 className="mb-3">Things to know</h5>
             <div className="footer-links">
-              <Link to="/">Our Subscriptions</Link>
+              <Link to="/pricing">Our Subscriptions</Link>
               <Link to="/advertise-with-us">Advertise With Us</Link>
               <Link to="/">Posters Condition Grading</Link>
               <Link to="/">Terms & Conditions</Link>

@@ -183,7 +183,7 @@ export const userAddressMapReducer = (state = {}, action) => {
   }
 };
 
-export const listSubscriptionReducer = (
+export const subscriptionListReducer = (
   state = { loading: true, subscriptions: [] },
   action
 ) => {
@@ -191,7 +191,7 @@ export const listSubscriptionReducer = (
     case SUBSCRIPTION_LIST_REQUEST:
       return { loading: true };
     case SUBSCRIPTION_LIST_SUCCESS:
-      return { loading: false, subscriptions: action.payload };
+      return { loading: false, ...action.payload };
     case SUBSCRIPTION_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -200,14 +200,14 @@ export const listSubscriptionReducer = (
 };
 
 export const subscriptionCreateReducer = (
-  state = { loading: true, subscription: {} },
+  state = { loading: false, subscription: {} },
   action
 ) => {
   switch (action.type) {
     case SUBSCRIPTION_CREATE_REQUEST:
       return { loading: true };
     case SUBSCRIPTION_CREATE_SUCCESS:
-      return { loading: false, subscription: action.payload };
+      return { loading: false, ...action.payload };
     case SUBSCRIPTION_CREATE_FAIL:
       return { loading: false, error: action.payload };
     default:

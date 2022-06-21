@@ -12,11 +12,12 @@ function Hero({
     <div
       className="section fh"
       style={{
+        position: "relative",
         backgroundImage: `url(${image})`,
       }}
     >
       <h1>{heading}</h1>
-      <h2>{heading2}</h2>
+      {heading2 && <h2>{heading2}</h2>}
       {showSearch && (
         <div className="">
           <div>
@@ -24,6 +25,7 @@ function Hero({
           </div>
         </div>
       )}
+      <div className="layer"></div>
     </div>
   );
 }

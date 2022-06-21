@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { detailsUser, updateUserProfile } from '../actions/userActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
-import Axios from 'axios';
-import SellerSidebar from '../components/SellerSidebar';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { detailsUser, updateUserProfile } from "../actions/userActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
+import Axios from "axios";
+import PageLayout from "../layouts/page";
 
 export default function ProfileScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [sellerName, setSellerName] = useState('');
-  const [sellerLogo, setSellerLogo] = useState('');
-  const [sellerDescription, setSellerDescription] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [seller, setSeller] = useState({
+    name: "",
+    email: "",
+    password: "",
+    logo: "",
+    collection_name: "",
+    stripe_account_id: "",
+    description: "",
+  });
 
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { userInfo } = useSelector((state) => state.userSignin);
+  const { loading, error, user } = useSelector((state) => state.userDetails);
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const {
     success: successUpdate,
@@ -27,187 +28,199 @@ export default function ProfileScreen() {
     loading: loadingUpdate,
   } = userUpdateProfile;
 
-
-  const [loadingUpload, setLoadingUpload] = useState(false);
-  const [errorUpload, setErrorUpload] = useState('');
-
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    bodyFormData.append('image', file);
-    setLoadingUpload(true);
+    bodyFormData.append("image", file);
+    // setLoadingUpload(true);
     try {
-      const { data } = await Axios.post('/api/uploads', bodyFormData, {
+      const { data } = await Axios.post("/api/uploads", bodyFormData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${userInfo.token}`,
         },
       });
-      setSellerLogo(data);
-      setLoadingUpload(false);
+      console.log(data);
+      // setSellerLogo(data);
+      // setLoadingUpload(false);
     } catch (error) {
-      setErrorUpload(error.message);
-      setLoadingUpload(false);
+      // setErrorUpload(error.message);
+      // setLoadingUpload(false);
     }
   };
 
+  const onChange = (e) => {
+    console.log({
+      ...seller,
+      [e.target.name]: e.target.value,
+    });
+    setSeller({ ...seller, [e.target.name]: e.target.value });
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
+    const { _id } = userInfo;
     if (!user) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
-      dispatch(detailsUser(userInfo._id));
-    } else {
-      setName(user.name);
-      setEmail(user.email);
-      if (user.seller) {
-        setSellerName(user.seller.name);
-        setSellerLogo(user.seller.logo);
-        setSellerDescription(user.seller.description);
-      }
+      dispatch(detailsUser(_id));
     }
-  }, [dispatch, userInfo._id, user]);
+  }, [dispatch, user, userInfo]);
+
+  useEffect(() => {
+    if (user) {
+      setSeller({
+        ...seller,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        logo: user.seller.logo,
+        collection_name: user.seller.name,
+        stripe_account_id: user.seller.stripe_account_id,
+        description: user.seller.description,
+      });
+    }
+    return () => {};
+  }, [user]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch update profile
-    if (password !== confirmPassword) {
-      alert('Password and Confirm Password Are Not Matched');
+    const data = new FormData(e.target);
+    const logo = data.get("logo");
+    if (seller.password !== confirmPassword) {
+      alert("Password and Confirm Password Are Not Matched");
     } else {
+      console.log("seller::", seller);
       dispatch(
         updateUserProfile({
           userId: user._id,
-          name,
-          email,
-          password,
-          sellerName,
-          sellerLogo,
-          sellerDescription,
+          name: seller.name,
+          email: seller.email,
+          password: seller.password,
+          seller: {
+            name: seller.collection_name,
+            logo: logo.name,
+            description: seller.description,
+            stripe_account_id: seller.stripe_account_id,
+          },
         })
       );
     }
   };
   return (
-    <div className={"row top"}>
-      <div className="col-1">
-        <SellerSidebar />
-      </div>
-      <div className={"ml-3 col-3"}>
-        <form className="form" onSubmit={submitHandler}>
-          <div>
-            <h1>User Profile</h1>
-          </div>
-          {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-            <>
-              {loadingUpdate && <LoadingBox></LoadingBox>}
-              {errorUpdate && (
-                <MessageBox variant="danger">{errorUpdate}</MessageBox>
-              )}
-              {successUpdate && (
-                <MessageBox variant="success">
-                  Profile Updated Successfully
-                </MessageBox>
-              )}
-              <div>
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Enter password"
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="confirmPassword">confirm Password</label>
-                <input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Enter confirm password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                ></input>
-              </div>
-              {user.isSeller && (
-                <>
-                  <h2>Seller</h2>
-                  <div>
-                    <label htmlFor="sellerName">Seller Name</label>
-                    <input
-                      id="sellerName"
-                      type="text"
-                      placeholder="Enter Seller Name"
-                      value={sellerName}
-                      onChange={(e) => setSellerName(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <label htmlFor="sellerLogo">Image</label>
-                    <input
-                      id="sellerLogo"
-                      type="text"
-                      placeholder="Enter image"
-                      value={sellerLogo}
-                      onChange={(e) => setSellerLogo(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <label htmlFor="imageFile">Image File</label>
-                    <input
-                      type="file"
-                      id="imageFile"
-                      label="Choose Image"
-                      onChange={uploadFileHandler}
-                    ></input>
-                    {loadingUpload && <LoadingBox></LoadingBox>}
-                    {errorUpload && (
-                      <MessageBox variant="danger">{errorUpload}</MessageBox>
-                    )}
-                  </div>
-                  <div>
-                    <label htmlFor="sellerDescription">Seller Description</label>
-                    <input
-                      id="sellerDescription"
-                      type="text"
-                      placeholder="Enter Seller Description"
-                      value={sellerDescription}
-                      onChange={(e) => setSellerDescription(e.target.value)}
-                    ></input>
-                  </div>
-                </>
-              )}
-              <div>
-                <label />
-                <button className="primary" type="submit">
-                  Update
-                </button>
-              </div>
-            </>
-          )}
-        </form>
-      </div>
-    </div>
-
+    <PageLayout>
+      <form className="form" onSubmit={submitHandler}>
+        <div>
+          <h1>User Profile</h1>
+        </div>
+        {loading ? (
+          <LoadingBox></LoadingBox>
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>
+        ) : (
+          <>
+            {loadingUpdate && <LoadingBox></LoadingBox>}
+            {errorUpdate && (
+              <MessageBox variant="danger">{errorUpdate}</MessageBox>
+            )}
+            {successUpdate && (
+              <MessageBox variant="success">
+                Profile Updated Successfully
+              </MessageBox>
+            )}
+            <div>
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                name={"name"}
+                type="text"
+                placeholder="Enter name"
+                defaultValue={seller.name}
+                onChange={onChange}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                name={"email"}
+                type="email"
+                placeholder="Enter email"
+                defaultValue={seller.email}
+                onChange={onChange}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                name={"password"}
+                type="password"
+                placeholder="Enter password"
+                onChange={onChange}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="confirmPassword">confirm Password</label>
+              <input
+                id="confirmPassword"
+                name={"confirmPassword"}
+                type="password"
+                placeholder="Enter confirm password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="stripe_account_id">Stripe Accound Id</label>
+              <input
+                id="stripe_account_id"
+                name={"stripe_account_id"}
+                type="text"
+                placeholder="Enter Stripe Accound Id"
+                defaultValue={seller.stripe_account_id}
+                onChange={onChange}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="collection_name">Collection Name</label>
+              <input
+                id="collection_name"
+                name={"collection_name"}
+                type="text"
+                placeholder="Enter Collection Name"
+                defaultValue={seller.name}
+                onChange={onChange}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="logo">Logo</label>
+              <input
+                id="logo"
+                name={"logo"}
+                type="file"
+                placeholder="Enter Logo"
+                onChange={uploadFileHandler}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="description">Description</label>
+              <textarea
+                id="description"
+                name={"description"}
+                type="text"
+                placeholder="Enter Description"
+                defaultValue={seller.description}
+                onChange={onChange}
+              ></textarea>
+            </div>
+            <div>
+              <label />
+              <button className="primary" type="submit">
+                Update
+              </button>
+            </div>
+          </>
+        )}
+      </form>
+    </PageLayout>
   );
 }

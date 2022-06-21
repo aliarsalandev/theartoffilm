@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import CartScreen from "./screens/CartScreen";
@@ -22,18 +24,22 @@ import UserEditScreen from "./screens/UserEditScreen";
 import SellerRoute from "./components/SellerRoute";
 import SellerScreen from "./screens/SellerScreen";
 import SearchScreen from "./screens/SearchScreen";
-// import { listProductCategories } from './actions/productActions';
-// import LoadingBox from './components/LoadingBox';
-// import MessageBox from './components/MessageBox';
 import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SupportScreen from "./screens/SupportScreen";
-import Footer from "./components/Footer";
 import SellersScreen from "./screens/SellersScreen";
-import Header from "./components/Header";
 import AdvertiseWithUs from "./screens/AdvertiseWithUs";
 import FAQScreen from "./screens/FAQScreen";
 import ContactScreen from "./screens/ContactScreen";
+import SubscriptionListScreen from "./screens/SubscriptionListScreen";
+import SubscriptionEditScreen from "./screens/SubscriptionEditScreen";
+import PricingScreen from "./screens/PricingScreen";
+import PaymentSuccess from "./screens/PaymentSuccess";
+import { UserSubscriptionScreen } from "./screens/UserSubscriptionScreen";
+import SettingScreen from "./screens/SettingScreen";
+import AboutUS from "./screens/AboutUS";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
+import Terms from "./screens/Terms";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -43,7 +49,7 @@ function App() {
     <BrowserRouter>
       <div className="">
         <Header />
-        <main className={"p-2"}>
+        <main className={""}>
           <Routes>
             <Route path="/seller/:id" element={<SellerScreen />}></Route>
             <Route path="/sellers" element={<SellersScreen />}></Route>
@@ -68,6 +74,10 @@ function App() {
             <Route
               path="/orderhistory"
               element={<OrderHistoryScreen />}
+            ></Route>
+            <Route
+              path="/payment/success/session/:id"
+              element={<PaymentSuccess />}
             ></Route>
             <Route path="/search/name" element={<SearchScreen />} exact></Route>
             <Route
@@ -114,14 +124,35 @@ function App() {
                 </AdminRoute>
               }
             />
-            {/* <Route
-              path="/subscription/:id/edit"
+            <Route
+              path="/subscriptions/:id/edit"
               element={
                 <AdminRoute>
                   <SubscriptionEditScreen />
                 </AdminRoute>
               }
-            />{" "}
+            />
+            <Route
+              path="/settings"
+              element={
+                <AdminRoute>
+                  <SettingScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path={"/user/subscriptions"}
+              element={<UserSubscriptionScreen />}
+            />
+            <Route
+              path="/subscriptions/create"
+              element={
+                <AdminRoute>
+                  <SubscriptionEditScreen />
+                </AdminRoute>
+              }
+            />
+
             <Route
               path="/subscriptions"
               element={
@@ -129,7 +160,9 @@ function App() {
                   <SubscriptionListScreen />
                 </AdminRoute>
               }
-            /> */}
+            />
+            <Route path="/pricing" element={<PricingScreen />} />
+
             <Route
               path="/productlist/pageNumber/:pageNumber"
               element={
@@ -195,12 +228,20 @@ function App() {
               }
             />
             <Route path="/" element={<HomeScreen />} exact></Route>
+
             <Route
               path="/advertise-with-us"
               element={<AdvertiseWithUs />}
             ></Route>
+
+            <Route path="/about-us" element={<AboutUS />}></Route>
+
             <Route path="/faq" element={<FAQScreen />}></Route>
+            <Route path="/privacy" element={<PrivacyPolicy />}></Route>
+            <Route path="/terms" element={<Terms />}></Route>
             <Route path="/contact" element={<ContactScreen />}></Route>
+
+            {/* <Route path="/support/:user/:room" element={<Chat />} /> */}
           </Routes>
         </main>
         <Footer userInfo={userInfo} />

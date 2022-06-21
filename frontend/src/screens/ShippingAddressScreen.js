@@ -53,7 +53,8 @@ export default function ShippingAddressScreen(props) {
           lng: newLng,
         })
       );
-      navigate("/payment");
+      // navigate("/payment");
+      navigate("/placeorder");
     }
   };
   const chooseOnMap = () => {
@@ -113,7 +114,7 @@ export default function ShippingAddressScreen(props) {
         <div>
           <label htmlFor="postalCode">Postal Code</label>
           <input
-            type="text"
+            type={"number"}
             id="postalCode"
             placeholder="Enter postal code"
             value={postalCode}

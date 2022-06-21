@@ -30,11 +30,12 @@ import {
   artistListReducer,
   artistCreateReducer,
 } from "./reducers/productReducers";
+import { socketReducer } from "./reducers/socketReducer";
 import {
   sellerListReducer,
   subscriptionCreateReducer,
   subscriptionDeleteReducer,
-  listSubscriptionReducer,
+  subscriptionListReducer,
   subscriptionUpdateReducer,
   userAddressMapReducer,
   userDeleteReducer,
@@ -61,7 +62,7 @@ const initialState = {
     shippingAddress: localStorage.getItem("shippingAddress")
       ? JSON.parse(localStorage.getItem("shippingAddress"))
       : {},
-    paymentMethod: "PayPal",
+    paymentMethod: "Stripe",
   },
 };
 const reducer = combineReducers({
@@ -71,7 +72,7 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
   subscriptionCreate: subscriptionCreateReducer,
-  subscriptionList: listSubscriptionReducer,
+  subscriptionList: subscriptionListReducer,
   subscriptionUpdate: subscriptionUpdateReducer,
   subscriptionDelete: subscriptionDeleteReducer,
   subscriptionDetails: subscriptionDetailsReducer,
@@ -107,6 +108,7 @@ const reducer = combineReducers({
   productReviewCreate: productReviewCreateReducer,
   userAddressMap: userAddressMapReducer,
   orderSummary: orderSummaryReducer,
+  notificationReceived: socketReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
