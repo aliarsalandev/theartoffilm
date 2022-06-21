@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { directorSchema } from "./directorModel.js";
+import mongoose from 'mongoose';
+import { directorSchema } from './directorModel.js';
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -15,32 +15,32 @@ const reviewSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
-    seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+    seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
     image: { type: String, required: false },
     images: [String],
-    casts: [{ type: mongoose.Schema.Types.ObjectID, ref: "Cast" }],
-    artists: [{ type: mongoose.Schema.Types.ObjectID, ref: "Artist" }],
-    origin: { type: String, required: true },
-    year: { type: Number, required: true },
-    format: { type: String, required: true },
-    condition: { type: String, required: true },
-    rolledFolded: { type: String, required: true },
-    countInStock: { type: Number, required: true },
-    price: { type: Number, required: true },
-    salePrice: { type: Number, required: true },
-    description: { type: String, required: true },
-    rating: { type: Number, required: true },
-    numReviews: { type: Number, required: true },
-    visible: { type: Boolean, required: true },
-    forSale: { type: Boolean, required: true },
+    casts: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Cast' }],
+    artists: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Artist' }],
+    origin: { type: String },
+    year: { type: Number },
+    format: { type: String },
+    condition: { type: String },
+    rolledFolded: { type: String },
+    countInStock: { type: Number },
+    price: { type: Number },
+    salePrice: { type: Number },
+    description: { type: String },
+    rating: { type: Number },
+    numReviews: { type: Number },
+    visible: { type: Boolean },
+    forSale: { type: Boolean },
     reviews: [reviewSchema],
-    directors: [{ type: mongoose.Schema.Types.ObjectID, ref: "Director" }],
+    directors: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Director' }],
   },
   {
     timestamps: true,
   }
 );
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model('Product', productSchema);
 
 export default Product;
