@@ -1,5 +1,6 @@
 import http from "http";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -13,6 +14,16 @@ import castRouter from "./routers/castRouter.js";
 import artistRouter from "./routers/artistRouter.js";
 import sellerRouter from "./routers/sellerRouter.js";
 import subscriptionRouter from "./routers/subscriptionRouter.js";
+import sessionRouter from "./routers/sessionRouter.js";
+import settingsRouter from "./routers/settingsRouter.js";
+import cors from "cors";
+import {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersOfRoom,
+} from "./data/chat-users.js";
+import messageRouter from "./routers/messageRouter.js";
 
 dotenv.config();
 
@@ -26,12 +37,15 @@ mongoose.connect(
 app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/sellers", sellerRouter);
-app.use("/api/subscription", subscriptionRouter);
+app.use("/api/subscriptions", subscriptionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/directors", directorRouter);
 app.use("/api/casts", castRouter);
 app.use("/api/artists", artistRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/messages", messageRouter);
+app.use("/api/sessions", sessionRouter);
+app.use("/api/settings", settingsRouter);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
@@ -55,73 +69,57 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5000;
 
 const httpServer = http.Server(app);
+
 const io = new Server(httpServer, { cors: { origin: "*" } });
-const users = [];
+app.use(cors());
 
 io.on("connection", (socket) => {
-  console.log("connection", socket.id);
+  socket.on("join", ({ name, room }, callback) => {
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if (error) return callback(error);
+
+    socket.join(user.room);
+
+    //admin generated messages are called 'message'
+    //welcome message for user
+    socket.emit("message", {
+      user: "admin",
+      text: `${user.name}, welcome to the room ${user.room}`,
+    });
+
+    //message to all the users of that room except the newly joined user
+    socket.broadcast
+      .to(user.room)
+      .emit("message", { user: "admin", text: `${user.name} has joined` });
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersOfRoom(user.room),
+    });
+
+    callback();
+  });
+
+  //user generated message are called 'sendMessage'
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("message", { user: user.name, text: message });
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getUsersOfRoom(user.room),
+    });
+
+    callback();
+  });
+
   socket.on("disconnect", () => {
-    const user = users.find((x) => x.socketId === socket.id);
+    const user = removeUser(socket.id);
     if (user) {
-      user.online = false;
-      console.log("Offline", user.name);
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit("updateUser", user);
-      }
-    }
-  });
-  socket.on("onLogin", (user) => {
-    const updatedUser = {
-      ...user,
-      online: true,
-      socketId: socket.id,
-      messages: [],
-    };
-    const existUser = users.find((x) => x._id === updatedUser._id);
-    if (existUser) {
-      existUser.socketId = socket.id;
-      existUser.online = true;
-    } else {
-      users.push(updatedUser);
-    }
-    console.log("Online", user.name);
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      io.to(admin.socketId).emit("updateUser", updatedUser);
-    }
-    if (updatedUser.isAdmin) {
-      io.to(updatedUser.socketId).emit("listUsers", users);
-    }
-  });
-
-  socket.on("onUserSelected", (user) => {
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      const existUser = users.find((x) => x._id === user._id);
-      io.to(admin.socketId).emit("selectUser", existUser);
-    }
-  });
-
-  socket.on("onMessage", (message) => {
-    if (message.isAdmin) {
-      const user = users.find((x) => x._id === message._id && x.online);
-      if (user) {
-        io.to(user.socketId).emit("message", message);
-        user.messages.push(message);
-      }
-    } else {
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit("message", message);
-        const user = users.find((x) => x._id === message._id && x.online);
-        user.messages.push(message);
-      } else {
-        io.to(socket.id).emit("message", {
-          name: "Admin",
-          body: "Sorry. I am not online right now",
-        });
-      }
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
+      });
     }
   });
 });

@@ -56,6 +56,7 @@ export default function ProductEditScreen() {
   const { artist } = artistCreateDetails;
 
   const productUpdate = useSelector((state) => state.productUpdate);
+
   const { directors } = useSelector((state) => state.directorList);
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
@@ -185,6 +186,7 @@ export default function ProductEditScreen() {
           authorization: `Bearer ${userInfo.token}`,
         },
       });
+      console.log("image upload data", data);
       if (forImages) {
         setImages([...images, data.secure_url]);
       } else {
@@ -192,6 +194,7 @@ export default function ProductEditScreen() {
       }
       setLoadingUpload(false);
     } catch (err) {
+      console.log(err);
       setErrorUpload(err);
       dispatch({ type: "UPLOAD_FAIL", payload: err });
     }

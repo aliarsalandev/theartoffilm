@@ -4,10 +4,11 @@ const subscriptionSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     image: { type: String, required: false },
+    currency: { type: String, required: true },
+    products: { type: Number, required: true, default: 0 },
     monthPrice: { type: Number, required: true },
     yearPrice: { type: String, required: true },
-    posters: { type: Number, required: true },
-    posterImages: { type: Number, required: true },
+    perks: { type: Array, required: true },
   },
   {
     timestamps: true,

@@ -15,39 +15,7 @@ function ShowCase({ products = [], onClick }) {
 
   return (
     <div className={"column center"}>
-      <StyleRoot>
-        <Coverflow
-          className={"coverflow"}
-          displayQuantityOfSide={isMobile ? 1 : 2}
-          navigation
-          enableHeading
-          currentFigureScale={1.8}
-          otherFigureScale={1}
-          media={{
-            "@media (max-width: 900px)": {
-              width: "100%",
-              height: "420px",
-            },
-            "@media (min-width: 900px)": {
-              width: "100%",
-              height: "420px",
-            },
-          }}
-        >
-          {filteredProducts.map((product, index) => (
-            <img
-              key={product._id}
-              onClick={() => {
-                onClick(product);
-              }}
-              src={product.image}
-              alt={product.name}
-            />
-          ))}
-        </Coverflow>
-      </StyleRoot>
-
-      <div className="row p-2 pagination">
+      <div className="row ptb-2 pagination">
         <span
           onClick={() => {
             setFilteredProducts(products);
@@ -100,6 +68,38 @@ function ShowCase({ products = [], onClick }) {
           0..9
         </span>
       </div>
+
+      <StyleRoot>
+        <Coverflow
+          className={"coverflow"}
+          displayQuantityOfSide={isMobile ? 1 : 2}
+          navigation
+          enableHeading
+          currentFigureScale={1.8}
+          otherFigureScale={1}
+          media={{
+            "@media (max-width: 900px)": {
+              width: "100%",
+              height: "420px",
+            },
+            "@media (min-width: 900px)": {
+              width: "100%",
+              height: "420px",
+            },
+          }}
+        >
+          {filteredProducts.map((product, index) => (
+            <img
+              key={product._id}
+              onClick={() => {
+                onClick(product);
+              }}
+              src={product.image}
+              alt={product.name}
+            />
+          ))}
+        </Coverflow>
+      </StyleRoot>
     </div>
   );
 }

@@ -17,48 +17,48 @@ import {
   SUBSCRIPTION_UPDATE_SUCCESS,
 } from "../constants/userConstants";
 
-export const createSubscription = () => async (dispatch, getState) => {
-  const {
-    userSignin: { userInfo },
-  } = getState();
-  dispatch({
-    type: SUBSCRIPTION_CREATE_REQUEST,
-    payload: {},
-  });
-  try {
-    const { data } = await Axios.post(
-      "/api/subscription",
-      {
-        name: "Test",
-        image: "test",
-        monthPrice: 0,
-        yearPrice: 0,
-        posters: 0,
-        posterImages: 0,
-      },
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
-
-    dispatch({ type: SUBSCRIPTION_CREATE_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: SUBSCRIPTION_CREATE_FAIL,
-      payload:
+export const createSubscription =
+  ({ name, monthPrice, yearPrice, products, currency, image, perks }) =>
+  async (dispatch, getState) => {
+    dispatch({ type: SUBSCRIPTION_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        "/api/subscriptions",
+        {
+          name,
+          monthPrice,
+          yearPrice,
+          products,
+          currency,
+          image,
+          perks,
+        },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: SUBSCRIPTION_CREATE_SUCCESS,
+        payload: data.subscription,
+      });
+    } catch (error) {
+      const message =
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+          : error.message;
+      dispatch({ type: SUBSCRIPTION_CREATE_FAIL, payload: message });
+    }
+  };
 
 export const listSubscriptions = () => async (dispatch) => {
   dispatch({
     type: SUBSCRIPTION_LIST_REQUEST,
   });
   try {
-    const { data } = await Axios.get("/api/subscription");
+    const { data } = await Axios.get("/api/subscriptions");
     dispatch({ type: SUBSCRIPTION_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: SUBSCRIPTION_LIST_FAIL, payload: error.message });
@@ -68,7 +68,7 @@ export const listSubscriptions = () => async (dispatch) => {
 export const detailsSubscription = (subscriptionId) => async (dispatch) => {
   dispatch({ type: SUBSCRIPTION_DETAILS_REQUEST, payload: subscriptionId });
   try {
-    const { data } = await Axios.get(`/api/subscription/${subscriptionId}`);
+    const { data } = await Axios.get(`/api/subscriptions/${subscriptionId}`);
     dispatch({ type: SUBSCRIPTION_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -81,14 +81,14 @@ export const detailsSubscription = (subscriptionId) => async (dispatch) => {
   }
 };
 export const updateSubscription =
-  (subscription) => async (dispatch, getState) => {
+  (subscription, id) => async (dispatch, getState) => {
     dispatch({ type: SUBSCRIPTION_UPDATE_REQUEST, payload: subscription });
     const {
       userSignin: { userInfo },
     } = getState();
     try {
       const { data } = await Axios.put(
-        `/api/subscription/${subscription._id}`,
+        `/api/subscriptions/${id}`,
         subscription,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

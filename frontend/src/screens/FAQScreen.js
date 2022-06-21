@@ -3,14 +3,16 @@ import Accordion from "../components/Accordion";
 
 import HeroSection from "../sections/HeroSection";
 
-function FAQScreen() {
+function FAQScreen({ header = true }) {
   return (
     <div>
-      <HeroSection
-        heading={"FAQs"}
-        heading2="Home/FAQs"
-        image="/images/theater.jpeg"
-      />
+      {header && (
+        <HeroSection
+          heading={"FAQs"}
+          heading2="Home/FAQs"
+          image="/images/theater.jpeg"
+        />
+      )}
 
       <div className="faq-section p-4">
         <div className="faq-item">

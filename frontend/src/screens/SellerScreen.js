@@ -7,10 +7,14 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import ShowCase from "../components/ShowCase";
 import { useNavigate } from "react-router-dom";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function SellerScreen(props) {
   const params = useParams();
   const { id: sellerId } = params;
+
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
 
   const [currentProduct, setCurrentProduct] = React.useState(null);
   const userDetails = useSelector((state) => state.userDetails);
@@ -91,7 +95,7 @@ export default function SellerScreen(props) {
 
                   <li>
                     <div className="row">
-                      <div>Directors</div>
+                      <div className={"bold"}>Directors</div>
                       <div className="director-label">
                         {currentProduct.directors?.map((director) => (
                           <span>{director.name} | </span>
@@ -101,7 +105,7 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Casts</div>
+                      <div className={"bold"}>Casts</div>
                       <div className="cast-label">
                         {currentProduct.casts?.map((cast) => (
                           <span>{cast.name} | </span>
@@ -111,7 +115,7 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Artists</div>
+                      <div className={"bold"}>Artists</div>
                       <div className="artist-label">
                         {currentProduct.artists?.map((artist) => (
                           <span>{artist.name} | </span>
@@ -121,7 +125,7 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Origin</div>
+                      <div className={"bold"}>Origin</div>
                       <div className="origin-label">
                         {currentProduct.origin}
                       </div>
@@ -129,13 +133,13 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Year</div>
+                      <div className={"bold"}>Year</div>
                       <div className="origin-label">{currentProduct.year}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
-                      <div>Format</div>
+                      <div className={"bold"}>Format</div>
                       <div className="format-label">
                         {currentProduct.format}
                       </div>
@@ -143,7 +147,7 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Condition</div>
+                      <div className={"bold"}>Condition</div>
                       <div className="condition-label">
                         {currentProduct.condition}
                       </div>
@@ -151,17 +155,23 @@ export default function SellerScreen(props) {
                   </li>
                   <li>
                     <div className="row">
-                      <div>Rolled / Folded</div>
+                      <div className={"bold"}>Rolled / Folded</div>
                       <div className="rolledFolded-label">
                         {currentProduct.rolledFolded}
                       </div>
                     </div>
                   </li>
                   <li>
-                    Description:
+                    <div className="bold">Description</div>
                     <p>{currentProduct.description}</p>
                   </li>
-                  <li className={"price"}>Pirce : ₤{currentProduct.price}</li>
+                  <li className={""}>
+                    <span className="bold">Pirce</span>{" "}
+                    <span className="price">
+                      {symbol}{" "}
+                      {(rates[currency] * currentProduct.price).toFixed(1)}
+                    </span>
+                  </li>
 
                   {currentProduct.forSale && (
                     <>

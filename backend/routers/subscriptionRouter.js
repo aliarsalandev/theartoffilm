@@ -10,27 +10,27 @@ subscriptionRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const subscriptions = await Subscription.find();
-    res.send(subscriptions);
+    res.send({ subscriptions });
   })
 );
 
 subscriptionRouter.post(
   "/",
-  isAuth,
-  isAdmin,
+  // isAuth,
   expressAsyncHandler(async (req, res) => {
-    const { name, image, monthPrice, yearPrice, posters, posterImages } =
-      req.body;
+    // const { name, image, monthPrice, yearPrice, perks } = req.body;
     const subscription = new Subscription({
-      name,
-      image,
-      monthPrice,
-      yearPrice,
-      posters,
-      posterImages,
+      name: req.body.name,
+      image: req.body.image,
+      products: req.body.products,
+      monthPrice: req.body.monthPrice,
+      yearPrice: req.body.yearPrice,
+      currency: req.body.currency,
+      perks: req.body.perks,
+      image: req.body.image,
     });
     const createdSubscription = await subscription.save();
-    res.send({ subscription: createdSubscription });
+
     res.status(200).send({
       message: "Subscription Created",
       subscription: createdSubscription,
@@ -40,19 +40,20 @@ subscriptionRouter.post(
 
 subscriptionRouter.put(
   "/:id",
-  isAuth,
-  isAdmin,
+  // isAuth,
+  // isAdmin,
   expressAsyncHandler(async (req, res) => {
     const subscriptionId = req.params.id;
-    const subscription = await Subscription.findById(subscriptionId);
+    const subscription = await Subscription.findOne({ _id: subscriptionId });
+
     if (subscription) {
       subscription.name = req.body.name;
       subscription.image = req.body.image;
+      subscription.products = req.body.products;
       subscription.monthPrice = req.body.monthPrice;
       subscription.yearPrice = req.body.yearPrice;
-      subscription.posters = req.body.posters;
-      subscription.posterImages = req.body.posterImages;
-
+      subscription.currency = req.body.currency;
+      subscription.perks = req.body.perks;
       const updatedSubscription = await subscription.save();
       res.send({
         message: "Subscription Updated",

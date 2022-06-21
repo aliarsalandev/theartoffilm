@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function CartScreen(props) {
   const navigate = useNavigate();
   const params = useParams();
   const { id: productId } = params;
+
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
 
   const { search } = useLocation();
   const qtyInUrl = new URLSearchParams(search).get("qty");
@@ -70,7 +74,9 @@ export default function CartScreen(props) {
                       ))}
                     </select>
                   </div>
-                  <div>${item.price}</div>
+                  <div>
+                    {symbol} {(rates[currency] * item.price).toFixed(1)}
+                  </div>
                   <div>
                     <button
                       type="button"
@@ -90,8 +96,12 @@ export default function CartScreen(props) {
           <ul>
             <li>
               <h2>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
-                {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :{" "}
+                {symbol}
+                {cartItems.reduce(
+                  (a, c) => a + (rates[currency] * c.price).toFixed(1) * c.qty,
+                  0
+                )}
               </h2>
             </li>
             <li>

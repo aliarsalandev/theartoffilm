@@ -4,11 +4,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { detailsProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function ProductScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState("");
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
 
   const params = useParams();
   const { id: productId } = params;
@@ -25,7 +28,7 @@ export default function ProductScreen() {
   };
 
   return (
-    <div>
+    <div className={"page-padding"}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -56,7 +59,7 @@ export default function ProductScreen() {
                 ))}
               </div>
             </div>
-            <div className="col-3 mr-3 ml-3">
+            <div className="col-3 mr-3 ml-3 poster-details">
               <ul>
                 <li>
                   <h1>{product.name}</h1>
@@ -64,7 +67,7 @@ export default function ProductScreen() {
 
                 <li>
                   <div className="row">
-                    <div>Directors</div>
+                    <div className={"bold"}>Directors</div>
                     <div className="director-label">
                       {product.directors?.map((director) => (
                         <span>{director.name} | </span>
@@ -74,7 +77,7 @@ export default function ProductScreen() {
                 </li>
                 <li>
                   <div className="row">
-                    <div>Casts</div>
+                    <div className={"bold"}>Casts</div>
                     <div className="cast-label">
                       {product.casts?.map((cast) => (
                         <span>{cast.name} | </span>
@@ -84,7 +87,7 @@ export default function ProductScreen() {
                 </li>
                 <li>
                   <div className="row">
-                    <div>Artists</div>
+                    <div className={"bold"}>Artists</div>
                     <div className="artist-label">
                       {product.artists?.map((artist) => (
                         <span>{artist.name} | </span>
@@ -94,50 +97,55 @@ export default function ProductScreen() {
                 </li>
                 <li>
                   <div className="row">
-                    <div>Origin</div>
+                    <div className={"bold"}>Origin</div>
                     <div className="origin-label">{product.origin}</div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Year</div>
+                    <div className={"bold"}>Year</div>
                     <div>{product.year}</div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Format</div>
+                    <div className={"bold"}>Format</div>
                     <div className="format-label">{product.format}</div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Condition</div>
+                    <div className={"bold"}>Condition</div>
                     <div className="condition-label">{product.condition}</div>
                   </div>
                 </li>
                 <li>
                   <div className="row">
-                    <div>Rolled / Folded</div>
+                    <div className={"bold"}>Rolled / Folded</div>
                     <div className="rolledFolded-label">
                       {product.rolledFolded}
                     </div>
                   </div>
                 </li>
                 <li>
-                  Description:
+                  <div className="bold">Description</div>
                   <p>{product.description}</p>
                 </li>
                 <li
-                  className={"price"}
                   style={{
                     textDecoration: product.salePrice ? "line-through" : "",
                   }}
                 >
-                  Pirce : ₤{product.price}
+                  <span className="bold">Pirce</span> :{" "}
+                  <span className="price">
+                    {symbol} {(rates[currency] * product.price).toFixed(2)}
+                  </span>
                 </li>
                 {product.salePrice > 0 && (
-                  <li className={"price"}>Sale Price : ${product.salePrice}</li>
+                  <li className={"price"}>
+                    Sale Price : {symbol}{" "}
+                    {(rates[currency] * product.salePrice).toFixed(2)}
+                  </li>
                 )}
               </ul>
 

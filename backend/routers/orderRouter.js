@@ -1,35 +1,39 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import Order from '../models/orderModel.js';
-import User from '../models/userModel.js';
-import Product from '../models/productModel.js';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import Order from "../models/orderModel.js";
+import User from "../models/userModel.js";
+import Product from "../models/productModel.js";
 import {
   isAdmin,
   isAuth,
   isSellerOrAdmin,
   mailgun,
   payOrderEmailTemplate,
-} from '../utils.js';
+} from "../utils.js";
+import Stripe from "stripe";
+import Session from "../models/sessionModel.js";
+import Setting from "../models/settingModel.js";
 
 const orderRouter = express.Router();
+
 orderRouter.get(
-  '/',
+  "/",
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const seller = req.query.seller || '';
+    const seller = req.query.seller || "";
     const sellerFilter = seller ? { seller } : {};
 
     const orders = await Order.find({ ...sellerFilter }).populate(
-      'user',
-      'name'
+      "user",
+      "name"
     );
     res.send(orders);
   })
 );
 
 orderRouter.get(
-  '/summary',
+  "/summary",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -38,7 +42,7 @@ orderRouter.get(
         $group: {
           _id: null,
           numOrders: { $sum: 1 },
-          totalSales: { $sum: '$totalPrice' },
+          totalSales: { $sum: "$totalPrice" },
         },
       },
     ]);
@@ -53,9 +57,9 @@ orderRouter.get(
     const dailyOrders = await Order.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           orders: { $sum: 1 },
-          sales: { $sum: '$totalPrice' },
+          sales: { $sum: "$totalPrice" },
         },
       },
       { $sort: { _id: 1 } },
@@ -63,7 +67,7 @@ orderRouter.get(
     const productCategories = await Product.aggregate([
       {
         $group: {
-          _id: '$category',
+          _id: "$category",
           count: { $sum: 1 },
         },
       },
@@ -73,7 +77,7 @@ orderRouter.get(
 );
 
 orderRouter.get(
-  '/mine',
+  "/mine",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
@@ -82,11 +86,11 @@ orderRouter.get(
 );
 
 orderRouter.post(
-  '/',
+  "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: 'Cart is empty' });
+      res.status(400).send({ message: "Cart is empty" });
     } else {
       const order = new Order({
         seller: req.body.orderItems[0].seller,
@@ -97,36 +101,37 @@ orderRouter.post(
         shippingPrice: req.body.shippingPrice,
         taxPrice: req.body.taxPrice,
         totalPrice: req.body.totalPrice,
+        allowedToPay: false,
         user: req.user._id,
       });
       const createdOrder = await order.save();
       res
         .status(201)
-        .send({ message: 'New Order Created', order: createdOrder });
+        .send({ message: "New Order Created", order: createdOrder });
     }
   })
 );
 
 orderRouter.get(
-  '/:id',
+  "/:id",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
       res.send(order);
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: "Order Not Found" });
     }
   })
 );
 
 orderRouter.put(
-  '/:id/pay',
+  "/:id/pay",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id).populate(
-      'user',
-      'email name'
+      "user",
+      "email name"
     );
     if (order) {
       order.isPaid = true;
@@ -143,7 +148,7 @@ orderRouter.put(
           .messages()
           .send(
             {
-              from: 'Amazona <amazona@mg.yourdomain.com>',
+              from: "Amazona <amazona@mg.yourdomain.com>",
               to: `${order.user.name} <${order.user.email}>`,
               subject: `New order ${order._id}`,
               html: payOrderEmailTemplate(order),
@@ -160,30 +165,30 @@ orderRouter.put(
         console.log(err);
       }
 
-      res.send({ message: 'Order Paid', order: updatedOrder });
+      res.send({ message: "Order Paid", order: updatedOrder });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: "Order Not Found" });
     }
   })
 );
 
 orderRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
       const deleteOrder = await order.remove();
-      res.send({ message: 'Order Deleted', order: deleteOrder });
+      res.send({ message: "Order Deleted", order: deleteOrder });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: "Order Not Found" });
     }
   })
 );
 
 orderRouter.put(
-  '/:id/deliver',
+  "/:id/deliver",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -193,11 +198,105 @@ orderRouter.put(
       order.deliveredAt = Date.now();
 
       const updatedOrder = await order.save();
-      res.send({ message: 'Order Delivered', order: updatedOrder });
+      res.send({ message: "Order Delivered", order: updatedOrder });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: "Order Not Found" });
     }
   })
 );
 
+orderRouter.put(
+  "/:id/allow-to-pay",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    console.log(req.body);
+    if (order) {
+      order.allowedToPay = req.body.allowedToPay;
+      order.shippingPrice = +req.body.shippingPrice;
+      order.totalPrice =
+        order.itemsPrice + order.shippingPrice + order.taxPrice;
+      const updatedOrder = await order.save();
+      res.send({
+        message: "Order Shipping Price Updated",
+        order: updatedOrder,
+      });
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
+
+orderRouter.post("/create-checkout-session", async (req, res) => {
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: req.body.line_items,
+    mode: "payment",
+    success_url: `http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}`,
+    cancel_url:
+      "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
+  });
+  const new_session = new Session({
+    id: session.id,
+    url: session.url,
+    type: req.body.type,
+    period: req.body.period,
+    ref: req.body.ref,
+    status: "unpaid",
+  });
+  const createdSession = await new_session.save();
+  res.send({ session: createdSession });
+});
+
+orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
+  const session_id = req.params.session_id;
+  const user_id = req.params.user_id;
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+
+  const stripe_session = await stripe.checkout.sessions.retrieve(session_id);
+  // select only the adventures name and length
+  const session = await Session.findOne(
+    { id: session_id },
+    "id ref type period"
+  ).exec();
+
+  if (session.type === "subscription") {
+    const user = await User.findById(user_id);
+    user.seller.subscription = session.ref;
+    user.seller.subscription_period = session.period;
+
+    user.save();
+  } else {
+    const order = await Order.findOne({ user: user_id }).exec();
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    await order.save();
+  }
+
+  session.status = stripe_session.payment_status;
+  await session.save();
+  res.send({ session: session });
+});
+
+orderRouter.post("/transfer", async (req, res) => {
+  const order = await Order.findById(req.body.orderId);
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+
+  // Create a Transfer to the connected account (later):
+  const transfer = await stripe.transfers.create({
+    amount: parseInt(order.totalPrice - order.totalPrice * 0.07),
+    currency: "gbp",
+    destination: "acct_18LHw7GFDcM4wUS8",
+    transfer_group: "seller_transfer",
+    source_transaction: order._id,
+  });
+
+  console.log(JSON.stringify(transfer));
+  res.send({ transfer });
+});
 export default orderRouter;

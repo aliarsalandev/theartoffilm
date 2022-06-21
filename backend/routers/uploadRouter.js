@@ -14,10 +14,14 @@ uploadRouter.post(
   isSellerOrAdmin,
   upload.single("file"),
   async (req, res) => {
+    const CLOUDINARY_CLOUD_NAME = "theartoffilms";
+    const CLOUDINARY_API_SECRET = "u9PT2614sk7pwSpATGDQvWiVhg0";
+    const CLOUDINARY_API_KEY = "563822985559768";
+
     cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
+      cloud_name: CLOUDINARY_CLOUD_NAME,
+      api_key: CLOUDINARY_API_KEY,
+      api_secret: CLOUDINARY_API_SECRET,
     });
     const streamUpload = (req) => {
       return new Promise((resolve, reject) => {
@@ -35,4 +39,27 @@ uploadRouter.post(
     res.send(result);
   }
 );
+
+uploadRouter.post("/media", async (req, res) => {
+  let media;
+  let uploadPath;
+  console.log(req.files, req.body);
+  res.send({});
+  return;
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  media = req.body.media;
+  const __dirname = path.resolve();
+
+  uploadPath = path.join(__dirname, "/uploads") + media.name;
+
+  // Use the mv() method to place the file somewhere on your server
+  media.mv(uploadPath, function (err) {
+    if (err) return res.status(500).send(err);
+
+    res.send({ message: "File uploaded!", uploadPath });
+  });
+});
 export default uploadRouter;
