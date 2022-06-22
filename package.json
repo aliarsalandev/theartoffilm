@@ -39,8 +39,8 @@
     "stripe": "^9.9.0"
   },
   "engines": {
-    "node": "16.13.0",
-    "npm": "8.5.0"
+    "node": "16.15.1",
+    "npm": "8.11.0"
   },
   "homepage": "https://github.com/basir/theartoffilm#readme"
 }
