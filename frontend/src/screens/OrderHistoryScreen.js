@@ -39,7 +39,7 @@ export default function OrderHistoryScreen(props) {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders?.map((order) => (
                   <tr key={order._id}>
                     <td>{order._id}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>
@@ -49,7 +49,7 @@ export default function OrderHistoryScreen(props) {
                     </td>
                     <td>
                       {order.isDelivered
-                        ? order.deliveredAt.substring(0, 10)
+                        ? order.deliveredAt?.substring(0, 10)
                         : "No"}
                     </td>
                     <td>

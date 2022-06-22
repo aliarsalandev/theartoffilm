@@ -179,7 +179,6 @@ export default function OrderScreen(props) {
         <div className="col-1">
           <div className="card">
             <h3>Chat</h3>
-
             <div>
               <ul className="messages">
                 {messages?.map(({ message, read }, index) => (
@@ -198,35 +197,37 @@ export default function OrderScreen(props) {
                 ))}
               </ul>
             </div>
-            <div>
-              <div className="form-group">
-                <label>Message</label>
-                <textarea
-                  name={"message"}
-                  onChange={(e) => {
-                    setMessage(e.target.value);
+            {!order?.isDelivered && !order?.isPaid && (
+              <div>
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea
+                    name={"message"}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                    }}
+                    className="form-control"
+                    rows="3"
+                  ></textarea>
+                </div>
+                <button
+                  onClick={(e) => {
+                    setMessages([
+                      ...messages,
+                      {
+                        message,
+                      },
+                    ]);
+                    sendMessage(order._id, userInfo, message).then((data) => {
+                      console.log(data);
+                    });
                   }}
-                  className="form-control"
-                  rows="3"
-                ></textarea>
+                  className="btn btn-primary"
+                >
+                  Send
+                </button>
               </div>
-              <button
-                onClick={(e) => {
-                  setMessages([
-                    ...messages,
-                    {
-                      message,
-                    },
-                  ]);
-                  sendMessage(order._id, userInfo, message).then((data) => {
-                    console.log(data);
-                  });
-                }}
-                className="btn btn-primary"
-              >
-                Send
-              </button>
-            </div>
+            )}
           </div>
           <div className="card card-body">
             <ul>
@@ -243,7 +244,9 @@ export default function OrderScreen(props) {
                 <div className="row">
                   <div>Shipping</div>
                   <div>
-                    {userInfo._id === order.seller ? (
+                    {userInfo._id === order.seller &&
+                    !order.isDelivered &&
+                    !order.isPaid ? (
                       <form
                         onSubmit={updateShippingPrice}
                         className={"flex column"}

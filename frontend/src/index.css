@@ -1219,3 +1219,7 @@ h4 {
 .danger {
   color: var(--accent-color);
 }
+
+iframe {
+  position: relative !important;
+}
