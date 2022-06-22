@@ -1,21 +1,16 @@
 import Axios from "axios";
-import { PayPalButton } from "react-paypal-button-v2";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
+import { deliverOrder, detailsOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
-import {
-  allowedToPay,
-  processCheckout,
-  transferToSeller,
-} from "../helpers/payment";
+import { allowedToPay, processCheckout } from "../helpers/payment";
 import { getMessages, sendMessage } from "../helpers/media";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
@@ -36,11 +31,7 @@ export default function OrderScreen(props) {
   const { userInfo } = userSignin;
 
   const orderPay = useSelector((state) => state.orderPay);
-  const {
-    loading: loadingPay,
-    error: errorPay,
-    success: successPay,
-  } = orderPay;
+  const { success: successPay } = orderPay;
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
     loading: loadingDeliver,
@@ -87,11 +78,11 @@ export default function OrderScreen(props) {
       setMessages(data);
     });
     return () => {};
-  }, []);
+  }, [orderId, userInfo]);
 
-  const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(order, paymentResult));
-  };
+  // const successPaymentHandler = (paymentResult) => {
+  //   dispatch(payOrder(order, paymentResult));
+  // };
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));

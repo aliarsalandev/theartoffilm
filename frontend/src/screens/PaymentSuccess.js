@@ -8,7 +8,7 @@ function PaymentSuccess() {
   const params = useParams();
   const { id: session_id } = params;
   const { userInfo } = useSelector((state) => state.userSignin);
-  const [status, setStatus] = useState();
+  const [, setStatus] = useState();
   const [type, setType] = useState("");
 
   useEffect(() => {

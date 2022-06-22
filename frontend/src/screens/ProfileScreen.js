@@ -66,18 +66,28 @@ export default function ProfileScreen() {
     }
   }, [dispatch, user, userInfo]);
 
+  const updateSeller = (user) => {
+    const { name, email, password, seller } = user;
+    const {
+      logo,
+      name: collection_name,
+      stripe_account_id,
+      description,
+    } = seller;
+    setSeller({
+      ...seller,
+      name,
+      email,
+      password,
+      logo,
+      collection_name,
+      stripe_account_id,
+      description,
+    });
+  };
   useEffect(() => {
     if (user) {
-      setSeller({
-        ...seller,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        logo: user.seller.logo,
-        collection_name: user.seller.name,
-        stripe_account_id: user.seller.stripe_account_id,
-        description: user.seller.description,
-      });
+      updateSeller(user);
     }
     return () => {};
   }, [user]);

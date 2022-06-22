@@ -13,25 +13,27 @@ function Header() {
   });
 
   const [selected_currency, setCurrency] = React.useState({});
+  const updateRates = useCallback(
+    (_rates) => {
+      setRates({
+        ...rates,
+        ...rates,
+      });
+    },
+    [rates]
+  );
 
-  const getCurrencyRates = useCallback(() => {
+  useEffect(() => {
+    console.log("SubscriptionEditScreen useEffect");
+    setCurrency(JSON.parse(localStorage.getItem("currency")) ?? {});
     CurrencyRates({
       onResult: (result) => {
-        setRates({
-          ...rates,
-          ...result.rates,
-        });
+        updateRates(result.rates);
       },
       onError: (error) => {
         console.log("41", error);
       },
     });
-  }, []);
-
-  useEffect(() => {
-    console.log("SubscriptionEditScreen useEffect");
-    setCurrency(JSON.parse(localStorage.getItem("currency")) ?? {});
-    getCurrencyRates();
     return () => {};
   }, []);
 
