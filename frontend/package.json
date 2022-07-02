@@ -50,5 +50,8 @@
     "redux-thunk": "^2.4.1",
     "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.5"
+  },
+  "engines": {
+    "node": "16.15.1"
   }
 }
