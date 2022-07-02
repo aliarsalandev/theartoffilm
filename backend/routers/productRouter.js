@@ -202,7 +202,7 @@ productRouter.post(
       artists: [],
       origin: "UK",
       year: "2010",
-      format: "Dum",
+      format: "US Insert",
       condition: "Good",
       rolledFolded: "Rolled",
       countInStock: 10,

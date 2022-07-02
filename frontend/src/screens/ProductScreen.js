@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { detailsProduct } from "../actions/productActions";
@@ -23,12 +24,13 @@ export default function ProductScreen() {
   useEffect(() => {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
+
   const addToCartHandler = () => {
     navigate(`/cart/${productId}?qty=${qty}`);
   };
 
   return (
-    <div className={"page-padding"}>
+    <div className={`${isMobile ? "mobile-page-padding" : "page-padding"}`}>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -36,20 +38,21 @@ export default function ProductScreen() {
       ) : (
         <div>
           <div className="p-2">
-            <Link to="/">Back to result</Link>
+            <Link to={`/product/${product._id}/edit`}>Back to result</Link>
           </div>
           <div className="mb-3"></div>
-          <div className="flex top">
-            <div className="col-2">
+          <div className={`${isMobile ? "column" : "flex"} top`}>
+            <div className="col-2 col-xs-12">
               <img
                 className="large"
                 src={selectedImage || product.image}
                 alt={product.name}
               ></img>
-              <div className="row start">
+              <div className="flex start">
                 {[product.image, ...product?.images].map((image) => (
                   <img
-                    className="thumbnail"
+                    key={image}
+                    className={`${isMobile ? "small" : "thumbnail"}`}
                     src={image}
                     alt={product.name}
                     onClick={() => {
@@ -59,97 +62,94 @@ export default function ProductScreen() {
                 ))}
               </div>
             </div>
-            <div className="col-3 mr-3 ml-3 poster-details">
-              <ul>
-                <li>
-                  <h1>{product.name}</h1>
-                </li>
+            <div className="col-3 col-xs-12 mr-3 ml-3 poster-details">
+              <table style={{ width: "100%" }}>
+                <tbody>
+                  <tr style={{ width: "100%" }}>
+                    <td>
+                      <h1>{product.name}</h1>
+                    </td>
+                    <td></td>
+                  </tr>
 
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Directors</div>
-                    <div className="director-label">
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Directors</td>
+                    <td className="director-label text-right">
                       {product.directors?.map((director) => (
-                        <span>{director.name} | </span>
+                        <span key={director.name}>{director.name} | </span>
                       ))}
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Casts</div>
-                    <div className="cast-label">
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Casts</td>
+                    <td className="cast-label text-right">
                       {product.casts?.map((cast) => (
-                        <span>{cast.name} | </span>
+                        <span key={cast.name}>{cast.name} | </span>
                       ))}
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Artists</div>
-                    <div className="artist-label">
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Artists</td>
+                    <td className="artist-label text-right">
                       {product.artists?.map((artist) => (
-                        <span>{artist.name} | </span>
+                        <span key={artist.name}>{artist.name} | </span>
                       ))}
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Origin</div>
-                    <div className="origin-label">{product.origin}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Year</div>
-                    <div>{product.year}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Format</div>
-                    <div className="format-label">{product.format}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Condition</div>
-                    <div className="condition-label">{product.condition}</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="row">
-                    <div className={"bold"}>Rolled / Folded</div>
-                    <div className="rolledFolded-label">
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Origin</td>
+                    <td className="origin-label text-right">
+                      {product.origin}
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Year</td>
+                    <td className={" text-right"}>{product.year}</td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Format</td>
+                    <td className="format-label  text-right">
+                      {product.format}
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Condition</td>
+                    <td className="condition-label  text-right">
+                      {product.condition}
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className={"bold td-title"}>Rolled / Folded</td>
+                    <td className="rolledFolded-label  text-right">
                       {product.rolledFolded}
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="bold">Description</div>
-                  <p>{product.description}</p>
-                </li>
-                <li
-                  style={{
-                    textDecoration: product.salePrice ? "line-through" : "",
-                  }}
-                >
-                  <span className="bold">Pirce</span> :{" "}
-                  <span className="price">
-                    {symbol} {(rates[currency] * product.price).toFixed(2)}
-                  </span>
-                </li>
-                {product.salePrice > 0 && (
-                  <li className={"price"}>
-                    Sale Price : {symbol}{" "}
-                    {(rates[currency] * product.salePrice).toFixed(2)}
-                  </li>
-                )}
-              </ul>
+                    </td>
+                  </tr>
+                  <tr style={{ width: "100%" }}>
+                    <td className="bold td-title">Description</td>
+                    <td className={" text-right"}>{product.description}</td>
+                  </tr>
+                  <tr
+                    style={{
+                      textDecoration: product.salePrice ? "trne-through" : "",
+                    }}
+                  >
+                    <td className="bold td-title">Price</td>
+                    <td className="price text-right">
+                      {symbol} {(rates[currency] * product.price).toFixed(2)}
+                    </td>
+                  </tr>
+                  {product.salePrice > 0 && (
+                    <tr className={"price"}>
+                      <td>Sale Price : {symbol}</td>
+                      <td className={"text-right"}>
+                        {(rates[currency] * product.salePrice).toFixed(2)}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
 
-              <div className="card card-body">
+              {/* <div className="card card-body">
                 <ul>
                   <li>
                     <div className="row">
@@ -199,7 +199,7 @@ export default function ProductScreen() {
                     </>
                   )}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import data from "../data";
+import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import { prices } from "../utils";
 
 export default function SearchScreen(props) {
@@ -86,43 +87,44 @@ export default function SearchScreen(props) {
   };
 
   return (
-    <div>
-      <div className="row">
-        {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
+    <NoSideBarLayout>
+      <div className="p-4">
+        <div className="row">
+          {loading ? (
+            <LoadingBox></LoadingBox>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <div>
+              {
+                products.filter(
+                  (product) =>
+                    (product.image.length > 0) &
+                    product.visible &
+                    (product.price > 0)
+                ).length
+              }{" "}
+              Results
+            </div>
+          )}
           <div>
-            {
-              products.filter(
-                (product) =>
-                  (product.image.length > 0) &
-                  product.visible &
-                  (product.price > 0)
-              ).length
-            }{" "}
-            Results
+            Sort by{" "}
+            <select
+              value={order}
+              onChange={(e) => {
+                navigate(getFilterUrl({ order: e.target.value }));
+              }}
+            >
+              <option value="newest">Newest Arrivals</option>
+              <option value="lowest">Price: Low to High</option>
+              <option value="highest">Price: High to Low</option>
+              <option value="toprated">Avg. Customer Reviews</option>
+            </select>
           </div>
-        )}
-        <div>
-          Sort by{" "}
-          <select
-            value={order}
-            onChange={(e) => {
-              navigate(getFilterUrl({ order: e.target.value }));
-            }}
-          >
-            <option value="newest">Newest Arrivals</option>
-            <option value="lowest">Price: Low to High</option>
-            <option value="highest">Price: High to Low</option>
-            <option value="toprated">Avg. Customer Reviews</option>
-          </select>
         </div>
-      </div>
-      <div className="row top">
-        <div className="col-1">
-          {/* <h3>Department</h3>
+        <div className="row top">
+          <div className="col-1">
+            {/* <h3>Department</h3>
           <div>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
@@ -151,168 +153,168 @@ export default function SearchScreen(props) {
               </ul>
             )}
           </div> */}
-          <div>
-            <div className="form-group">
-              <label>Directors</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ directors: e.target.value }));
-                }}
-              >
-                <option value="">Directors</option>
-                {directors?.map((director) => (
-                  <option key={director._id} value={director._id}>
-                    {director.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <div>
+              <div className="form-group">
+                <label>Directors</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ directors: e.target.value }));
+                  }}
+                >
+                  <option value="">Directors</option>
+                  {directors?.map((director) => (
+                    <option key={director._id} value={director._id}>
+                      {director.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Casts</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ casts: e.target.value }));
-                }}
-              >
-                <option value="">Casts</option>
-                {casts?.map((cast) => (
-                  <option key={cast._id} value={cast._id}>
-                    {cast.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Casts</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ casts: e.target.value }));
+                  }}
+                >
+                  <option value="">Casts</option>
+                  {casts?.map((cast) => (
+                    <option key={cast._id} value={cast._id}>
+                      {cast.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Artists</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ artists: e.target.value }));
-                }}
-              >
-                <option value="">Artists</option>
-                {artists?.map((artist) => (
-                  <option key={artist._id} value={artist._id}>
-                    {artist.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Artists</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ artists: e.target.value }));
+                  }}
+                >
+                  <option value="">Artists</option>
+                  {artists?.map((artist) => (
+                    <option key={artist._id} value={artist._id}>
+                      {artist.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Country of Origins</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ origin: e.target.value }));
-                }}
-              >
-                <option value="">Origin</option>
-                {data.origins?.map((origin) => (
-                  <option key={origin.code} value={origin.code}>
-                    {origin.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Country of Origins</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ origin: e.target.value }));
+                  }}
+                >
+                  <option value="">Origin</option>
+                  {data.origins?.map((origin) => (
+                    <option key={origin.code} value={origin.code}>
+                      {origin.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Year</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ year: e.target.value }));
-                }}
-              >
-                <option value="">Year</option>
-                {Array.from(Array(new Date().getFullYear() - 1929).keys())?.map(
-                  (year) => (
+              <div className="form-group">
+                <label>Year</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ year: e.target.value }));
+                  }}
+                >
+                  <option value="">Year</option>
+                  {Array.from(
+                    Array(new Date().getFullYear() - 1929).keys()
+                  )?.map((year) => (
                     <option key={year} value={year + 1930}>
                       {year + 1930}
                     </option>
-                  )
-                )}
-              </select>
-            </div>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Condition</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ condition: e.target.value }));
-                }}
-              >
-                <option value="">Condition</option>
-                {data.conditions?.map(({ label, value }) => (
-                  <option key={label} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Condition</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ condition: e.target.value }));
+                  }}
+                >
+                  <option value="">Condition</option>
+                  {data.conditions?.map(({ label, value }) => (
+                    <option key={label} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Format</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ format: e.target.value }));
-                }}
-              >
-                <option value="">Format</option>
-                {data.formats?.map(({ label, value }) => (
-                  <option key={label} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Rolled Folded</label>
-              <select
-                className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ rolledFolded: e.target.value }));
-                }}
-              >
-                <option value="">Rolled Folded</option>
-                {data.rolledFolded?.map(({ label, value }) => (
-                  <option key={label} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="form-group">
+                <label>Format</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ format: e.target.value }));
+                  }}
+                >
+                  <option value="">Format</option>
+                  {data.formats?.map(({ label, value }) => (
+                    <option key={label} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Rolled Folded</label>
+                <select
+                  className={"form-control"}
+                  onChange={(e) => {
+                    navigate(getFilterUrl({ rolledFolded: e.target.value }));
+                  }}
+                >
+                  <option value="">Rolled Folded</option>
+                  {data.rolledFolded?.map(({ label, value }) => (
+                    <option key={label} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Price</label>
-              <div className={"flex column"}>
-                {prices.map((p) => (
-                  <Link
-                    key={p.name}
-                    style={{ cursor: "pointer" }}
-                    to={getFilterUrl({ min: p.min, max: p.max })}
-                  >
-                    <span
-                      className={
-                        `selection ${p.min}-${p.max}` === `${min}-${max}`
-                          ? "active"
-                          : ""
-                      }
+              <div className="form-group">
+                <label>Price</label>
+                <div className={"flex column"}>
+                  {prices.map((p) => (
+                    <Link
+                      key={p.name}
+                      style={{ cursor: "pointer" }}
+                      to={getFilterUrl({ min: p.min, max: p.max })}
                     >
-                      {p.name}
-                    </span>
-                  </Link>
-                ))}
+                      <span
+                        className={
+                          `selection ${p.min}-${p.max}` === `${min}-${max}`
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        {p.name}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          {/* <div>
+            {/* <div>
             <h3>Avg. Customer Review</h3>
             <ul>
               {ratings.map((r) => (
@@ -327,57 +329,58 @@ export default function SearchScreen(props) {
               ))}
             </ul>
           </div> */}
-        </div>
+          </div>
 
-        <div className="col-3">
-          {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-            <>
-              {!products && <MessageBox>No Poster Found</MessageBox>}
+          <div className="col-3">
+            {loading ? (
+              <LoadingBox></LoadingBox>
+            ) : error ? (
+              <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
+              <>
+                {!products && <MessageBox>No Poster Found</MessageBox>}
 
-              <div
-                className="row center"
-                style={{ flexDirection: isMobile ? "column" : "row" }}
-              >
-                {products.map((product) => {
-                  const show =
-                    (product.image.length > 0) &
-                    product.visible &
-                    (product.price > 0);
-                  return (
-                    show === 1 && (
-                      <Product key={product._id} product={product}></Product>
-                    )
-                  );
-                })}
-              </div>
-              <div className="row center pagination">
-                {products.filter(
-                  (product) =>
-                    (product.image.length > 0) &
-                    product.visible &
-                    (product.price > 0)
-                ).length > 4 ? (
-                  [...Array(pages).keys()].map((x) => (
-                    <Link
-                      className={x + 1 === page ? "active" : ""}
-                      key={x + 1}
-                      to={getFilterUrl({ page: x + 1 })}
-                    >
-                      {x + 1}
-                    </Link>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </div>
-            </>
-          )}
+                <div
+                  className="row center"
+                  style={{ flexDirection: isMobile ? "column" : "row" }}
+                >
+                  {products.map((product) => {
+                    const show =
+                      (product.image.length > 0) &
+                      product.visible &
+                      (product.price > 0);
+                    return (
+                      show === 1 && (
+                        <Product key={product._id} product={product}></Product>
+                      )
+                    );
+                  })}
+                </div>
+                <div className="row center pagination">
+                  {products.filter(
+                    (product) =>
+                      (product.image.length > 0) &
+                      product.visible &
+                      (product.price > 0)
+                  ).length > 4 ? (
+                    [...Array(pages).keys()].map((x) => (
+                      <Link
+                        className={x + 1 === page ? "active" : ""}
+                        key={x + 1}
+                        to={getFilterUrl({ page: x + 1 })}
+                      >
+                        {x + 1}
+                      </Link>
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </NoSideBarLayout>
   );
 }

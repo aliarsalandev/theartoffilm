@@ -13,6 +13,22 @@ export const uploadFile = async (file, userInfo) => {
   return data;
 };
 
+export const uploadFileHandler = async (file, userInfo) => {
+  const bodyFormData = new FormData();
+  bodyFormData.append("file", file);
+  try {
+    const { data } = await Axios.post("/api/uploads", bodyFormData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    console.log("image upload data", data);
+    return data.secure_url;
+  } catch (err) {
+    return err;
+  }
+};
 export const sendMessage = async (order, userInfo, message) => {
   const { data } = await Axios.post(
     `/api/messages/${order}/${userInfo._id}`,

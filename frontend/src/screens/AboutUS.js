@@ -39,16 +39,28 @@ function AboutUS() {
                   your entire movie poster collection in one place, as well as
                   share a single poster image or your whole collection with 1
                   person or all the members in the world.
-                  <p>
-                    Once you have subscribed to The Art of Film you will upload
-                    and manage a minimum of 500 posters with dropdown menus to
-                    populate with your own collection information.
-                  </p>
-                  <p>
-                    When uploading your poster images to the showcase you select
-                    the format, country of issue, condition, year of release,
-                    cast and crew, etc.
-                  </p>
+                </p>
+                <p>
+                  Once you have subscribed to The Art of Film you will upload
+                  and manage a minimum of 500 posters with dropdown menus to
+                  populate with your own collection information.
+                </p>
+                <p>
+                  When uploading your poster images to the showcase you select
+                  the format, country of issue, condition, year of release, cast
+                  and crew, etc.
+                </p>
+                <p>
+                  <span>
+                    Contact Henry Coleman the author
+                    <a
+                      className="selection"
+                      href="mailto:henrhenry@theartoffilm.co.uk"
+                    >
+                      {" "}
+                      henry@theartoffilm.co.uk
+                    </a>
+                  </span>
                 </p>
               </div>
             </div>
@@ -58,7 +70,7 @@ function AboutUS() {
                 <img
                   src={"/images/poster-1.jpg"}
                   alt=""
-                  className="img mw-80"
+                  className={`img ${isMobile ? "w-100" : "w-80"}`}
                 />
               </div>
             </div>
@@ -77,16 +89,28 @@ function AboutUS() {
                   your entire movie poster collection in one place, as well as
                   share a single poster image or your whole collection with 1
                   person or all the members in the world.
-                  <p>
-                    Once you have subscribed to The Art of Film you will upload
-                    and manage a minimum of 500 posters with dropdown menus to
-                    populate with your own collection information.
-                  </p>
-                  <p>
-                    When uploading your poster images to the showcase you select
-                    the format, country of issue, condition, year of release,
-                    cast and crew, etc.
-                  </p>
+                </p>
+                <p>
+                  Once you have subscribed to The Art of Film you will upload
+                  and manage a minimum of 500 posters with dropdown menus to
+                  populate with your own collection information.
+                </p>
+                <p>
+                  When uploading your poster images to the showcase you select
+                  the format, country of issue, condition, year of release, cast
+                  and crew, etc.
+                </p>
+                <p>
+                  <span>
+                    Contact Henry Coleman the author
+                    <a
+                      className="selection"
+                      href="mailto:henrhenry@theartoffilm.co.uk"
+                    >
+                      {" "}
+                      henry@theartoffilm.co.uk
+                    </a>
+                  </span>
                 </p>
               </div>
             </div>
@@ -96,7 +120,7 @@ function AboutUS() {
                 <img
                   src={"/images/poster-1.jpg"}
                   alt=""
-                  className="img mw-80"
+                  className={`img ${isMobile ? "w-100" : "w-80"}`}
                 />
               </div>
             </div>
@@ -114,16 +138,28 @@ function AboutUS() {
                 entire movie poster collection in one place, as well as share a
                 single poster image or your whole collection with 1 person or
                 all the members in the world.
-                <p>
-                  Once you have subscribed to The Art of Film you will upload
-                  and manage a minimum of 500 posters with dropdown menus to
-                  populate with your own collection information.
-                </p>
-                <p>
-                  When uploading your poster images to the showcase you select
-                  the format, country of issue, condition, year of release, cast
-                  and crew, etc.
-                </p>
+              </p>
+              <p>
+                Once you have subscribed to The Art of Film you will upload and
+                manage a minimum of 500 posters with dropdown menus to populate
+                with your own collection information.
+              </p>
+              <p>
+                When uploading your poster images to the showcase you select the
+                format, country of issue, condition, year of release, cast and
+                crew, etc.
+              </p>
+              <p>
+                <span>
+                  Contact Henry Coleman the author
+                  <a
+                    className="selection"
+                    href="mailto:henrhenry@theartoffilm.co.uk"
+                  >
+                    {" "}
+                    henry@theartoffilm.co.uk
+                  </a>
+                </span>
               </p>
             </div>
           </div>
@@ -133,7 +169,7 @@ function AboutUS() {
               <img
                 src={"/images/news-paper.png"}
                 alt=""
-                className="img mw-80"
+                className={`img ${isMobile ? "w-100" : "w-80"}`}
               />
             </div>
           </div>

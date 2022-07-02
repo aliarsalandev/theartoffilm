@@ -27,25 +27,25 @@ export default function ProfileScreen() {
     error: errorUpdate,
     loading: loadingUpdate,
   } = userUpdateProfile;
+  const [logo, setLogo] = useState("");
 
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = async (e, forImages = false) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    bodyFormData.append("image", file);
-    // setLoadingUpload(true);
+    bodyFormData.append("file", file);
     try {
       const { data } = await Axios.post("/api/uploads", bodyFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
+          authorization: `Bearer ${userInfo.token}`,
         },
       });
-      console.log(data);
-      // setSellerLogo(data);
-      // setLoadingUpload(false);
-    } catch (error) {
-      // setErrorUpload(error.message);
-      // setLoadingUpload(false);
+      setSeller({ ...seller, logo: data.secure_url });
+      setLogo(data.secure_url);
+      console.log("image upload data", data);
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "UPLOAD_FAIL", payload: err });
     }
   };
 
@@ -94,27 +94,26 @@ export default function ProfileScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
-    const logo = data.get("logo");
+    let password = user.password;
     if (seller.password !== confirmPassword) {
-      alert("Password and Confirm Password Are Not Matched");
+      password = user.password;
     } else {
-      console.log("seller::", seller);
-      dispatch(
-        updateUserProfile({
-          userId: user._id,
-          name: seller.name,
-          email: seller.email,
-          password: seller.password,
-          seller: {
-            name: seller.collection_name,
-            logo: logo.name,
-            description: seller.description,
-            stripe_account_id: seller.stripe_account_id,
-          },
-        })
-      );
+      password = seller.password;
     }
+    dispatch(
+      updateUserProfile({
+        userId: user._id,
+        name: seller.name,
+        email: seller.email,
+        password,
+        seller: {
+          name: seller.collection_name,
+          logo,
+          description: seller.description,
+          stripe_account_id: seller.stripe_account_id,
+        },
+      })
+    );
   };
   return (
     <PageLayout>
@@ -180,12 +179,12 @@ export default function ProfileScreen() {
               ></input>
             </div>
             <div>
-              <label htmlFor="stripe_account_id">Stripe Accound Id</label>
+              <label htmlFor="stripe_account_id">Stripe Account Id</label>
               <input
                 id="stripe_account_id"
                 name={"stripe_account_id"}
                 type="text"
-                placeholder="Enter Stripe Accound Id"
+                placeholder="Enter Stripe Account Id"
                 defaultValue={seller.stripe_account_id}
                 onChange={onChange}
               ></input>

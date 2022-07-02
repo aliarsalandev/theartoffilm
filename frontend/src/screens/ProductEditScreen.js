@@ -232,18 +232,18 @@ export default function ProductEditScreen() {
           ) : (
             <>
               <div>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Movie Poster Title</label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter Movie Poster Title"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 ></input>
               </div>
 
               <div className={"featured-image"}>
-                <label htmlFor="image">Feature ImageImage</label>
+                <label htmlFor="image">Featured Image</label>
                 <img src={image} alt="product" width={100} height={100} />
 
                 <div className={"hide"}>
@@ -284,7 +284,7 @@ export default function ProductEditScreen() {
                 </div>
               </div>
               <div className={"col start"}>
-                {images?.length === 0 && <MessageBox>No image</MessageBox>}
+                {/* {images?.length === 0 && <MessageBox>No image</MessageBox>} */}
                 <ul className={"row start"}>
                   {images?.map((url) => (
                     <li key={url}>
@@ -300,11 +300,11 @@ export default function ProductEditScreen() {
                 <div className="mt-3"></div>
               </div>
               <div>
-                <label htmlFor="images">Poster Images</label>
+                <label htmlFor="images">Additional Poster Images</label>
                 <input
                   type="file"
                   id="images"
-                  label="Choose Image"
+                  label="Choose Additional Image"
                   onChange={(e) => uploadFileHandler(e, true)}
                 ></input>
                 {loadingUpload && <LoadingBox></LoadingBox>}
@@ -418,10 +418,10 @@ export default function ProductEditScreen() {
               </div>
 
               <div>
-                <label htmlFor="origin">Origin</label>
+                <label htmlFor="origin">Country of Origin</label>
                 <Select
                   className="multi-select"
-                  placeholder={"Select Country"}
+                  placeholder={"Select Country of Origin"}
                   defaultValue={{
                     value: product.origin,
                     label: product.origin,
@@ -533,11 +533,11 @@ export default function ProductEditScreen() {
                 ></textarea>
               </div>
               <div>
-                <label htmlFor="countInStock">Count In Stock</label>
+                <label htmlFor="countInStock">In Stock</label>
                 <input
                   id="countInStock"
                   type="number"
-                  placeholder="Enter countInStock"
+                  placeholder="Enter  InStock"
                   value={countInStock}
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></input>
@@ -552,16 +552,19 @@ export default function ProductEditScreen() {
                   onChange={(e) => setPrice(e.target.value)}
                 ></input>
               </div>
-              <div>
-                <label htmlFor="salePrice">Sale Price</label>
-                <input
-                  id="salePrice"
-                  type="number"
-                  placeholder="Enter Sale Price"
-                  value={salePrice}
-                  onChange={(e) => setSalePrice(+e.target.value)}
-                ></input>
-              </div>
+
+              {forSale && (
+                <div>
+                  <label htmlFor="salePrice">Sale Price</label>
+                  <input
+                    id="salePrice"
+                    type="number"
+                    placeholder="Enter Sale Price"
+                    value={salePrice}
+                    onChange={(e) => setSalePrice(+e.target.value)}
+                  ></input>
+                </div>
+              )}
 
               <div className="row">
                 <div>
@@ -574,7 +577,7 @@ export default function ProductEditScreen() {
                       setVisible(e.target.checked);
                     }}
                   ></input>
-                </div>{" "}
+                </div>
                 <div>
                   <label htmlFor="forSale">For Sale</label>
                   <input

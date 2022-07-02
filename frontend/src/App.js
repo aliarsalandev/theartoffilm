@@ -40,6 +40,8 @@ import SettingScreen from "./screens/SettingScreen";
 import AboutUS from "./screens/AboutUS";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Terms from "./screens/Terms";
+import BlogPage from "./screens/BlogPage";
+import PosterGradingCategoriesPage from "./screens/PosterGradingCategoriesPage";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -234,10 +236,17 @@ function App() {
               element={<AdvertiseWithUs />}
             ></Route>
 
+            <Route path="/blog-page" element={<BlogPage />}></Route>
+
             <Route path="/about-us" element={<AboutUS />}></Route>
 
             <Route path="/faq" element={<FAQScreen />}></Route>
             <Route path="/privacy" element={<PrivacyPolicy />}></Route>
+            <Route
+              path="/poster-grading-categories"
+              element={<PosterGradingCategoriesPage />}
+            ></Route>
+
             <Route path="/terms" element={<Terms />}></Route>
             <Route path="/contact" element={<ContactScreen />}></Route>
 

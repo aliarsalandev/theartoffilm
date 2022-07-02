@@ -10,25 +10,25 @@ function Header() {
     GBP: 1,
     USD: 1.22255,
     EUR: 1.164851,
+    JPY: 1,
   });
 
   const [selected_currency, setCurrency] = React.useState({});
-  const updateRates = useCallback(
-    (_rates) => {
-      setRates({
-        ...rates,
-        ...rates,
-      });
-    },
-    [rates]
-  );
+  const updateRates = useCallback((_rates) => {
+    setRates({
+      ...rates,
+      ..._rates,
+    });
+  }, []);
 
   useEffect(() => {
     console.log("SubscriptionEditScreen useEffect");
     setCurrency(JSON.parse(localStorage.getItem("currency")) ?? {});
     CurrencyRates({
       onResult: (result) => {
-        updateRates(result.rates);
+        const rates = JSON.parse(result).rates;
+        console.log(rates);
+        updateRates(rates);
       },
       onError: (error) => {
         console.log("41", error);
@@ -38,28 +38,36 @@ function Header() {
   }, []);
 
   return (
-    <header className="row header">
-      <div>
-        <Link className="brand" to="/">
-          <img height={120} src={"/images/logo.png"} alt={"theartoffilms"} />
-        </Link>
-      </div>
+    <header className="flex column header">
       <div className={"row"}>
-        <div className={"row"}>
-          <div>
-            <Link to="/">Home</Link>
-            <Link to="/faq">FAQs</Link>
-            <Link to="/sellers">Collectors</Link>
-            <Link to="/pricing">Pricing</Link>
+        <div className={"row col-6"}>
+          <div className="social-icons">
+            <a
+              href="https://www.facebook.com/Henry4film/"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <i className="fa-brands fa-facebook"></i>
+            </a>
 
-            {userInfo?.isSeller && (
-              <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
-            )}
+            <a
+              href="https://www.instagram.com/the_artoffilm/?utm_medium=copy_link"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <i className="fa-brands fa-instagram"></i>
+            </a>
 
-            {userInfo && <Link to="/profile">My Account</Link>}
-
-            {!userInfo && <Link to="/signin">Sign In</Link>}
+            <a
+              href="https://www.youtube.com/channel/UCYDDoM6EPQryVyCzW9G-Ryg"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <i className="fa-brands fa-youtube"></i>
+            </a>
           </div>
+        </div>
+        <div className={"row col-6"}>
           <Link to="/cart">
             <i className="fa-solid fa-cart-shopping"></i>
             {cartItems.length > 0 && (
@@ -107,7 +115,44 @@ function Header() {
               >
                 EUR
               </option>
+              <option
+                selected={
+                  selected_currency.currency === "JPY" ? "selected" : ""
+                }
+                value="JPY"
+              >
+                JPY
+              </option>
             </select>
+          </div>
+
+          {userInfo && (
+            <Link className={"ml-2"} to="/profile">
+              My Account
+            </Link>
+          )}
+        </div>
+      </div>
+      <div className={"row"}>
+        <div>
+          <Link className="brand" to="/">
+            <img height={120} src={"/images/logo.png"} alt={"theartoffilms"} />
+          </Link>
+        </div>
+        <div className={"row"}>
+          <div className={"row"}>
+            <div>
+              <Link to="/">Home</Link>
+              <Link to="/sellers">Showcase</Link>
+              <Link to={"/search/name"}>Shop</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="/pricing">Subscriptions</Link>
+              {userInfo?.isSeller && (
+                <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
+              )}
+
+              {!userInfo && <Link to="/signin">Sign In</Link>}
+            </div>
           </div>
         </div>
       </div>

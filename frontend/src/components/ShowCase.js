@@ -69,37 +69,40 @@ function ShowCase({ products = [], onClick }) {
         </span>
       </div>
 
-      <StyleRoot>
-        <Coverflow
-          className={"coverflow"}
-          displayQuantityOfSide={isMobile ? 1 : 2}
-          navigation
-          enableHeading
-          currentFigureScale={1.8}
-          otherFigureScale={1}
-          media={{
-            "@media (max-width: 900px)": {
-              width: "100%",
-              height: "420px",
-            },
-            "@media (min-width: 900px)": {
-              width: "100%",
-              height: "420px",
-            },
-          }}
-        >
-          {filteredProducts.map((product, index) => (
-            <img
-              key={product._id}
-              onClick={() => {
-                onClick(product);
-              }}
-              src={product.image}
-              alt={product.name}
-            />
-          ))}
-        </Coverflow>
-      </StyleRoot>
+      <div className="coverflow-container">
+        <StyleRoot>
+          <Coverflow
+            className={"coverflow"}
+            displayQuantityOfSide={isMobile ? 1 : 2}
+            navigation
+            infiniteScroll
+            // enableHeading
+            currentFigureScale={isMobile ? 2 : 1.5}
+            otherFigureScale={0.4}
+            media={{
+              "@media (max-width: 900px)": {
+                width: "100%",
+                height: "480px",
+              },
+              "@media (min-width: 900px)": {
+                width: "100%",
+                height: "480px",
+              },
+            }}
+          >
+            {filteredProducts.map((product, index) => (
+              <img
+                key={product._id}
+                onClick={() => {
+                  onClick(product);
+                }}
+                src={product.image}
+                alt={product.name}
+              />
+            ))}
+          </Coverflow>
+        </StyleRoot>
+      </div>
     </div>
   );
 }

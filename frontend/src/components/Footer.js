@@ -2,6 +2,7 @@ import React from "react";
 import "./css/footer.css";
 import { Link } from "react-router-dom";
 import ChatBox from "../components/ChatBox";
+import { isMobile } from "react-device-detect";
 
 export default function Footer(props) {
   const userInfo = props;
@@ -10,7 +11,7 @@ export default function Footer(props) {
       {/* !userInfo.isAdmin && */}
       {userInfo && <ChatBox userInfo={userInfo} />}
       <div className="container footer-top">
-        <div className="row top">
+        <div className={`${isMobile ? "column top" : "flex between top"}`}>
           <div className="col md-3">
             <h5 className="mb-3">Get In Touch</h5>
             <div className="icon-with-text mb-1">
@@ -54,7 +55,10 @@ export default function Footer(props) {
               <Link to="/advertise-with-us">Advertise With Us</Link>
               <Link to="/">Posters Condition Grading</Link>
               <Link to="/">Terms & Conditions</Link>
-              <Link to="/">Privacy Policy</Link>
+              <Link to="/poster-grading-categories">
+                Poster Condition Grading
+              </Link>
+              <Link to="/privacy">Privacy Policy</Link>
             </div>
           </div>
           <div className="col md-3">

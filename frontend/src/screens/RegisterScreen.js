@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import Axios from "axios";
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function RegisterScreen(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [isSeller, setisSeller] = useState(false);
-  const [sellerName, setSellerName] = useState();
+  const [sellerName, setSellerName] = useState("");
+  const [description, setDescription] = useState("");
+
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
@@ -28,7 +31,9 @@ export default function RegisterScreen(props) {
     if (password !== confirmPassword) {
       alert("Password and confirm password are not match");
     } else {
-      dispatch(register(name, email, password, sellerName, isSeller));
+      dispatch(
+        register(name, email, password, sellerName, description, isSeller)
+      );
     }
   };
   useEffect(() => {
@@ -105,6 +110,17 @@ export default function RegisterScreen(props) {
                 placeholder="Enter Seller Name"
                 onChange={(e) => setSellerName(e.target.value)}
               ></input>
+            </div>
+
+            <div>
+              <label htmlFor="description">Description</label>
+              <textarea
+                id="description"
+                name={"description"}
+                type="text"
+                placeholder="Enter Description"
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
             </div>
           </>
         )}

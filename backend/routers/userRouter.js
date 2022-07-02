@@ -104,7 +104,7 @@ userRouter.put(
   "/profile",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log(req.body);
+    console.log("profile data", req.body);
     const user = await User.findById(req.user._id);
     if (user) {
       user.name = req.body.name || user.name;

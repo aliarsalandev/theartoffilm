@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useSpring, animated } from "react-spring";
 import "./css/accordion.css";
 function Accordion({ title, text }) {
@@ -20,7 +21,10 @@ function Accordion({ title, text }) {
 
   const openAnimation = useSpring({
     from: { opacity: "0", maxHeight: "48px" },
-    to: { opacity: "1", maxHeight: open ? "200px" : "48px" },
+    to: {
+      opacity: "1",
+      maxHeight: open ? "200px" : isMobile ? "64px" : "48px",
+    },
     config: { duration: "300" },
   });
 

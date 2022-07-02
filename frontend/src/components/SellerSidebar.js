@@ -28,17 +28,14 @@ function SellerSidebar() {
   // };
   return (
     <div className={"seller-sidebar"}>
-      {userInfo && (
-        <div>
-          <h4>
+      <ul>
+        <li className={""}>
+          {userInfo && (
             <Link to="/profile">
               <i className={"fas fa-user"}></i> My Account Information
             </Link>
-          </h4>
-        </div>
-      )}
-      <ul>
-        <li className={"p-2 m-2"}></li>
+          )}
+        </li>
         <li>
           <UploadPoster isLink={true} />
         </li>

@@ -431,12 +431,11 @@ function PrivacyPolicy() {
         <div className="flex column">
           <h2>CONTACT INFORMATION</h2>
           If you have any questions, concerns or complaints, you can contact our
-          privacy officer, Henry Coleman, at:
-          <span className={"selection"}>
-            <a href="mailto:henry@theartoffilm.co.uk">
-              henry@theartoffilm.co.uk
-            </a>
-          </span>
+          privacy officer, Henry Coleman, at:{" "}
+          <a className="selection" href="mailto:henrhenry@theartoffilm.co.uk">
+            {" "}
+            henry@theartoffilm.co.uk
+          </a>
         </div>
       </div>
     </NoSideBarLayout>
