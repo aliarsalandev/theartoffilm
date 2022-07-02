@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 import SampleImage from "../assets/images/sample.jpg";
 
@@ -13,7 +14,7 @@ function ShowCaseCard({
 }) {
   return (
     <div className={`flex between ${reverse ? "row-reverse" : ""} mtb-2`}>
-      <div className="col-md-6 plr-2">
+      <div className="col-md-6 col-xs-12 plr-2">
         <h2>
           <span className={"selection"}>{before}</span> {title}
         </h2>
@@ -23,7 +24,11 @@ function ShowCaseCard({
         </Link>
       </div>
       <div className={`col flex ${reverse ? "start" : "end"}`}>
-        <img src={image} alt="" className="img mw-80" />
+        <img
+          src={image}
+          alt=""
+          className={`img ${isMobile ? "w-100" : "w-80"}`}
+        />
       </div>
     </div>
   );

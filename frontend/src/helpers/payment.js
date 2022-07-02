@@ -10,7 +10,7 @@ export function CurrencyRates({ onResult, onError }) {
   };
 
   fetch(
-    "https://api.apilayer.com/fixer/latest?symbols=USD%2CEUR&base=GBP",
+    "https://api.apilayer.com/fixer/latest?base=GBP&?symbols=JPY%2CEUR%2CUSD",
     requestOptions
   )
     .then((response) => response.text())

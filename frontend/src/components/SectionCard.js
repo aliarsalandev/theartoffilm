@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 
 function SectionCard({
@@ -13,10 +14,10 @@ function SectionCard({
   return (
     <div className="section-card secondary">
       <div
-        className="flex between p-4"
+        className={`${isMobile ? "flex column-reverse" : "flex"} between p-4`}
         style={{ maxWidth: "1140px", margin: "0 auto" }}
       >
-        <div className="col flex column between plr-2">
+        <div className="col flex column between">
           <div className="body">
             <h2>
               <span>{before}</span> {title}
@@ -29,9 +30,13 @@ function SectionCard({
             </Link>
           </div>
         </div>
-        <div className="col flex end">
+        <div className={isMobile ? "" : "col flex end"}>
           {type === "image" ? (
-            <img src={image} alt="" className="img mw-80" />
+            <img
+              src={image}
+              alt=""
+              className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+            />
           ) : (
             <iframe
               frameBorder="0"

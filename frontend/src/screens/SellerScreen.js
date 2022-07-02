@@ -86,7 +86,7 @@ export default function SellerScreen(props) {
 
             {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
 
-            <div className="row center poster-details">
+            <div className="flex row poster-details">
               {currentProduct && (
                 <ul>
                   <li>

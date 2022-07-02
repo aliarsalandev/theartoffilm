@@ -530,6 +530,20 @@ function Terms() {
         <div>
           <h5>Policy Effective From Date: 24th day of January, 2022</h5>
         </div>
+        <div>
+          <p>
+            <span>
+              Contact Henry Coleman the author
+              <a
+                className="selection"
+                href="mailto:henrhenry@theartoffilm.co.uk"
+              >
+                {" "}
+                henry@theartoffilm.co.uk
+              </a>
+            </span>
+          </p>
+        </div>
       </div>
     </NoSideBarLayout>
   );

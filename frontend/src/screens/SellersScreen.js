@@ -72,12 +72,12 @@ export default function SellersScreen(props) {
                       </div>
                     </div>
                   </li>
-                  <li>
+                  {/* <li>
                     <Rating
                       rating={seller.seller.rating}
                       numReviews={seller.seller.numReviews}
                     ></Rating>
-                  </li>
+                  </li> */}
                   <li>
                     <a href={`mailto:${seller.email}`}>Contact Seller</a>
                   </li>

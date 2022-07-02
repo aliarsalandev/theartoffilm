@@ -30,7 +30,8 @@ import {
 } from "../constants/userConstants";
 
 export const register =
-  (name, email, password, seller_name, isSeller) => async (dispatch) => {
+  (name, email, password, seller_name, seller_description, isSeller) =>
+  async (dispatch) => {
     dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });
     try {
       const { data } = await Axios.post("/api/users/register", {
@@ -41,7 +42,7 @@ export const register =
         seller: {
           name: seller_name,
           logo: "",
-          description: "",
+          description: seller_description,
         },
       });
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });

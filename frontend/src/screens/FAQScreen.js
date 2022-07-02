@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "react-device-detect";
 import Accordion from "../components/Accordion";
 
 import HeroSection from "../sections/HeroSection";
@@ -15,7 +16,9 @@ function FAQScreen({ header = true }) {
       )}
 
       <div className="faq-section p-4">
-        <div className="faq-item">
+        <div
+          className={`faq-item ${isMobile ? "flex column-reverse" : "flex"}`}
+        >
           <div className="faq-accordion">
             <h3 className={"title text-start"}>
               <span className="selection">SUBSCRIPTION</span> FAQS
@@ -40,12 +43,20 @@ function FAQScreen({ header = true }) {
             </div>
           </div>
 
-          <div className="faq-image">
-            <img src={"/images/faq.jpg"} alt="" className="img mw-80" />
+          <div className="faq-image text-end">
+            <img
+              src={"/images/faq.jpg"}
+              alt=""
+              className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+            />
           </div>
         </div>
 
-        <div className="faq-item">
+        <div
+          className={`faq-item ${
+            isMobile ? "flex column-reverse" : "flex row-reverse"
+          }`}
+        >
           <div className="faq-accordion">
             <h3 className={"title text-start"}>
               <span className="selection">SHOWCASE</span> FAQS
@@ -71,11 +82,17 @@ function FAQScreen({ header = true }) {
           </div>
 
           <div className="faq-image">
-            <img src={"/images/faq1.jpg"} alt="" className="img mw-80" />
+            <img
+              src={"/images/faq1.jpg"}
+              alt=""
+              className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+            />
           </div>
         </div>
 
-        <div className="faq-item">
+        <div
+          className={`faq-item ${isMobile ? "flex column-reverse" : "flex"}`}
+        >
           <div className="faq-accordion">
             <h3 className={"title text-start"}>
               <span className="selection">BUY & SELL</span> FAQS
@@ -100,8 +117,12 @@ function FAQScreen({ header = true }) {
             </div>
           </div>
 
-          <div className="faq-image">
-            <img src={"/images/faq2.jpg"} alt="" className="img mw-80" />
+          <div className="faq-image text-end">
+            <img
+              src={"/images/faq2.jpg"}
+              alt=""
+              className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+            />
           </div>
         </div>
       </div>
