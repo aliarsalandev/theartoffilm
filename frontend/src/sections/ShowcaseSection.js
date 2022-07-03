@@ -14,7 +14,7 @@ function ShowCaseCard({
 }) {
   return (
     <div className={`flex between ${reverse ? "row-reverse" : ""} mtb-2`}>
-      <div className="col-md-6 col-xs-12 plr-2">
+      <div className={`col-md-6 col-xs-12 ${isMobile ? "" : "plr-2"}`}>
         <h2>
           <span className={"selection"}>{before}</span> {title}
         </h2>

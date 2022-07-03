@@ -95,7 +95,7 @@ export default function SearchScreen(props) {
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
-            <div>
+            <div className={"p-2"}>
               {
                 products.filter(
                   (product) =>
@@ -107,7 +107,7 @@ export default function SearchScreen(props) {
               Results
             </div>
           )}
-          <div>
+          <div className={"p-2"}>
             Sort by{" "}
             <select
               value={order}
@@ -122,8 +122,8 @@ export default function SearchScreen(props) {
             </select>
           </div>
         </div>
-        <div className="row top">
-          <div className="col-1">
+        <div className={`flex ${isMobile ? "column" : "row"} top`}>
+          <div className={`col-1`}>
             {/* <h3>Department</h3>
           <div>
             {loadingCategories ? (
@@ -153,165 +153,164 @@ export default function SearchScreen(props) {
               </ul>
             )}
           </div> */}
-            <div>
-              <div className="form-group">
-                <label>Directors</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ directors: e.target.value }));
-                  }}
-                >
-                  <option value="">Directors</option>
-                  {directors?.map((director) => (
-                    <option key={director._id} value={director._id}>
-                      {director.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Directors</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ directors: e.target.value }));
+                }}
+              >
+                <option value="">Directors</option>
+                {directors?.map((director) => (
+                  <option key={director._id} value={director._id}>
+                    {director.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Casts</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ casts: e.target.value }));
-                  }}
-                >
-                  <option value="">Casts</option>
-                  {casts?.map((cast) => (
-                    <option key={cast._id} value={cast._id}>
-                      {cast.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Casts</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ casts: e.target.value }));
+                }}
+              >
+                <option value="">Casts</option>
+                {casts?.map((cast) => (
+                  <option key={cast._id} value={cast._id}>
+                    {cast.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Artists</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ artists: e.target.value }));
-                  }}
-                >
-                  <option value="">Artists</option>
-                  {artists?.map((artist) => (
-                    <option key={artist._id} value={artist._id}>
-                      {artist.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Artists</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ artists: e.target.value }));
+                }}
+              >
+                <option value="">Artists</option>
+                {artists?.map((artist) => (
+                  <option key={artist._id} value={artist._id}>
+                    {artist.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Country of Origins</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ origin: e.target.value }));
-                  }}
-                >
-                  <option value="">Origin</option>
-                  {data.origins?.map((origin) => (
-                    <option key={origin.code} value={origin.code}>
-                      {origin.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Country of Origins</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ origin: e.target.value }));
+                }}
+              >
+                <option value="">Origin</option>
+                {data.origins?.map((origin) => (
+                  <option key={origin.code} value={origin.code}>
+                    {origin.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Year</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ year: e.target.value }));
-                  }}
-                >
-                  <option value="">Year</option>
-                  {Array.from(
-                    Array(new Date().getFullYear() - 1929).keys()
-                  )?.map((year) => (
+            <div className="form-group">
+              <label>Year</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ year: e.target.value }));
+                }}
+              >
+                <option value="">Year</option>
+                {Array.from(Array(new Date().getFullYear() - 1929).keys())?.map(
+                  (year) => (
                     <option key={year} value={year + 1930}>
                       {year + 1930}
                     </option>
-                  ))}
-                </select>
-              </div>
+                  )
+                )}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Condition</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ condition: e.target.value }));
-                  }}
-                >
-                  <option value="">Condition</option>
-                  {data.conditions?.map(({ label, value }) => (
-                    <option key={label} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Condition</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ condition: e.target.value }));
+                }}
+              >
+                <option value="">Condition</option>
+                {data.conditions?.map(({ label, value }) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Format</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ format: e.target.value }));
-                  }}
-                >
-                  <option value="">Format</option>
-                  {data.formats?.map(({ label, value }) => (
-                    <option key={label} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Rolled Folded</label>
-                <select
-                  className={"form-control"}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ rolledFolded: e.target.value }));
-                  }}
-                >
-                  <option value="">Rolled Folded</option>
-                  {data.rolledFolded?.map(({ label, value }) => (
-                    <option key={label} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="form-group">
+              <label>Format</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ format: e.target.value }));
+                }}
+              >
+                <option value="">Format</option>
+                {data.formats?.map(({ label, value }) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="form-group">
-                <label>Price</label>
-                <div className={"flex column"}>
-                  {prices.map((p) => (
-                    <Link
-                      key={p.name}
-                      style={{ cursor: "pointer" }}
-                      to={getFilterUrl({ min: p.min, max: p.max })}
+            <div className="form-group">
+              <label>Rolled Folded</label>
+              <select
+                className={"form-control"}
+                onChange={(e) => {
+                  navigate(getFilterUrl({ rolledFolded: e.target.value }));
+                }}
+              >
+                <option value="">Rolled Folded</option>
+                {data.rolledFolded?.map(({ label, value }) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Price</label>
+              <div className={"flex column"}>
+                {prices.map((p) => (
+                  <Link
+                    key={`${p.name}_${Math.random()}`}
+                    style={{ cursor: "pointer" }}
+                    to={getFilterUrl({ min: p.min, max: p.max })}
+                  >
+                    <span
+                      className={
+                        `selection ${p.min}-${p.max}` === `${min}-${max}`
+                          ? "active"
+                          : ""
+                      }
                     >
-                      <span
-                        className={
-                          `selection ${p.min}-${p.max}` === `${min}-${max}`
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        {p.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                      {p.name}
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
             {/* <div>
@@ -331,7 +330,7 @@ export default function SearchScreen(props) {
           </div> */}
           </div>
 
-          <div className="col-3">
+          <div className={`col-3`}>
             {loading ? (
               <LoadingBox></LoadingBox>
             ) : error ? (
@@ -341,8 +340,9 @@ export default function SearchScreen(props) {
                 {!products && <MessageBox>No Poster Found</MessageBox>}
 
                 <div
-                  className="row center"
-                  style={{ flexDirection: isMobile ? "column" : "row" }}
+                  className={`flex ${
+                    isMobile ? "column center" : "row start top plr-2"
+                  } `}
                 >
                   {products.map((product) => {
                     const show =

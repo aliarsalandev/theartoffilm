@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { isMobile } from "react-device-detect";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CurrencyRates } from "../helpers/payment";
@@ -134,26 +135,26 @@ function Header() {
         </div>
       </div>
       <div className={"row"}>
-        <div>
-          <Link className="brand" to="/">
-            <img height={120} src={"/images/logo.png"} alt={"theartoffilms"} />
+        <div className={`flex ${isMobile ? "column center w-100" : "row"} `}>
+          <Link className="flex center brand" to="/">
+            <img
+              height={isMobile ? 60 : 96}
+              src={"/images/logo.png"}
+              alt={"theartoffilms"}
+            />
           </Link>
         </div>
         <div className={"row"}>
-          <div className={"row"}>
-            <div>
-              <Link to="/">Home</Link>
-              <Link to="/sellers">Showcase</Link>
-              <Link to={"/search/name"}>Shop</Link>
-              <Link to="/faq">FAQ</Link>
-              <Link to="/pricing">Subscriptions</Link>
-              {userInfo?.isSeller && (
-                <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
-              )}
+          <Link to="/">Home</Link>
+          <Link to="/sellers">Showcase</Link>
+          <Link to={"/search/name"}>Shop</Link>
+          <Link to="/faq">FAQ</Link>
+          <Link to="/pricing">Subscriptions</Link>
+          {userInfo?.isSeller && (
+            <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
+          )}
 
-              {!userInfo && <Link to="/signin">Sign In</Link>}
-            </div>
-          </div>
+          {!userInfo && <Link to="/signin">Sign In</Link>}
         </div>
       </div>
     </header>
