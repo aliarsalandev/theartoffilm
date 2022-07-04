@@ -11,6 +11,7 @@ import {
   PRODUCT_DELETE_RESET,
 } from "../constants/productConstants";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
+import PageLayout from "../layouts/page";
 
 export default function ProductListScreen(props) {
   const navigate = useNavigate();
@@ -70,10 +71,7 @@ export default function ProductListScreen(props) {
   };
 
   return (
-    <div className={"row top"}>
-      <div className="col-1">
-        <SellerSidebar />
-      </div>
+    <PageLayout>
       <div className={"ml-3 col-3"}>
         <div>
           <div className="row">
@@ -168,6 +166,6 @@ export default function ProductListScreen(props) {
           )}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

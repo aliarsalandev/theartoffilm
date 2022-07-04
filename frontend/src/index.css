@@ -1354,7 +1354,7 @@ h4 {
 .bold {
   font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
-  font-size: 24px;
+  font-size: 1em;
 }
 
 .messages li {

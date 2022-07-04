@@ -7,6 +7,7 @@ import MessageBox from "../components/MessageBox";
 import SellerSidebar from "../components/SellerSidebar";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 import { unreadMessages } from "../helpers/media";
+import PageLayout from "../layouts/page";
 
 export default function OrderListScreen(props) {
   const navigate = useNavigate();
@@ -42,10 +43,7 @@ export default function OrderListScreen(props) {
     }
   };
   return (
-    <div className={"row top"}>
-      <div className="col-1">
-        <SellerSidebar />
-      </div>
+    <PageLayout>
       <div className={"ml-3 col-3"}>
         <div>
           <h1 className={"title"}>Orders</h1>
@@ -121,6 +119,6 @@ export default function OrderListScreen(props) {
           )}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

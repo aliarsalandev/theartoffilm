@@ -29,6 +29,9 @@ export default function SellerScreen(props) {
   } = productList;
   const [currentProduct, setCurrentProduct] = React.useState();
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(detailsUser(sellerId));
@@ -52,7 +55,9 @@ export default function SellerScreen(props) {
         <>
           <div className="flex center pt-2">
             {currentProduct?.seller._id === sellerId ? (
-              <h2 className={"title2"}>{currentProduct?.seller.seller.name}</h2>
+              <h2 className={"title2"}>
+                {currentProduct?.seller.seller?.name}
+              </h2>
             ) : (
               ""
             )}
@@ -76,7 +81,7 @@ export default function SellerScreen(props) {
                       {currentProduct.name}
                     </td>
                     <td className="director-label text-right">
-                      {currentProduct?.seller._id === sellerId && (
+                      {currentProduct?.seller._id === userInfo._id && (
                         <Link to={`/product/${currentProduct._id}/edit`}>
                           Edit
                         </Link>

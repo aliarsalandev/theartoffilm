@@ -544,7 +544,7 @@ export default function ProductEditScreen() {
 
               <div className="row">
                 <div>
-                  <label htmlFor="visible">Keep Poster Private</label>
+                  <label htmlFor="visible">Keep Poster Public</label>
                   <input
                     id="visible"
                     type="checkbox"
