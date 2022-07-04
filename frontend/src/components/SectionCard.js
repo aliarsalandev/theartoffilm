@@ -19,15 +19,22 @@ function SectionCard({
       >
         <div className="col flex column between">
           <div className="body">
-            <h2>
-              <span>{before}</span> {title}
+            <h2 className={"text-start"}>
+              <span className={"selection"}>{before}</span> {title}
             </h2>
             <p>{text}</p>
           </div>
+          <br />
+          <br />
           <div className="footer">
-            <Link to={link} className="button primary">
+            <a
+              href={link}
+              target={"_blank"}
+              className="button primary"
+              rel="noreferrer"
+            >
               {linkText}
-            </Link>
+            </a>
           </div>
         </div>
         <div className={isMobile ? "" : "col flex end"}>

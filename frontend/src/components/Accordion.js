@@ -14,7 +14,7 @@ function Accordion({ title, text }) {
   const styles = {
     //if open is true, change color of title
     accordionTitle: {
-      color: open ? "#10d6f5" : "var(--accent-color)",
+      color: open ? "#ffffff" : "var(--accent-color)",
     },
   };
   //open animation with react spring
@@ -23,7 +23,7 @@ function Accordion({ title, text }) {
     from: { opacity: "0", maxHeight: "48px" },
     to: {
       opacity: "1",
-      maxHeight: open ? "200px" : isMobile ? "64px" : "48px",
+      maxHeight: open ? "200px" : isMobile ? "64px" : "24px",
     },
     config: { duration: "300" },
   });
@@ -36,7 +36,7 @@ function Accordion({ title, text }) {
     },
     to: {
       transform: open ? "rotate(180deg)" : "rotate(0deg)",
-      color: open ? "#10d6f5" : "#fff",
+      color: open ? "#ffffff" : "#fff",
     },
     config: { duration: "120" },
   });

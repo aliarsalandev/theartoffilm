@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { detailsProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import data from "../data";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function ProductScreen() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState("");
   const { currency, rates } = useCurrency();
@@ -17,7 +17,6 @@ export default function ProductScreen() {
   const params = useParams();
   const { id: productId } = params;
 
-  const [qty, setQty] = useState(1);
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
@@ -25,12 +24,15 @@ export default function ProductScreen() {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
-  const addToCartHandler = () => {
-    navigate(`/cart/${productId}?qty=${qty}`);
-  };
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   return (
-    <div className={`${isMobile ? "mobile-page-padding" : "page-padding"}`}>
+    <div
+      className={`bg-light-dark ${
+        isMobile ? "mobile-page-padding" : "page-padding"
+      }`}
+    >
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -38,11 +40,17 @@ export default function ProductScreen() {
       ) : (
         <div>
           <div className="p-2">
-            <Link to={`/product/${product._id}/edit`}>Back to result</Link>
+            <Link
+              to={userInfo ? `/product/${product._id}/edit` : `/search/name`}
+            >
+              {userInfo?.isSeller || userInfo?.isAdmin
+                ? "Back to result"
+                : "Back to Shop"}
+            </Link>
           </div>
           <div className="mb-3"></div>
           <div className={`${isMobile ? "column" : "flex"} top`}>
-            <div className="col-2 col-xs-12">
+            <div className="flex column col-3 col-xs-12">
               <img
                 className="large"
                 src={selectedImage || product.image}
@@ -66,82 +74,95 @@ export default function ProductScreen() {
               <table style={{ width: "100%" }}>
                 <tbody>
                   <tr style={{ width: "100%" }}>
-                    <td>
+                    <td style={{ width: "100%" }}>
                       <h1>{product.name}</h1>
                     </td>
                     <td></td>
                   </tr>
 
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Directors</td>
-                    <td className="director-label text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Directors</td>
+                    <td className="bold director-label text-right">
                       {product.directors?.map((director) => (
                         <span key={director.name}>{director.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Casts</td>
-                    <td className="cast-label text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Casts</td>
+                    <td className="bold cast-label text-right">
                       {product.casts?.map((cast) => (
                         <span key={cast.name}>{cast.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Artists</td>
-                    <td className="artist-label text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Artists</td>
+                    <td className="bold artist-label text-right">
                       {product.artists?.map((artist) => (
                         <span key={artist.name}>{artist.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Origin</td>
-                    <td className="origin-label text-right">
-                      {product.origin}
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
+                      Country of Origin
+                    </td>
+                    <td className="bold   text-right">
+                      {
+                        data.origins.find(({ code }) => code === product.origin)
+                          ?.name
+                      }
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Year</td>
-                    <td className={" text-right"}>{product.year}</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Year</td>
+                    <td className={"bold text-right"}>{product.year}</td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Format</td>
-                    <td className="format-label  text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Format</td>
+                    <td className="bold format-label  text-right">
                       {product.format}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Condition</td>
-                    <td className="condition-label  text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold bold td-title text-accent"}>
+                      Condition
+                    </td>
+                    <td className="bold condition-label  text-right">
                       {product.condition}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className={"bold td-title"}>Rolled / Folded</td>
-                    <td className="rolledFolded-label  text-right">
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
+                      Rolled / Folded
+                    </td>
+                    <td className="bold rolledFolded-label  text-right">
                       {product.rolledFolded}
                     </td>
                   </tr>
-                  <tr style={{ width: "100%" }}>
-                    <td className="bold td-title">Description</td>
-                    <td className={" text-right"}>{product.description}</td>
-                  </tr>
-                  <tr
-                    style={{
-                      textDecoration: product.salePrice ? "trne-through" : "",
-                    }}
-                  >
-                    <td className="bold td-title">Price</td>
-                    <td className="price text-right">
-                      {symbol} {(rates[currency] * product.price).toFixed(2)}
-                    </td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className="bold td-title text-accent">Description</td>
+                    <td className={"bold text-right"}>{product.description}</td>
                   </tr>
                   {product.salePrice > 0 && (
-                    <tr className={"price"}>
-                      <td>Sale Price : {symbol}</td>
-                      <td className={"text-right"}>
+                    <tr
+                      className={"flex align-center"}
+                      style={{
+                        textDecoration: product.salePrice ? "trne-through" : "",
+                      }}
+                    >
+                      <td className="bold td-title text-accent">Price</td>
+                      <td className="bold line-through price text-right">
+                        {symbol} {(rates[currency] * product.price).toFixed(2)}
+                      </td>
+                    </tr>
+                  )}
+                  {product.salePrice > 0 && (
+                    <tr className={"flex"}>
+                      <td className="bold td-title text-accent">Sale Price</td>
+                      <td className={"bold text-right"}>
+                        {symbol}{" "}
                         {(rates[currency] * product.salePrice).toFixed(2)}
                       </td>
                     </tr>

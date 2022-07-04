@@ -1,0 +1,10 @@
+.cover-flow > div div {
+  background-color: transparent !important;
+  color: var(--accent-color) !important;
+  font-size: 2rem;
+}
+.properties {
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+}

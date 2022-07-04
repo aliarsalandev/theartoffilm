@@ -194,7 +194,7 @@ productRouter.post(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
-      name: `Product ${Date.now()}`,
+      name: `Poster ${Date.now()}`,
       seller: req.user._id,
       image: "",
       images: [],

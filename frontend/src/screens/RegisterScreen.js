@@ -13,7 +13,7 @@ export default function RegisterScreen(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [isSeller, setisSeller] = useState(false);
+  const [isSeller, setisSeller] = useState(true);
   const [sellerName, setSellerName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -42,10 +42,10 @@ export default function RegisterScreen(props) {
     }
   }, [navigate, redirect, userInfo]);
   return (
-    <div>
+    <div className={"bg-light-dark"} style={{ padding: "4em 0" }}>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Create Account</h1>
+          <h1 className={"title"}>Create Account</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -91,39 +91,25 @@ export default function RegisterScreen(props) {
         </div>
 
         <div>
-          <label htmlFor="seller">Become a Seller</label>
+          <label htmlFor="_name">Collection Name</label>
           <input
-            id="isSeller"
-            type="checkbox"
-            checked={isSeller}
-            onChange={(e) => setisSeller(e.target.checked)}
+            id="_name"
+            type="text"
+            placeholder="Enter Seller Name"
+            onChange={(e) => setSellerName(e.target.value)}
           ></input>
         </div>
-        {isSeller && (
-          <>
-            <h2>Collection Info</h2>
-            <div>
-              <label htmlFor="_name">Collection Name</label>
-              <input
-                id="_name"
-                type="text"
-                placeholder="Enter Seller Name"
-                onChange={(e) => setSellerName(e.target.value)}
-              ></input>
-            </div>
 
-            <div>
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name={"description"}
-                type="text"
-                placeholder="Enter Description"
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-            </div>
-          </>
-        )}
+        <div>
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            name={"description"}
+            type="text"
+            placeholder="Enter Description"
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </div>
 
         <div>
           <label />

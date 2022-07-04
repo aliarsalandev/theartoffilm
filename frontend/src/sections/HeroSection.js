@@ -10,14 +10,18 @@ function Hero({
 }) {
   return (
     <div
-      className="section fh"
+      className="section fh p-2"
       style={{
         position: "relative",
         backgroundImage: `url(${image})`,
       }}
     >
-      <h1>{heading}</h1>
-      {heading2 && <h2>{heading2}</h2>}
+      <h1 className={"title"}>{heading}</h1>
+      {heading2 && (
+        <h2 className={"text-center text-md"} style={{ margin: "0 auto" }}>
+          {heading2}
+        </h2>
+      )}
       {showSearch && (
         <div className="">
           <div>

@@ -6,72 +6,55 @@ import HeroSection from "../sections/HeroSection";
 
 function AdvertiseWithUs() {
   return (
-    <div>
+    <div className={"bg-light-dark"}>
       <HeroSection
         heading={"Advertise With Us"}
         heading2=""
         image="/images/banner-1.png"
       />
-      <div className="flex column column-center ptb-4">
-        <h3 className={"title2"}>
-          <span className={"selection"}>ADVERTISE WITH THE ART OF FILM</span>
-        </h3>
-        <h1 className={"title"}>
-          <span className={"selection"}>ADVERTISING</span> OPTIONS
-        </h1>
+      <div className="flex column column-center ptb-4 bg-dark">
+        <h5 className={"text-md"}>
+          <span className={"selection"}>ADVERTISE WITH</span> THE ART OF FILM
+        </h5>
+        <h2 className={"title2"}>
+          <span className="selection">ADVERTISING</span> OPTIONS
+        </h2>
+        <br />
         <p style={{ maxWidth: isMobile ? "90%" : "60%", textAlign: "center" }}>
           You do not have to subscribe in order to advertise with The Art of
           Film. If you have any questions about our advertising options please
-          <p>
-            <span>
-              Contact Henry Coleman the author
-              <a
-                className="selection"
-                href="mailto:henrhenry@theartoffilm.co.uk"
-              >
-                {" "}
-                henry@theartoffilm.co.uk
-              </a>
-            </span>
-          </p>
+          Contact Henry Coleman the author
+          <a className="" href="mailto:henrhenry@theartoffilm.co.uk">
+            {" "}
+            henry@theartoffilm.co.uk
+          </a>
         </p>
       </div>
 
-      <div className="showcase-section p-2">
+      <div className="showcase-section p-2 bg-light-dark">
         <div className="p-2">
           <div className="row start top">
             <div className="section start col-md-6 col-xs-12">
               <div className="p-2">
-                <h2>
-                  <span>Showcase</span> YOUR MOVIE POSTERS
+                <h2 className={"text-start"}>
+                  <span className={"selection"}>SPONSORED</span> LINKS
                 </h2>
                 <p>
-                  In The Art of Film showcase you can collate, edit and view
-                  your entire movie poster collection in one place, as well as
-                  share a single poster image or your whole collection with 1
-                  person or all the members in the world.
-                </p>
-                <p>
-                  Once you have subscribed to The Art of Film you will upload
-                  and manage a minimum of 500 posters with dropdown menus to
-                  populate with your own collection information.
-                </p>
-                <p>
-                  When uploading your poster images to the showcase you select
-                  the format, country of issue, condition, year of release, cast
-                  and crew, etc.
-                </p>
-                <p>
-                  <span>
-                    Contact Henry Coleman the author
-                    <a
-                      className="selection"
-                      href="mailto:henrhenry@theartoffilm.co.uk"
-                    >
-                      {" "}
-                      henry@theartoffilm.co.uk
-                    </a>
-                  </span>
+                  Sponsored Links are external links embedded in an image that
+                  links directly to your website. These links will appear on
+                  multiple pages throughout our Site. Each sponsored link is
+                  priced at £25 per month or £250 for a year (2 months free).
+                  Please select your preference when you ‘Add to Cart’. Once you
+                  have purchased your sponsored link a member of The Art of Film
+                  will be in touch to discuss the requirements and artwork for
+                  your advert. Contact Henry Coleman the author
+                  <a
+                    className="selection"
+                    href="mailto:henrhenry@theartoffilm.co.uk"
+                  >
+                    {" "}
+                    henry@theartoffilm.co.uk
+                  </a>
                 </p>
               </div>
             </div>
@@ -92,36 +75,16 @@ function AdvertiseWithUs() {
           <div className="row start top">
             <div className="section start col-md-6 col-xs-12">
               <div className="p-2">
-                <h2>
-                  <span>Showcase</span> YOUR MOVIE POSTERS
+                <h2 className={"text-start"}>
+                  <span className={"selection"}>HOMEPAGE</span> BANNER
                 </h2>
                 <p>
-                  In The Art of Film showcase you can collate, edit and view
-                  your entire movie poster collection in one place, as well as
-                  share a single poster image or your whole collection with 1
-                  person or all the members in the world.
-                </p>
-                <p>
-                  Once you have subscribed to The Art of Film you will upload
-                  and manage a minimum of 500 posters with dropdown menus to
-                  populate with your own collection information.
-                </p>
-                <p>
-                  When uploading your poster images to the showcase you select
-                  the format, country of issue, condition, year of release, cast
-                  and crew, etc.
-                </p>
-                <p>
-                  <span>
-                    Contact Henry Coleman the author
-                    <a
-                      className="selection"
-                      href="mailto:henrhenry@theartoffilm.co.uk"
-                    >
-                      {" "}
-                      henry@theartoffilm.co.uk
-                    </a>
-                  </span>
+                  Advertise your business on The Art of Film homepage. Homepage
+                  advertisements are slightly larger than web listings, however
+                  there is limited premium space available. The price of a
+                  homepage banner is £350 per year. Once you have purchased your
+                  homepage advertising a member of The Art of Film will be in
+                  touch to discuss the artwork for your advert.
                 </p>
               </div>
             </div>
@@ -141,36 +104,26 @@ function AdvertiseWithUs() {
         <div className="row start top">
           <div className="section start col-md-6 col-xs-12">
             <div className="p-2">
-              <h2>
-                <span>Showcase</span> YOUR MOVIE POSTERS
+              <h2 className={"text-start"}>
+                <span className={"selection"}>ADVERTORIAL</span>
               </h2>
               <p>
-                In The Art of Film showcase you can collate, edit and view your
-                entire movie poster collection in one place, as well as share a
-                single poster image or your whole collection with 1 person or
-                all the members in the world.
-              </p>
-              <p>
-                Once you have subscribed to The Art of Film you will upload and
-                manage a minimum of 500 posters with dropdown menus to populate
-                with your own collection information.
-              </p>
-              <p>
-                When uploading your poster images to the showcase you select the
-                format, country of issue, condition, year of release, cast and
-                crew, etc.
-              </p>
-              <p>
-                <span>
-                  Contact Henry Coleman the author
-                  <a
-                    className="selection"
-                    href="mailto:henrhenry@theartoffilm.co.uk"
-                  >
-                    {" "}
-                    henry@theartoffilm.co.uk
-                  </a>
-                </span>
+                Create an advertorial for your business and have this appear as
+                a homepage feature, a blog and it will also be pushed on all The
+                Art of Film social media platforms. The content of your
+                advertorial must include valuable content for movie poster
+                enthusiasts and will include links directly to your website. The
+                price of an advertorial is £500. Once you have purchased your
+                advertorial a member of The Art of Film will be in touch to
+                discuss the artwork for your advert. Contact Henry Coleman the
+                author
+                <a
+                  className="selection"
+                  href="mailto:henrhenry@theartoffilm.co.uk"
+                >
+                  {" "}
+                  henry@theartoffilm.co.uk
+                </a>
               </p>
             </div>
           </div>

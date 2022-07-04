@@ -19,6 +19,7 @@ import MultiSelectDropdown from "../components/MultiSelectDropdown";
 import Select from "react-select";
 import SellerSidebar from "../components/SellerSidebar";
 import data from "../data";
+import PageLayout from "../layouts/page";
 
 export default function ProductEditScreen() {
   const params = useParams();
@@ -40,7 +41,6 @@ export default function ProductEditScreen() {
   const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(false);
   const [forSale, setForSale] = useState(false);
-  const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -104,7 +104,6 @@ export default function ProductEditScreen() {
       setFormat(product.format);
       setCondition(product.condition);
       setRolledFolded(product.rolledFolded);
-      setCountInStock(product.countInStock);
       setDescription(product.description);
       setVisible(product.visible);
       setForSale(product.forSale);
@@ -162,7 +161,7 @@ export default function ProductEditScreen() {
         format,
         condition,
         rolledFolded,
-        countInStock,
+        countInStock: 1,
         description,
         visible,
         forSale,
@@ -205,18 +204,15 @@ export default function ProductEditScreen() {
   };
 
   return (
-    <div className={"row top"}>
-      <div className="col-1">
-        <SellerSidebar />
-      </div>
+    <PageLayout>
       <div className={"col-3"}>
         <form className="form" onSubmit={submitHandler}>
           <div>
-            <h1>Edit Product {productId}</h1>
+            <h1 className={"title"}>Edit Poster</h1>
             <div className="min-30">
               {product && (
                 <Link to={`/product/${product._id}`} target="_blank">
-                  View Product
+                  View Poster
                 </Link>
               )}
             </div>
@@ -241,7 +237,6 @@ export default function ProductEditScreen() {
                   onChange={(e) => setName(e.target.value)}
                 ></input>
               </div>
-
               <div className={"featured-image"}>
                 <label htmlFor="image">Featured Image</label>
                 <img src={image} alt="product" width={100} height={100} />
@@ -257,7 +252,6 @@ export default function ProductEditScreen() {
                   ></input>
                 </div>
               </div>
-
               <div className={"attachement-images"}>
                 <input
                   type="file"
@@ -271,7 +265,6 @@ export default function ProductEditScreen() {
                 )}
                 <div className="mt-3"></div>
               </div>
-
               <div>
                 <div className={"hide"}>
                   <label htmlFor="image">Images</label>
@@ -312,7 +305,6 @@ export default function ProductEditScreen() {
                   <MessageBox variant="danger">{errorUpload}</MessageBox>
                 )}
               </div>
-
               <div>
                 <label htmlFor="directors">Directors</label>
                 <MultiSelectDropdown
@@ -381,7 +373,6 @@ export default function ProductEditScreen() {
                   }}
                 />
               </div>
-
               <div>
                 <label htmlFor="directors">Artists</label>
                 <MultiSelectDropdown
@@ -416,7 +407,6 @@ export default function ProductEditScreen() {
                   }}
                 />
               </div>
-
               <div>
                 <label htmlFor="origin">Country of Origin</label>
                 <Select
@@ -435,7 +425,6 @@ export default function ProductEditScreen() {
                   }}
                 />
               </div>
-
               <div>
                 <label htmlFor="year">Year</label>
                 <Select
@@ -453,7 +442,6 @@ export default function ProductEditScreen() {
                   }}
                 />
               </div>
-
               <div>
                 <label htmlFor="format">Format</label>
 
@@ -485,7 +473,6 @@ export default function ProductEditScreen() {
                   }}
                 />
               </div>
-
               <div>
                 <label htmlFor="rolledFolded">Rolled / Folded</label>
                 <Select
@@ -532,7 +519,7 @@ export default function ProductEditScreen() {
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
-              <div>
+              {/* <div>
                 <label htmlFor="countInStock">In Stock</label>
                 <input
                   id="countInStock"
@@ -541,34 +528,23 @@ export default function ProductEditScreen() {
                   value={countInStock}
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></input>
-              </div>
-              <div>
-                <label htmlFor="price">Price</label>
-                <input
-                  id="price"
-                  type="number"
-                  placeholder="Enter price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                ></input>
-              </div>
-
+              </div> */}
               {forSale && (
                 <div>
-                  <label htmlFor="salePrice">Sale Price</label>
+                  <label htmlFor="price">PRODUCT MARKET VALUE</label>
                   <input
-                    id="salePrice"
+                    id="price"
                     type="number"
-                    placeholder="Enter Sale Price"
-                    value={salePrice}
-                    onChange={(e) => setSalePrice(+e.target.value)}
+                    placeholder="Enter price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
                   ></input>
                 </div>
               )}
 
               <div className="row">
                 <div>
-                  <label htmlFor="visible">Visibility</label>
+                  <label htmlFor="visible">Keep Poster Private</label>
                   <input
                     id="visible"
                     type="checkbox"
@@ -591,6 +567,19 @@ export default function ProductEditScreen() {
                 </div>
               </div>
 
+              {forSale && (
+                <div>
+                  <label htmlFor="salePrice">Sale Price</label>
+                  <input
+                    id="salePrice"
+                    type="number"
+                    placeholder="Enter Sale Price"
+                    value={salePrice}
+                    onChange={(e) => setSalePrice(+e.target.value)}
+                  ></input>
+                </div>
+              )}
+
               <div>
                 <label></label>
                 <button className="primary" type="submit">
@@ -601,6 +590,6 @@ export default function ProductEditScreen() {
           )}
         </form>
       </div>
-    </div>
+    </PageLayout>
   );
 }

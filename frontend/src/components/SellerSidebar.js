@@ -27,12 +27,14 @@ function SellerSidebar() {
   //   dispatch(createProduct());
   // };
   return (
-    <div className={"seller-sidebar"}>
-      <ul>
+    <div className={"seller-sidebar bg-dark"} style={{ height: "100vh" }}>
+      <ul className={"list-type-none"}>
         <li className={""}>
           {userInfo && (
             <Link to="/profile">
-              <i className={"fas fa-user"}></i> My Account Information
+              <span className={"link"}>
+                <i className={"fas fa-user"}></i> My Account Information
+              </span>
             </Link>
           )}
         </li>
@@ -40,17 +42,17 @@ function SellerSidebar() {
           <UploadPoster isLink={true} />
         </li>
         <li>
-          <Link to="/productlist/seller">
+          <Link className={"link"} to="/productlist/seller">
             <i className={"fas fa-list"}></i> Poster List
           </Link>
         </li>
         <li>
-          <Link to="/user/subscriptions">
+          <Link className={"link"} to="/user/subscriptions">
             <i className={"fas fa-list"}></i> My Subscriptions
           </Link>
         </li>
         <li>
-          <Link to={`/seller/${userInfo._id}`}>
+          <Link className={"link"} to={`/seller/${userInfo._id}`}>
             <i className={"fas fa-images"}></i> My ShowCase
           </Link>
         </li>
@@ -60,9 +62,9 @@ function SellerSidebar() {
           <div>
             <h3>Selling</h3>
           </div>
-          <ul className="">
+          <ul className="list-type-none">
             <li>
-              <Link to="/orderlist/seller">
+              <Link className={"link"} to="/orderlist/seller">
                 <i className={"fas fa-clipboard"}></i> Customer Orders
               </Link>
             </li>
@@ -75,9 +77,9 @@ function SellerSidebar() {
           <div>
             <h3>Buying</h3>
           </div>
-          <ul>
+          <ul className={"list-type-none"} style={{ lineHeight: "2em" }}>
             <li>
-              <Link to="/orderhistory">
+              <Link className={"link"} to="/orderhistory">
                 <i className={"fas fa-clipboard"}></i> Purchase Orders
               </Link>
             </li>
@@ -92,17 +94,17 @@ function SellerSidebar() {
           </div>
           <ul className="">
             <li>
-              <Link to="/dashboard">
+              <Link className={"link"} to="/dashboard">
                 <i className={"fas fa-dashboard"}></i> Reports
               </Link>
             </li>
             <li>
-              <Link to="/productlist">
+              <Link className={"link"} to="/productlist">
                 <i className={"fas fa-list"}></i> All Posters
               </Link>
             </li>
             <li>
-              <Link to="/orderlist">
+              <Link className={"link"} to="/orderlist">
                 <i className={"fas fa-clipboard"}></i> Orders
                 {unread.length > 0 && (
                   <i className={"fas fa-bell m-2"}>
@@ -112,13 +114,13 @@ function SellerSidebar() {
               </Link>
             </li>
             <li>
-              <Link to="/userlist">
+              <Link className={"link"} to="/userlist">
                 <i className={"fas fa-users"} style={{ fontSize: "0.6em" }}></i>{" "}
                 Users
               </Link>
             </li>
             <li>
-              <Link to="/support">
+              <Link className={"link"} to="/support">
                 <i className={"fas fa-headset"}></i> User Enqueries
               </Link>
             </li>

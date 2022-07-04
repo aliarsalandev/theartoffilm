@@ -26,58 +26,60 @@ function Package({
         <p className="about">{/* <img src={image} alt={"Package"} /> */}</p>
       </article>
 
-      <div className="payment">
-        <h3 className="price">
-          {currency}{" "}
-          {period === "month" ? `${monthPrice}/Month` : `${yearPrice}/Year`}
-        </h3>
-        <p className="billed-other">
-          {/* <strong>Billed annually</strong> or $24 monthly */}
-        </p>
-      </div>
-
-      <div className="perks">
-        <ul>
-          {perks?.map((perk, index) => (
-            <li key={index}>
-              <i className={"fa fa-check"}></i> {perk}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {userInfo && (
-        <div className="button">
-          {loading === true ? (
-            <div>
-              <i className="fa fa-spinner fa-spin">Loading....</i>
-            </div>
-          ) : (
-            <button
-              className="button-free s-b"
-              title={"Get Started"}
-              onClick={(e) => {
-                setLoading(true);
-                processCheckout(
-                  currency,
-                  name,
-                  period === "month" ? `${monthPrice}0` : `${yearPrice}0`,
-                  period,
-                  1,
-                  "subscription",
-                  id
-                ).then((data) => {
-                  // console.log(JSON.stringify(data));
-                  window.open(data.session.url, "_blank");
-                });
-                setLoading(false);
-              }}
-            >
-              Get started
-            </button>
-          )}
+      <div className="p-2">
+        <div className="payment">
+          <h3 className="price">
+            {currency}{" "}
+            {period === "month" ? `${monthPrice}/Month` : `${yearPrice}/Year`}
+          </h3>
+          <p className="billed-other">
+            {/* <strong>Billed annually</strong> or $24 monthly */}
+          </p>
         </div>
-      )}
+
+        <div className="perks">
+          <ul>
+            {perks?.map((perk, index) => (
+              <li key={index}>
+                <i className={"fa fa-check"}></i> {perk}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {userInfo && (
+          <div className="button">
+            {loading === true ? (
+              <div>
+                <i className="fa fa-spinner fa-spin">Loading....</i>
+              </div>
+            ) : (
+              <button
+                className="button-free s-b"
+                title={"Get Started"}
+                onClick={(e) => {
+                  setLoading(true);
+                  processCheckout(
+                    currency,
+                    name,
+                    period === "month" ? `${monthPrice}0` : `${yearPrice}0`,
+                    period,
+                    1,
+                    "subscription",
+                    id
+                  ).then((data) => {
+                    // console.log(JSON.stringify(data));
+                    window.open(data.session.url, "_blank");
+                  });
+                  setLoading(false);
+                }}
+              >
+                Get started
+              </button>
+            )}
+          </div>
+        )}
+      </div>
       <br />
       {userInfo?.isAdmin && (
         <Link to={`/subscriptions/${id}/edit`} className="button-free s-b">

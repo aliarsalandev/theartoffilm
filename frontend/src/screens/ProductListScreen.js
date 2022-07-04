@@ -10,9 +10,14 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from "../constants/productConstants";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function ProductListScreen(props) {
   const navigate = useNavigate();
+
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
+
   const { pageNumber = 1 } = useParams();
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf("/seller") >= 0;
@@ -72,7 +77,7 @@ export default function ProductListScreen(props) {
       <div className={"ml-3 col-3"}>
         <div>
           <div className="row">
-            <h1>Posters</h1>
+            <h1 className={"title"}>Posters</h1>
             <UploadPoster />
           </div>
 
@@ -95,9 +100,9 @@ export default function ProductListScreen(props) {
                   <tr>
                     <th>ID</th>
                     <th>NAME</th>
-                    <th>PRICE</th>
-                    <th>Visibility</th>
-                    <th>For Sell</th>
+                    <th>POSTER MARKET VALUE</th>
+                    <th>VISIBILITY</th>
+                    <th>FOR SALE</th>
                     <th>ACTIONS</th>
                   </tr>
                 </thead>
@@ -121,9 +126,11 @@ export default function ProductListScreen(props) {
                           {product.name}
                         </Link>
                       </td>
-                      <td>{product.price}</td>
+                      <td>
+                        {symbol} {(rates[currency] * product.price).toFixed(2)}
+                      </td>
                       <td>{product.visible ? "Visible" : "Not Visible"}</td>
-                      <td>{product.forSale ? "For Sell" : "Not For Sell"}</td>
+                      <td>{product.forSale ? "For Sale" : "Not For Sale"}</td>
                       <td>
                         <button
                           type="button"

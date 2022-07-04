@@ -12,6 +12,7 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 import data from "../data";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import { prices } from "../utils";
 
@@ -21,6 +22,9 @@ export default function SearchScreen(props) {
   const { directors } = useSelector((state) => state.directorList);
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
+
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
 
   const {
     name = "all",
@@ -47,7 +51,6 @@ export default function SearchScreen(props) {
       listProducts({
         pageNumber,
         name: name !== "all" ? name : "",
-        // category: category !== 'all' ? category : '',
         min,
         max,
         rating,
@@ -72,9 +75,9 @@ export default function SearchScreen(props) {
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     let search_url = `/search/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
-    search_url += filter.directors ? `/directors/${filter.directors}` : ``;
-    search_url += filter.casts ? `/casts/${filter.casts}` : ``;
-    search_url += filter.artists ? `/artists/${filter.artists}` : ``;
+    search_url += filter.directors ? `/directors/${[filter.directors]}` : ``;
+    search_url += filter.casts ? `/casts/${[filter.casts]}` : ``;
+    search_url += filter.artists ? `/artists/${[filter.artists]}` : ``;
     search_url += filter.origin ? `/origin/${filter.origin}` : ``;
     search_url += filter.year ? `/year/${filter.year}` : ``;
     search_url += filter.condition ? `/condition/${filter.condition}` : ``;
@@ -118,7 +121,6 @@ export default function SearchScreen(props) {
               <option value="newest">Newest Arrivals</option>
               <option value="lowest">Price: Low to High</option>
               <option value="highest">Price: High to Low</option>
-              <option value="toprated">Avg. Customer Reviews</option>
             </select>
           </div>
         </div>
@@ -154,14 +156,14 @@ export default function SearchScreen(props) {
             )}
           </div> */}
             <div className="form-group">
-              <label>Directors</label>
+              <label>Director</label>
               <select
                 className={"form-control"}
                 onChange={(e) => {
-                  navigate(getFilterUrl({ directors: e.target.value }));
+                  navigate(getFilterUrl({ directors: [e.target.value] }));
                 }}
               >
-                <option value="">Directors</option>
+                <option value="">Director</option>
                 {directors?.map((director) => (
                   <option key={director._id} value={director._id}>
                     {director.name}
@@ -171,14 +173,14 @@ export default function SearchScreen(props) {
             </div>
 
             <div className="form-group">
-              <label>Casts</label>
+              <label>Cast</label>
               <select
                 className={"form-control"}
                 onChange={(e) => {
-                  navigate(getFilterUrl({ casts: e.target.value }));
+                  navigate(getFilterUrl({ casts: [e.target.value] }));
                 }}
               >
-                <option value="">Casts</option>
+                <option value="">Cast</option>
                 {casts?.map((cast) => (
                   <option key={cast._id} value={cast._id}>
                     {cast.name}
@@ -188,14 +190,14 @@ export default function SearchScreen(props) {
             </div>
 
             <div className="form-group">
-              <label>Artists</label>
+              <label>Artist</label>
               <select
                 className={"form-control"}
                 onChange={(e) => {
-                  navigate(getFilterUrl({ artists: e.target.value }));
+                  navigate(getFilterUrl({ artists: [e.target.value] }));
                 }}
               >
-                <option value="">Artists</option>
+                <option value="">Artist</option>
                 {artists?.map((artist) => (
                   <option key={artist._id} value={artist._id}>
                     {artist.name}
@@ -205,7 +207,7 @@ export default function SearchScreen(props) {
             </div>
 
             <div className="form-group">
-              <label>Country of Origins</label>
+              <label>Country of Origin</label>
               <select
                 className={"form-control"}
                 onChange={(e) => {
@@ -307,7 +309,7 @@ export default function SearchScreen(props) {
                           : ""
                       }
                     >
-                      {p.name}
+                      {p.name.replaceAll("$", symbol)}
                     </span>
                   </Link>
                 ))}

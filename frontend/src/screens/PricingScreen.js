@@ -8,6 +8,7 @@ import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import SectionCard from "../components/SectionCard";
 import FAQScreen from "./FAQScreen";
 import { useCurrency } from "../hooks/currencyHooks";
+import HeroSection from "../sections/HeroSection";
 
 function PricingScreen() {
   const { currency, rates } = useCurrency();
@@ -27,8 +28,15 @@ function PricingScreen() {
 
   return (
     <NoSideBarLayout>
+      <HeroSection
+        heading={"SUBSCRIPTIONS"}
+        heading2={"HOME / SUBSCRIPTIONS"}
+        showSearch={false}
+        image={"/images/Optimized-AoF-Banner-Raw.jpg"}
+      />
+
       <div>
-        <div className="p-2">
+        <div className="p-2" style={{ padding: "4em 0" }}>
           <div className={"flex center"}>
             <div className="switcher" style={{ margin: "0 auto" }}>
               <input
@@ -104,24 +112,8 @@ function PricingScreen() {
             </div>
           )}
         </div>
-        <div className="page-section">
-          <SectionCard
-            before={"Showcase"}
-            title={"your Movie Posters"}
-            text={`Manage and showcase your movie collection. Once you have
-                  subscribed to The Art of Film you will have access to a
-                  minimum of 500 blank template pages with dropdown menus to
-                  populate with your own collection information. Choose the
-                  format, country of issue, condition, year of release, cast,
-                  and crew, etc. You can then choose to keep movie posters in
-                  your own private collection and/or you can choose to sell
-                  posters through our Movie Poster Shop.`}
-            image={"/images/34618045.jpg"}
-            linkText={"Contact Us"}
-            link={"/contact"}
-          />
-        </div>
-        <FAQScreen header={false} />
+
+        <FAQScreen showSubscriptionFAQs={true} header={false} />
       </div>
     </NoSideBarLayout>
   );

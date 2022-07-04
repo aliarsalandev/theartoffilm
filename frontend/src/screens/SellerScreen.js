@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
 import { detailsUser } from "../actions/userActions";
@@ -8,6 +8,7 @@ import MessageBox from "../components/MessageBox";
 import ShowCase from "../components/ShowCase";
 import { useNavigate } from "react-router-dom";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
+import data from "../data";
 
 export default function SellerScreen(props) {
   const params = useParams();
@@ -16,189 +17,178 @@ export default function SellerScreen(props) {
   const { currency, rates } = useCurrency();
   const symbol = useSymbol(currency);
 
-  const [currentProduct, setCurrentProduct] = React.useState(null);
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { loading, error } = userDetails;
 
   const productList = useSelector((state) => state.productList);
+
   const {
     loading: loadingProducts,
     error: errorProducts,
     products,
   } = productList;
+  const [currentProduct, setCurrentProduct] = React.useState();
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(detailsUser(sellerId));
     dispatch(listProducts({ seller: sellerId }));
   }, [dispatch, sellerId]);
-  const navigate = useNavigate();
 
-  const addToCartHandler = () => {
-    navigate(`/cart/${currentProduct._id}?qty=1`);
-  };
   return (
-    <div className="row start top">
+    <div className="bg-light-dark">
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div className="col-1">
-          <ul className="card card-body">
-            <li>
-              <div className="row start">
-                <div className="p-1">
-                  <img
-                    className="small"
-                    src={user.seller.logo}
-                    alt={user.seller.name}
-                  ></img>
-                </div>
-                <div className="p-1">
-                  <h1>{user.seller.name}</h1>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <a href={`mailto:${user.email}`}>Contact Seller</a>
-            </li>
-            <li>{user.seller.description}</li>
-          </ul>
-        </div>
+        <></>
       )}
-      <div className="col-3 mb-3">
-        {loadingProducts ? (
-          <LoadingBox></LoadingBox>
-        ) : errorProducts ? (
-          <MessageBox variant="danger">{errorProducts}</MessageBox>
-        ) : (
-          <>
-            <div className={""}>
-              <ShowCase
-                products={products.filter((product) => product.visible)}
-                onClick={(product) => {
-                  setCurrentProduct(product);
-                }}
-              />
-            </div>
+      {loadingProducts ? (
+        <LoadingBox></LoadingBox>
+      ) : errorProducts ? (
+        <MessageBox variant="danger">{errorProducts}</MessageBox>
+      ) : (
+        <>
+          <div className="flex center pt-2">
+            {currentProduct?.seller._id === sellerId ? (
+              <h2 className={"title2"}>{currentProduct?.seller.seller.name}</h2>
+            ) : (
+              ""
+            )}
+          </div>
 
-            {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
+          <ShowCase
+            products={products.filter((product) => product.visible)}
+            onClick={(product) => {
+              setCurrentProduct(product);
+            }}
+          />
 
-            <div className="flex row poster-details">
-              {currentProduct && (
-                <ul>
-                  <li>
-                    <h1>{currentProduct.name}</h1>
-                  </li>
+          {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
 
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Directors</div>
-                      <div className="director-label">
-                        {currentProduct.directors?.map((director) => (
-                          <span>{director.name} | </span>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Casts</div>
-                      <div className="cast-label">
-                        {currentProduct.casts?.map((cast) => (
-                          <span>{cast.name} | </span>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Artists</div>
-                      <div className="artist-label">
-                        {currentProduct.artists?.map((artist) => (
-                          <span>{artist.name} | </span>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Origin</div>
-                      <div className="origin-label">
-                        {currentProduct.origin}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Year</div>
-                      <div className="origin-label">{currentProduct.year}</div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Format</div>
-                      <div className="format-label">
-                        {currentProduct.format}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Condition</div>
-                      <div className="condition-label">
-                        {currentProduct.condition}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="row">
-                      <div className={"bold"}>Rolled / Folded</div>
-                      <div className="rolledFolded-label">
-                        {currentProduct.rolledFolded}
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="bold">Description</div>
-                    <p>{currentProduct.description}</p>
-                  </li>
-                  <li className={""}>
-                    <span className="bold">Pirce</span>{" "}
-                    <span className="price">
-                      {symbol}{" "}
-                      {(rates[currency] * currentProduct.price).toFixed(1)}
-                    </span>
-                  </li>
+          <div className="flex p-2 poster-details">
+            {currentProduct && (
+              <table style={{ width: "100%" }}>
+                <tbody>
+                  <tr className={"flex row start"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
+                      {currentProduct.name}
+                    </td>
+                    <td className="director-label text-right">
+                      {currentProduct?.seller._id === sellerId && (
+                        <Link to={`/product/${currentProduct._id}/edit`}>
+                          Edit
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
 
-                  {currentProduct.forSale && (
-                    <>
-                      <li>
-                        <div className="row">
-                          <button
-                            onClick={addToCartHandler}
-                            className="primary showcase"
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
-                      </li>
-                    </>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Directors</td>
+                    <td className="director-label text-right">
+                      {currentProduct.directors?.map((director) => (
+                        <span key={director.name}>{director.name} | </span>
+                      ))}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Casts</td>
+                    <td className="cast-label text-right">
+                      {currentProduct.casts?.map((cast) => (
+                        <span key={cast.name}>{cast.name} | </span>
+                      ))}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Artists</td>
+                    <td className="artist-label text-right">
+                      {currentProduct.artists?.map((artist) => (
+                        <span key={artist.name}>{artist.name} | </span>
+                      ))}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
+                      Country of Origin
+                    </td>
+                    <td className="origin-label text-right">
+                      {
+                        data.origins.find(
+                          ({ code }) => code === currentProduct.origin
+                        )?.name
+                      }
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Year</td>
+                    <td className={" text-right"}>{currentProduct.year}</td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Format</td>
+                    <td className="format-label  text-right">
+                      {currentProduct.format}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Condition</td>
+                    <td className="condition-label  text-right">
+                      {currentProduct.condition}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
+                      Rolled / Folded
+                    </td>
+                    <td className="rolledFolded-label  text-right">
+                      {currentProduct.rolledFolded}
+                    </td>
+                  </tr>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className="bold td-title text-accent">Description</td>
+                    <td className={" text-right"}>
+                      {currentProduct.description}
+                    </td>
+                  </tr>
+                  {currentProduct.salePrice > 0 && (
+                    <tr
+                      className={"flex align-center"}
+                      style={{
+                        textDecoration: currentProduct.salePrice
+                          ? "trne-through"
+                          : "",
+                      }}
+                    >
+                      <td className="bold td-title text-accent">Price</td>
+                      <td className="line-through price text-right">
+                        {symbol}{" "}
+                        {(rates[currency] * currentProduct.price).toFixed(2)}
+                      </td>
+                    </tr>
                   )}
-                </ul>
-              )}
-            </div>
+                  {currentProduct.salePrice > 0 && (
+                    <tr className={"flex"}>
+                      <td className="bold td-title text-accent">Sale Price</td>
+                      <td className={"text-right"}>
+                        {symbol}{" "}
+                        {(rates[currency] * currentProduct.salePrice).toFixed(
+                          2
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            )}
+          </div>
 
-            {/* <div className="row center">
+          {/* <div className="row center">
               {products.map((product) => (
                 <Product key={product._id} product={product}></Product>
               ))}
             </div> */}
-          </>
-        )}
-      </div>
+        </>
+      )}
 
       {/*  */}
     </div>

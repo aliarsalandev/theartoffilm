@@ -21,7 +21,7 @@ export default function DashboardScreen() {
       <div className={"ml-3 col-3"}>
         <div>
           <div className="row">
-            <h1>Dashboard</h1>
+            <h1 className={"title"}>Dashboard</h1>
           </div>
           {loading ? (
             <LoadingBox />

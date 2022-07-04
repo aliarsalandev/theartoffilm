@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Coverflow from "react-coverflow";
-import { StyleRoot } from "radium";
-
 import propTypes from "prop-types";
+import CoverFlowComponent from "./CoverFlow";
 import { isMobile } from "react-device-detect";
 
 function ShowCase({ products = [], onClick }) {
@@ -14,7 +12,7 @@ function ShowCase({ products = [], onClick }) {
   }, [products]);
 
   return (
-    <div className={"column center"}>
+    <div className={"flex column center"}>
       <div className="row ptb-2 pagination">
         <span
           onClick={() => {
@@ -69,40 +67,23 @@ function ShowCase({ products = [], onClick }) {
         </span>
       </div>
 
-      <div className="coverflow-container">
-        <StyleRoot>
-          <Coverflow
-            className={"coverflow"}
-            displayQuantityOfSide={isMobile ? 1 : 2}
-            navigation
-            infiniteScroll
-            // enableHeading
-            currentFigureScale={isMobile ? 2 : 1.5}
-            otherFigureScale={0.4}
-            media={{
-              "@media (max-width: 900px)": {
-                width: "100%",
-                height: "480px",
-              },
-              "@media (min-width: 900px)": {
-                width: "100%",
-                height: "480px",
-              },
-            }}
-          >
-            {filteredProducts.map((product, index) => (
-              <img
-                key={product._id}
-                onClick={() => {
-                  onClick(product);
-                }}
-                src={product.image}
-                alt={product.name}
-              />
-            ))}
-          </Coverflow>
-        </StyleRoot>
-      </div>
+      <CoverFlowComponent
+        products={filteredProducts}
+        imagesArr={filteredProducts.map((product) => product.image)}
+        direction="horizontal"
+        width={`${isMobile ? "100%" : "100%"}`}
+        height={`${isMobile ? "100%" : 425}`}
+        itemRatio="21:14"
+        background="transparent"
+        onClick={onClick}
+        handleSelect={(index) => {
+          const product = filteredProducts.find(
+            (product, ind) => ind === index
+          );
+          onClick(product);
+        }}
+        labelsArr={filteredProducts.map((product) => product.name)}
+      />
     </div>
   );
 }

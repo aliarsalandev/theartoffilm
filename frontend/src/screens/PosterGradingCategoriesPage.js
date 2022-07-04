@@ -8,19 +8,19 @@ import NoSideBarLayout from "../layouts/NoSideBarLayout";
 function PosterGradingCategoriesPage() {
   return (
     <NoSideBarLayout>
-      <div className="showcase-section container p-2 pt-4">
+      <div className="showcase-section p-2 pt-4 bg-light-dark">
         <div className={"p-2 text-center"}>
-          <h1>
+          <h1 className={"title"}>
             <span className="selection">POSTER GRADING</span>
           </h1>
-          <p style={{ lineHeight: "2em" }}>
+          <p>
             Collectors using The Art of Film must ensure all posters are grading
             using this 6 point poster grading system.
           </p>
         </div>
 
         <div className="p-2">
-          <div className="flex wrap start top">
+          <div className="flex wrap center container top">
             {[
               {
                 title: "MINT",
@@ -54,18 +54,16 @@ function PosterGradingCategoriesPage() {
             ))}
           </div>
 
-          <div>
+          <div className={"p-2 text-center"}>
             <p>
-              <span>
-                Contact Henry Coleman the author
-                <a
-                  className="selection"
-                  href="mailto:henrhenry@theartoffilm.co.uk"
-                >
-                  {" "}
-                  henry@theartoffilm.co.uk
-                </a>
-              </span>
+              Contact Henry Coleman the author
+              <a
+                className="selection"
+                href="mailto:henrhenry@theartoffilm.co.uk"
+              >
+                {" "}
+                henry@theartoffilm.co.uk
+              </a>
             </p>
           </div>
         </div>

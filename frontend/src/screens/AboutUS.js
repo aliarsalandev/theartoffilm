@@ -32,7 +32,8 @@ function AboutUS() {
             <div className="section start col-md-6 col-xs-12">
               <div className="p-2">
                 <h2>
-                  <span>Showcase</span> YOUR MOVIE POSTERS
+                  <span className={"selection"}>Showcase</span> YOUR MOVIE
+                  POSTERS
                 </h2>
                 <p>
                   In The Art of Film showcase you can collate, edit and view
@@ -51,16 +52,14 @@ function AboutUS() {
                   and crew, etc.
                 </p>
                 <p>
-                  <span>
-                    Contact Henry Coleman the author
-                    <a
-                      className="selection"
-                      href="mailto:henrhenry@theartoffilm.co.uk"
-                    >
-                      {" "}
-                      henry@theartoffilm.co.uk
-                    </a>
-                  </span>
+                  Contact Henry Coleman the author
+                  <a
+                    className="selection"
+                    href="mailto:henrhenry@theartoffilm.co.uk"
+                  >
+                    {" "}
+                    henry@theartoffilm.co.uk
+                  </a>
                 </p>
               </div>
             </div>
@@ -81,7 +80,7 @@ function AboutUS() {
           <div className="row start top">
             <div className="section start col-md-6 col-xs-12">
               <div className="p-2">
-                <h2>
+                <h2 className={"text-start"}>
                   <span>Showcase</span> YOUR MOVIE POSTERS
                 </h2>
                 <p>
@@ -101,16 +100,14 @@ function AboutUS() {
                   and crew, etc.
                 </p>
                 <p>
-                  <span>
-                    Contact Henry Coleman the author
-                    <a
-                      className="selection"
-                      href="mailto:henrhenry@theartoffilm.co.uk"
-                    >
-                      {" "}
-                      henry@theartoffilm.co.uk
-                    </a>
-                  </span>
+                  Contact Henry Coleman the author
+                  <a
+                    className="selection"
+                    href="mailto:henrhenry@theartoffilm.co.uk"
+                  >
+                    {" "}
+                    henry@theartoffilm.co.uk
+                  </a>
                 </p>
               </div>
             </div>
@@ -130,8 +127,8 @@ function AboutUS() {
         <div className="row start top">
           <div className="section start col-md-6 col-xs-12">
             <div className="p-2">
-              <h2>
-                <span>Showcase</span> YOUR MOVIE POSTERS
+              <h2 className={"text-start"}>
+                <span className={"selection"}>Showcase</span> YOUR MOVIE POSTERS
               </h2>
               <p>
                 In The Art of Film showcase you can collate, edit and view your
@@ -147,19 +144,14 @@ function AboutUS() {
               <p>
                 When uploading your poster images to the showcase you select the
                 format, country of issue, condition, year of release, cast and
-                crew, etc.
-              </p>
-              <p>
-                <span>
-                  Contact Henry Coleman the author
-                  <a
-                    className="selection"
-                    href="mailto:henrhenry@theartoffilm.co.uk"
-                  >
-                    {" "}
-                    henry@theartoffilm.co.uk
-                  </a>
-                </span>
+                crew, etc. Contact Henry Coleman the author
+                <a
+                  className="selection"
+                  href="mailto:henrhenry@theartoffilm.co.uk"
+                >
+                  {" "}
+                  henry@theartoffilm.co.uk
+                </a>
               </p>
             </div>
           </div>

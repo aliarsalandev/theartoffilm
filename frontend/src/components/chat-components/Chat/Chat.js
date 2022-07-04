@@ -63,7 +63,7 @@ const Chat = () => {
       <div className="outer">
         <div className="chat-container">
           <div className="search-container">
-            <h1>
+            <h1 className={"title"}>
               <img
                 className="logo"
                 src="https://image.flaticon.com/icons/svg/2950/2950581.svg"

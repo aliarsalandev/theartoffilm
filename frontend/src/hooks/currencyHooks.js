@@ -29,7 +29,7 @@ export const useCurrency = () => {
           GBP: 1,
           USD: 1.22255,
           EUR: 1.164851,
-          YEN: 163.0,
+          JPY: 164.0,
         };
     setCurrency(_currency ?? "GBP");
     setRates(currency_rates ?? {});

@@ -11,29 +11,28 @@ function PrivacyPolicy() {
         image="/images/theater.jpeg"
       />
 
-      <div className={"flex column center p-4"}>
+      <div className={"flex column center p-4 bg-light-dark"}>
         <span className="selection">WWW.THEARTOFFILM.CO.UK</span>
+        <br />
         <div className="flex column">
-          <h2>PRIVACY POLICY</h2>
           <span>Type of website: Ecommerce</span>
+          <br />
           <span>Effective date: 24th day of January, 2022</span>
         </div>
 
         <div className="flex column">
-          <span>
+          <p>
             www.theartoffilm.co.uk (the “Site”) is owned and operated by The Art
             of Film. The Art of Film is the data controller and can be contacted
-            at:
-          </span>
-          <span className={"selection"}>
-            <a href="mailto:henry@theartoffilm.co.uk">
+            at:{" "}
+            <a className={"selection"} href="mailto:henry@theartoffilm.co.uk">
               henry@theartoffilm.co.uk
             </a>
-          </span>
+          </p>
         </div>
 
         <div className="flex column">
-          <h2>PURPOSE</h2>
+          <h3 className={"selection"}>PURPOSE</h3>
           <ul>
             <li>
               The purpose of this privacy policy (this “Privacy Policy”) is to
@@ -52,7 +51,7 @@ function PrivacyPolicy() {
         </div>
 
         <div className="flex column">
-          <h2>GDPR</h2>
+          <h3 className={"selection"}>GDPR</h3>
           <ul>
             <li>
               For users in the European Union, we adhere to the Regulation (EU)
@@ -70,7 +69,7 @@ function PrivacyPolicy() {
         </div>
 
         <div className="flex column">
-          <h2>CONSENT</h2>
+          <h3 className={"selection"}>CONSENT</h3>
           <ul>
             <li>By using our Site users agree that they consent to:</li>
             <li>The conditions set out in this Privacy Policy.</li>
@@ -83,17 +82,17 @@ function PrivacyPolicy() {
             </li>
             <li>
               You can withdraw your consent by: Contacting the Privacy Officer.
-              <span className={"selection"}>
+              <p className={"selection"}>
                 <a href="mailto:henry@theartoffilm.co.uk">
                   henry@theartoffilm.co.uk
                 </a>
-              </span>
+              </p>
             </li>
           </ul>
         </div>
 
         <div className="flex column">
-          <h2>LEGAL BASIS FOR PROCESSING</h2>
+          <h3 className={"selection"}>LEGAL BASIS FOR PROCESSING</h3>
           <ul>
             <li>
               We collect and process personal data about users in the EU only
@@ -120,7 +119,7 @@ function PrivacyPolicy() {
         </div>
 
         <div className="flex column">
-          <h2>PERSONAL DATA WE COLLECT</h2>
+          <h3 className={"selection"}>PERSONAL DATA WE COLLECT</h3>
           <ul>
             <li>
               We only collect data that helps us achieve the purpose set out in
@@ -131,17 +130,19 @@ function PrivacyPolicy() {
         </div>
 
         <div className={"flex column"}>
-          <h2>DATA COLLECTED AUTOMATICALLY</h2>
-          <span>
+          <h3 className={"selection"}>DATA COLLECTED AUTOMATICALLY</h3>
+          <p>
             When you visit and use our Site, we may automatically collect and
             store the following information:
-          </span>
-          <li>IP address;</li>
-          <li>Location;</li>
-          <li>Clicked links; and Content viewed.</li>
+          </p>
+          <ul>
+            <li>IP address;</li>
+            <li>Location;</li>
+            <li>Clicked links; and Content viewed.</li>
+          </ul>
         </div>
         <div className={"flex column"}>
-          <h2>DATA COLLECTED IN A NON-AUTOMATIC WAY</h2>
+          <h3 className={"selection"}>DATA COLLECTED IN A NON-AUTOMATIC WAY</h3>
           <ul>
             <li>
               We may also collect the following data when you perform certain
@@ -158,7 +159,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2> HOW WE USE PERSONAL DATA </h2>
+          <h3 className={"selection"}> HOW WE USE PERSONAL DATA </h3>
           <ul>
             <li>
               {" "}
@@ -181,11 +182,10 @@ function PrivacyPolicy() {
               The data we collect when the user performs certain functions may
               be used for the following purposes: Communication; and Payments.
             </li>
-            <li></li>
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2> WHO WE SHARE PERSONAL DATA WITH </h2>
+          <h3 className={"selection"}> WHO WE SHARE PERSONAL DATA WITH </h3>
           <ul>
             <li>
               Employees We may disclose user data to any member of our
@@ -212,7 +212,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>Other Disclosures</h2>
+          <h3 className={"selection"}>Other Disclosures</h3>
           <ul>
             <li>
               We will not sell or share your data with other third parties,
@@ -227,7 +227,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>HOW LONG WE STORE PERSONAL DATA</h2>
+          <h3 className={"selection"}>HOW LONG WE STORE PERSONAL DATA</h3>
           <ul>
             <li>
               User data will be stored for 6 years. You will be notified if your
@@ -257,7 +257,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>INTERNATIONAL DATA TRANSFERS</h2>
+          <h3 className={"selection"}>INTERNATIONAL DATA TRANSFERS</h3>
           <ul>
             <li>
               We transfer user personal data to the following countries: All EU
@@ -282,7 +282,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>YOUR RIGHTS AS A USER</h2>
+          <h3 className={"selection"}>YOUR RIGHTS AS A USER</h3>
           <ul>
             <li>
               Under the GDPR, you have the following rights: Right to be
@@ -308,9 +308,9 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className="flex column">
-          <h2>
+          <h3 className={"selection"}>
             HOW TO ACCESS, MODIFY, DELETE, OR CHALLENGE THE DATA COLLECTED
-          </h2>
+          </h3>
           <ul>
             <li>
               If you would like to know if we have collected your personal data,
@@ -318,7 +318,7 @@ function PrivacyPolicy() {
               personal data and to who we disclosed your personal data, if you
               would like your data to be deleted or modified in any way, or if
               you would like to exercise any of your other rights under the
-              GDPR, please contact our privacy officer here: Henry Coleman
+              GDPR, please contact our privacy officer here: Henry Coleman{" "}
               <span className={"selection"}>
                 <a href="mailto:henry@theartoffilm.co.uk">
                   henry@theartoffilm.co.uk
@@ -328,7 +328,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>DO NOT TRACK NOTICE</h2>
+          <h3 className={"selection"}>DO NOT TRACK NOTICE</h3>
           <ul>
             <li>
               Do Not Track (“DNT”) is a privacy preference that you can set in
@@ -347,7 +347,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>USE OF COOKIES</h2>
+          <h3 className={"selection"}>USE OF COOKIES</h3>
           <ul>
             <li>
               {" "}
@@ -404,7 +404,7 @@ function PrivacyPolicy() {
           </ul>
         </div>
         <div className={"flex column"}>
-          <h2>COMPLAINTS</h2>
+          <h3 className={"selection"}>COMPLAINTS</h3>
           <ul>
             <li>
               If you have any complaints about how we process your personal
@@ -425,17 +425,18 @@ function PrivacyPolicy() {
               contacting the Information Commissioner’s Office in the UK, Data
               Protection Commission in Ireland.
             </li>
-            <li></li>
           </ul>
         </div>
         <div className="flex column">
-          <h2>CONTACT INFORMATION</h2>
-          If you have any questions, concerns or complaints, you can contact our
-          privacy officer, Henry Coleman, at:{" "}
-          <a className="selection" href="mailto:henrhenry@theartoffilm.co.uk">
-            {" "}
-            henry@theartoffilm.co.uk
-          </a>
+          <h3 className={"selection"}>CONTACT INFORMATION</h3>
+          <p>
+            If you have any questions, concerns or complaints, you can contact
+            our privacy officer, Henry Coleman, at:
+            <a className="selection" href="mailto:henrhenry@theartoffilm.co.uk">
+              {" "}
+              henry@theartoffilm.co.uk
+            </a>
+          </p>
         </div>
       </div>
     </NoSideBarLayout>

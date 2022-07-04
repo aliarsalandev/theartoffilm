@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap");
 :root {
   --base-color: #0d1117;
   --light-dark-color: #161b22;
@@ -7,8 +7,27 @@
   --text-color: #eeeeee;
 }
 
+/* "Bebas Neue" - 400× Family
+"Bebas Neue", sans-serif;
+Style normal
+Weight 400
+Size 65px
+Line Height 62px
+Color #ffffff */
+
 * {
-  line-height: 1.8;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+}
+
+p {
+  font-family: "Poppins", sans-serif !important;
+  line-height: 26px;
+}
+
+input,
+button {
+  line-height: initial;
 }
 
 html {
@@ -93,8 +112,6 @@ input[type="number"] {
 header {
   background-color: var(--light-dark-color);
   grid-area: header;
-  padding-left: 10rem;
-  padding-right: 10rem;
   height: max-content;
   position: sticky;
   top: 0px;
@@ -126,12 +143,20 @@ a:hover {
   color: var(--accent-color);
 }
 
+a.button:hover {
+  color: var(--base-color);
+}
+
 ul {
   padding: 0;
   margin: 0;
-  list-style-type: none;
+  list-style-type: circle;
 }
 
+ol *,
+ul * {
+  font-family: "Poppins", sans-serif;
+}
 li {
   margin-top: 1rem;
 }
@@ -172,7 +197,6 @@ button:hover {
 
 .button {
   padding: 1rem;
-  border: 0.1rem var(--text-color) solid;
   text-align: center;
   font-size: 1.6rem;
   font-family: "Bebas Neue", "Times New Roman";
@@ -205,6 +229,11 @@ button.small {
 header a {
   color: var(--text-color);
   padding: 1rem;
+  line-height: 12px !important;
+  font-size: 1em;
+  letter-spacing: 4px;
+  color: var(--accent-color);
+  margin: 0px 15px;
 }
 
 a.brand {
@@ -342,6 +371,10 @@ a.brand {
 
 .plr-2 {
   padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.pr-2 {
   padding-right: 2rem;
 }
 
@@ -541,11 +574,17 @@ img.mw-100 {
 .form > div {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 2rem 0;
 }
 
-.form label {
+.from > .form label {
   margin: 1rem 0;
+}
+
+.form div,
+.form span,
+.form a {
+  font-family: "Poppins", sans-serif !important;
 }
 
 /* Dropdown */
@@ -633,6 +672,7 @@ img.mw-100 {
   /* border-radius: 0.5rem 0 0 0.5rem; */
   border-right: none;
   margin-left: 0.5rem;
+  width: 375px;
 }
 
 .active {
@@ -789,7 +829,8 @@ img.mw-100 {
 }
 
 .td-title {
-  width: 30%;
+  width: 40%;
+  font-size: 4rem;
 }
 .select option {
   color: var(--base-color);
@@ -916,17 +957,39 @@ img.mw-100 {
 }
 
 .title {
+  font-size: 65px;
+  margin: unset;
+  padding: unset;
+  text-align: center;
+  font-family: "Oswald" !important;
+}
+
+.title-xl {
+  font-size: 124px !important;
+}
+h3.title {
+  color: var(--text-color);
+}
+
+.title2,
+h2 {
   font-size: 64px;
+  line-height: 62px;
   margin: unset;
   padding: unset;
   text-align: center;
 }
 
-.title2 {
-  font-size: 20px;
-  margin: unset;
-  padding: unset;
-  text-align: center;
+h5 {
+  color: var(--accent-color);
+}
+
+.text-small {
+  font-size: 16px;
+}
+
+.text-md {
+  font-size: 2.4rem;
 }
 
 .text-center {
@@ -942,6 +1005,14 @@ img.mw-100 {
 }
 .selection {
   color: var(--accent-color);
+}
+
+.bg-dark {
+  background-color: var(--base-color);
+}
+
+.bg-light-dark {
+  background-color: var(--light-dark-color);
 }
 
 .secondary {
@@ -983,11 +1054,8 @@ h4 {
   bottom: 0;
   top: 0;
   background: black;
-  opacity: 0.8;
+  opacity: 0.7;
   z-index: 0 !important;
-}
-.section > h2 {
-  font-size: 3rem;
 }
 
 .section > h2 > span {
@@ -1021,7 +1089,6 @@ h4 {
 }
 
 .seller-sidebar {
-  background-color: var(--light-dark-color);
   padding: 24px 32px;
 }
 
@@ -1044,6 +1111,10 @@ h4 {
   background-color: transparent;
   border: unset;
   padding: 0px;
+}
+
+.line-through {
+  text-decoration: line-through;
 }
 
 .hide {
@@ -1172,9 +1243,12 @@ h4 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
 }
 
+.subscriptions .card .title {
+  background-color: var(--accent-color);
+  width: 100%;
+}
 .subscriptions .card .title * {
   margin: 0;
   padding: 0;
@@ -1208,7 +1282,7 @@ h4 {
 .switcher__label {
   float: left;
   width: 50%;
-  font-size: 12px;
+  font-size: 2.6rem;
   line-height: 30px;
   color: var(--text-color);
   text-align: center;
@@ -1273,12 +1347,14 @@ h4 {
   margin: 0 auto;
 }
 
-.bold {
-  font-weight: bold;
+.text-accent {
   color: var(--accent-color);
+}
+
+.bold {
   font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
-  font-size: 1em;
+  font-size: 24px;
 }
 
 .messages li {
@@ -1292,8 +1368,13 @@ h4 {
   color: var(--accent-color);
 }
 
-iframe {
-  position: absolute !important;
-  height: 0 !important;
+html > iframe,
+body > iframe {
+  position: absolute;
   width: 0 !important;
+  height: 0 !important;
+}
+
+.list-type-none {
+  list-style: none;
 }

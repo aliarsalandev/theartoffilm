@@ -4,8 +4,8 @@ import SellImage from "../assets/images/Sell.png";
 
 function WelcomeSection() {
   return (
-    <div className="section sw">
-      <h2>
+    <div className="section sw" style={{ padding: "5em 0" }}>
+      <h2 className={"title2"}>
         <span>WELCOME</span> TO THE ART OF FILM
       </h2>
       <p>
@@ -14,12 +14,12 @@ function WelcomeSection() {
         collection as well as sell movie posters and memorabilia.
       </p>
 
-      <div className="row mt-2 center">
-        <div>
+      <div className="flex row mt-2 between">
+        <div className={"m-2"}>
           <img src={ShowcaseImage} alt="" />
           <p>Showcase your movie poster collection</p>
         </div>
-        <div>
+        <div className={"m-2"}>
           <img src={SellImage} alt="" />
           <p>Sell your original movie posters</p>
         </div>

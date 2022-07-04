@@ -119,7 +119,9 @@ export default function ProfileScreen() {
     <PageLayout>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>User Profile</h1>
+          <h1 className={"title"}>
+            {userInfo?.isAdmin ? "Admin Profile" : "My Profile"}
+          </h1>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -189,38 +191,42 @@ export default function ProfileScreen() {
                 onChange={onChange}
               ></input>
             </div>
-            <div>
-              <label htmlFor="collection_name">Collection Name</label>
-              <input
-                id="collection_name"
-                name={"collection_name"}
-                type="text"
-                placeholder="Enter Collection Name"
-                defaultValue={seller.name}
-                onChange={onChange}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="logo">Logo</label>
-              <input
-                id="logo"
-                name={"logo"}
-                type="file"
-                placeholder="Enter Logo"
-                onChange={uploadFileHandler}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                name={"description"}
-                type="text"
-                placeholder="Enter Description"
-                defaultValue={seller.description}
-                onChange={onChange}
-              ></textarea>
-            </div>
+            {userInfo?.isSeller && (
+              <div className={"form"}>
+                <div>
+                  <label htmlFor="collection_name">Collection Name</label>
+                  <input
+                    id="collection_name"
+                    name={"collection_name"}
+                    type="text"
+                    placeholder="Enter Collection Name"
+                    defaultValue={seller.name}
+                    onChange={onChange}
+                  ></input>
+                </div>
+                <div>
+                  <label htmlFor="logo">Logo</label>
+                  <input
+                    id="logo"
+                    name={"logo"}
+                    type="file"
+                    placeholder="Enter Logo"
+                    onChange={uploadFileHandler}
+                  ></input>
+                </div>
+                <div>
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    id="description"
+                    name={"description"}
+                    type="text"
+                    placeholder="Enter Description"
+                    defaultValue={seller.description}
+                    onChange={onChange}
+                  ></textarea>
+                </div>
+              </div>
+            )}
             <div>
               <label />
               <button className="primary" type="submit">

@@ -11,7 +11,7 @@ function Header() {
     GBP: 1,
     USD: 1.22255,
     EUR: 1.164851,
-    JPY: 1,
+    JPY: 164.0,
   });
 
   const [selected_currency, setCurrency] = React.useState({});
@@ -39,8 +39,8 @@ function Header() {
   }, []);
 
   return (
-    <header className="flex column header">
-      <div className={"row"}>
+    <header className="flex column header bg-dark">
+      <div className={"flex row bg-light-dark plr-2"}>
         <div className={"row col-6"}>
           <div className="social-icons">
             <a
@@ -69,13 +69,6 @@ function Header() {
           </div>
         </div>
         <div className={"row col-6"}>
-          <Link to="/cart">
-            <i className="fa-solid fa-cart-shopping"></i>
-            {cartItems.length > 0 && (
-              <span className="badge">{cartItems.length}</span>
-            )}
-          </Link>
-
           <div className="flex" style={{ justifyContent: "end" }}>
             <select
               className={"select"}
@@ -129,32 +122,43 @@ function Header() {
 
           {userInfo && (
             <Link className={"ml-2"} to="/profile">
-              My Account
+              {userInfo?.isAdmin ? "Admin Account" : "My Account"}
             </Link>
           )}
         </div>
       </div>
-      <div className={"row"}>
+      <div className={`pr-2 flex ${isMobile ? "column" : ""}`}>
         <div className={`flex ${isMobile ? "column center w-100" : "row"} `}>
           <Link className="flex center brand" to="/">
             <img
-              height={isMobile ? 60 : 96}
+              width={isMobile ? 135 : 270}
               src={"/images/logo.png"}
               alt={"theartoffilms"}
             />
           </Link>
         </div>
-        <div className={"row"}>
+        <div className={"flex row center w-100"}>
           <Link to="/">Home</Link>
           <Link to="/sellers">Showcase</Link>
           <Link to={"/search/name"}>Shop</Link>
           <Link to="/faq">FAQ</Link>
           <Link to="/pricing">Subscriptions</Link>
-          {userInfo?.isSeller && (
+          <Link to="/blog-page">Why Film Poster</Link>
+          {userInfo?.isSeller ? (
             <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
+          ) : (
+            <></>
           )}
 
           {!userInfo && <Link to="/signin">Sign In</Link>}
+        </div>
+        <div className={"flex row center"}>
+          <Link to="/cart">
+            <i className="fa-solid fa-cart-shopping"></i>
+            {cartItems.length > 0 && (
+              <span className="badge">{cartItems.length}</span>
+            )}
+          </Link>
         </div>
       </div>
     </header>

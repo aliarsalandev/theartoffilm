@@ -25,12 +25,8 @@ export default function SellersScreen(props) {
   }, [dispatch, sellerId]);
 
   return (
-    <div className="mt-2">
-      <HeadingSection
-        small="Private Collections"
-        title="Showcase Your poster collection"
-      />
-      <div className="row center">
+    <div className="mtb-2 bg-light-dark" style={{ padding: "4rem" }}>
+      <div className="flex row start">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -39,7 +35,10 @@ export default function SellersScreen(props) {
           sellers.map(
             (seller) =>
               seller.seller.logo && (
-                <ul className="card card-body">
+                <ul
+                  className="card card-body bg-dark"
+                  style={{ listStyle: "none" }}
+                >
                   <li>
                     <div className="row start">
                       <Link to={`/seller/${seller._id}`}>

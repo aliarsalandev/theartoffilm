@@ -10,10 +10,9 @@ function Terms() {
         heading2="Home/Terms"
         image="/images/theater.jpeg"
       />
-      <div className="p-4">
+      <div className="p-4 bg-light-dark">
         <div>
-          <h2>Terms and Conditions</h2>
-          <h5>The Art of Film</h5>
+          <h3 className={"selection"}>The Art of Film</h3>
           <div>
             <p>
               These terms and conditions (the “Terms and Conditions”) govern the
@@ -33,7 +32,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>Intellectual Property</h5>
+            <h3 className={"selection"}>Intellectual Property</h3>
             <p>
               All digital content published and made available on our Site is
               the property of Henry Coleman and the Site’s creators. This
@@ -43,7 +42,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>The Minimum Age</h5>
+            <h3 className={"selection"}>The Minimum Age</h3>
             <p>
               The minimum age to use our Site is 16 years old. By using this
               Site, users agree that they are over 16 years old. We do not
@@ -51,7 +50,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>Acceptable Use</h5>
+            <h3 className={"selection"}>Acceptable Use</h3>
             <p>
               As a user of our Site, you agree to use our Site legally, not to
               use our Site for illegal purposes, and not to:
@@ -87,7 +86,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>User Contributions</h5>
+            <h3 className={"selection"}>User Contributions</h3>
             <p>Users may post the following information on our Site:</p>
             <ul>
               <li value="1">Blog post comments&nbsp;</li>
@@ -97,7 +96,6 @@ function Terms() {
               <li value="1">
                 <span>Advertising content</span>
               </li>
-              <li value="1">&nbsp;</li>
             </ul>
             <p>
               By posting movie posters, advertising and making comments publicly
@@ -107,7 +105,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>Accounts</h5>
+            <h3 className={"selection"}>Accounts</h3>
             <p>
               When you take out a subscription and create an account on our
               Site, you agree to the following:
@@ -131,7 +129,7 @@ function Terms() {
             </p>
           </div>
           <div>
-            <h5>Sale of goods and services</h5>
+            <h3 className={"selection"}>Sale of goods and services</h3>
             <p>
               These Terms and Conditions govern the sale of goods and services
               available on our Site.
@@ -175,7 +173,7 @@ function Terms() {
               monitor your payment instrument to verify receipt of any refund.
             </p>
             <div>
-              <h5>Third Party Goods and Services</h5>
+              <h3 className={"selection"}>Third Party Goods and Services</h3>
               <p>
                 Our Site offers goods and services from third parties. We cannot
                 guarantee the quality or accuracy of goods and services made
@@ -183,7 +181,7 @@ function Terms() {
               </p>
             </div>
             <div>
-              <h5>user goods and services</h5>
+              <h3 className={"selection"}>user goods and services</h3>
               <div>
                 <p>
                   Our Site allows users to sell goods and services. We do not
@@ -196,19 +194,21 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>subscriptions</h5>
+                <h3 className={"selection"}>subscriptions</h3>
                 <p>
                   Your subscription automatically renews and you will be
                   automatically billed until we receive notification that you
                   want to cancel the subscription.
                 </p>
                 <p>
-                  To cancel your subscription, please contact
-                  <a href="mailto:henry4film@aol.com">henry4film@aol.com</a>
+                  To cancel your subscription, please contact{" "}
+                  <a href="mailto:henry4film@theartoffilm.co.uk">
+                    henry4film@theartoffilm.co.uk
+                  </a>
                 </p>
               </div>
               <div>
-                <h5>The Art of Film Commission</h5>
+                <h3 className={"selection"}>The Art of Film Commission</h3>
                 <p>
                   A 6% commission is payable on all items that are sold via our
                   Site.&nbsp; Commission is automatically deducted on completion
@@ -217,7 +217,7 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>Payments</h5>
+                <h3 className={"selection"}>Payments</h3>
                 <p>We accept the following payment methods on our Site:</p>
                 <ul>
                   <li value="1">Credit Card;</li>
@@ -238,7 +238,7 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>shipping and Delivery</h5>
+                <h3 className={"selection"}>shipping and Delivery</h3>
                 <ul>
                   <li value="1">
                     Delivery of posters purchased on the site is managed
@@ -282,7 +282,9 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>Right to Cancel and Receive Reimbursement</h5>
+                <h3 className={"selection"}>
+                  Right to Cancel and Receive Reimbursement
+                </h3>
                 <p>
                   If you are a customer living in the United Kingdom or the
                   European Union you have the right to cancel your contract to
@@ -314,7 +316,7 @@ function Terms() {
                 <p>
                   To exercise your right to cancel you must inform us of your
                   decision to cancel within the cancellation period. To cancel,
-                  contact us by email at
+                  contact us by email at{" "}
                   <a href="mailto:henry@theartoffilm.co.uk">
                     henry@theartoffilm.co.uk
                   </a>
@@ -353,17 +355,15 @@ function Terms() {
                 </ul>
               </div>
               <div>
-                <h5>Right to cancel</h5>
+                <h3 className={"selection"}>Right to cancel</h3>
                 <p>
-                  <span>
-                    If you cancel your contract with us and goods have already
-                    been sent to you, then you must return the goods to us as
-                    soon as possible after informing us of your decision to
-                    cancel. You will be responsible for the cost of returning
-                    the goods. We will not be responsible for any damage or loss
-                    to the goods that occurs before they are returned to us,
-                    including while the goods are in transit.
-                  </span>
+                  If you cancel your contract with us and goods have already
+                  been sent to you, then you must return the goods to us as soon
+                  as possible after informing us of your decision to cancel. You
+                  will be responsible for the cost of returning the goods. We
+                  will not be responsible for any damage or loss to the goods
+                  that occurs before they are returned to us, including while
+                  the goods are in transit.
                   <br />
                 </p>
                 <p>
@@ -401,29 +401,29 @@ function Terms() {
                   reimbursement.
                 </p>
                 <p>
-                  <span>
-                    This right to cancel and to reimbursement is not affected by
-                    any return or refund policy we may have.
-                  </span>
+                  This right to cancel and to reimbursement is not affected by
+                  any return or refund policy we may have.
                 </p>
               </div>
               <div>
-                <h5>consumer protection Law</h5>
-                Where the Sale of Goods Act 1979, the Consumer Rights Act 2015,
-                or any other consumer protection legislation in your
-                jurisdiction applies and cannot be excluded, these Terms and
-                Conditions will not limit your legal rights and remedies under
-                that legislation. These Terms and Conditions will be read
-                subject to the mandatory provisions of that legislation. If
-                there is a conflict between these Terms and Conditions and that
-                legislation, the mandatory provisions of the legislation will
-                apply.
+                <h3 className={"selection"}>consumer protection Law</h3>
+                <p>
+                  Where the Sale of Goods Act 1979, the Consumer Rights Act
+                  2015, or any other consumer protection legislation in your
+                  jurisdiction applies and cannot be excluded, these Terms and
+                  Conditions will not limit your legal rights and remedies under
+                  that legislation. These Terms and Conditions will be read
+                  subject to the mandatory provisions of that legislation. If
+                  there is a conflict between these Terms and Conditions and
+                  that legislation, the mandatory provisions of the legislation
+                  will apply.
+                </p>
               </div>
               <div>
                 <p>&nbsp;</p>
               </div>
               <div>
-                <h5>Links to Other Websites</h5>
+                <h3 className={"selection"}>Links to Other Websites</h3>
                 <p>
                   Our Site contains links to third party websites or services
                   that we do not own or control. We are not responsible for the
@@ -437,7 +437,7 @@ function Terms() {
                 <p>&nbsp;</p>
               </div>
               <div>
-                <h5>Limitation of Liability</h5>
+                <h3 className={"selection"}>Limitation of Liability</h3>
                 <p>
                   Henry Coleman and our directors, officers, agents, employees,
                   subsidiaries, and affiliates will not be liable for any
@@ -446,7 +446,7 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>Indeminity</h5>
+                <h3 className={"selection"}>Indeminity</h3>
                 <p>
                   Except where prohibited by law, by using this Site you
                   indemnify and hold harmless Henry Coleman and our directors,
@@ -457,14 +457,14 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>Applicable Law</h5>
+                <h3 className={"selection"}>Applicable Law</h3>
                 <p>
                   These Terms and Conditions are governed by the laws of the
                   Country of England.
                 </p>
               </div>
               <div>
-                <h5>Dispute Resolution</h5>
+                <h3 className={"selection"}>Dispute Resolution</h3>
                 <p>
                   Subject to any exceptions specified in these Terms and
                   Conditions, if you and Henry Coleman are unable to resolve any
@@ -486,7 +486,7 @@ function Terms() {
                 </p>
               </div>
               <div>
-                <h5>severability</h5>
+                <h3 className={"selection"}>severability</h3>
                 <p>
                   If at any time any of the provisions set forth in these Terms
                   and Conditions are found to be inconsistent or invalid under
@@ -496,7 +496,7 @@ function Terms() {
                   these Terms and Conditions will still be considered valid.
                 </p>
               </div>
-              <h5>changes</h5>
+              <h3 className={"selection"}>changes</h3>
               <p>
                 These Terms and Conditions may be amended from time to time in
                 order to maintain compliance with the law and to reflect any
@@ -506,42 +506,40 @@ function Terms() {
                 Site.
               </p>
             </div>
-            <h5>Contact Details</h5>
+            <h3 className={"selection"}>Contact Details</h3>
             <p>
-              Please contact&nbsp;
-              <span>henry4film@aol.com</span>
-              &nbsp;if you have any questions or concerns.&nbsp;&nbsp;
-              <span>
-                You can also contact us through the feedback form available on
-                our Site
-              </span>
+              Please contact{" "}
+              <a href="mailto:henry4film@theartoffilm.co.uk">
+                henry4film@theartoffilm.co.uk
+              </a>{" "}
+              if you have any questions or concerns.& You can also contact us
+              through the feedback form available on our Site
             </p>
           </div>
           <div>
-            <h5>Cancellations</h5>
+            <h3 className={"selection"}>Cancellations</h3>
             <p>
               If you want to cancel your contract of sale with us you may
-              contact
-              <a href="mailto:henry4film@aol.com">henry4film@aol.com</a>
+              contact{" "}
+              <a href="mailto:henry4film@theartoffilm.co.uk">
+                henry4film@theartoffilm.co.uk
+              </a>
               &nbsp;giving your notice of cancellation.&nbsp;
             </p>
           </div>
         </div>
         <div>
-          <h5>Policy Effective From Date: 24th day of January, 2022</h5>
+          <h3 className={"selection"}>
+            Policy Effective From Date: 24th day of January, 2022
+          </h3>
         </div>
         <div>
           <p>
-            <span>
-              Contact Henry Coleman the author
-              <a
-                className="selection"
-                href="mailto:henrhenry@theartoffilm.co.uk"
-              >
-                {" "}
-                henry@theartoffilm.co.uk
-              </a>
-            </span>
+            Contact Henry Coleman the author
+            <a className="selection" href="mailto:henrhenry@theartoffilm.co.uk">
+              {" "}
+              henry@theartoffilm.co.uk
+            </a>
           </p>
         </div>
       </div>

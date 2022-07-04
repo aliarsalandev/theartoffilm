@@ -5,10 +5,12 @@ import HowThreeImage from "../assets/images/How-3.jpg";
 
 function HowItWorkSection() {
   return (
-    <div className="section">
+    <div className="section" style={{ padding: "4em" }}>
       <h2>
         <span>How</span> It Works
       </h2>
+      <br />
+      <br />
       <div className="row center mt-2 image-box">
         <div className="col item">
           <img src={HowOneImage} alt="" />

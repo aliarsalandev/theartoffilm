@@ -35,11 +35,11 @@
 }
 
 .accordion__header:hover h4 {
-  color: #10d6f5 !important;
+  color: #ffffff !important;
 }
 
 .accordion__header:hover i {
-  color: #10d6f5;
+  color: #ffffff;
 }
 
 .accordion__content {

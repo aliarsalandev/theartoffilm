@@ -21,7 +21,7 @@ export default function OrderHistoryScreen(props) {
       </div>
       <div className={"ml-3 col-3"}>
         <div>
-          <h1>Order History</h1>
+          <h1 className={"title"}>Order History</h1>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (

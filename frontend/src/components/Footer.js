@@ -10,10 +10,10 @@ export default function Footer(props) {
     <footer>
       {/* !userInfo.isAdmin && */}
       {userInfo && <ChatBox userInfo={userInfo} />}
-      <div className="container footer-top">
+      <div className=" footer-top bg-dark">
         <div className={`${isMobile ? "column top" : "flex between top"}`}>
           <div className="col md-3">
-            <h5 className="mb-3">Get In Touch</h5>
+            <h3 className="mb-3">Get In Touch</h3>
             <div className="icon-with-text mb-1">
               <i className="fa-solid fa-location-dot"></i>
               <span>London, UK</span>
@@ -49,35 +49,34 @@ export default function Footer(props) {
             </div>
           </div>
           <div className="col md-3">
-            <h5 className="mb-3">Things to know</h5>
+            <h3 className="mb-3">Things to know</h3>
             <div className="footer-links">
               <Link to="/pricing">Our Subscriptions</Link>
               <Link to="/advertise-with-us">Advertise With Us</Link>
-              <Link to="/">Posters Condition Grading</Link>
-              <Link to="/">Terms & Conditions</Link>
               <Link to="/poster-grading-categories">
-                Poster Condition Grading
+                Posters Condition Grading
               </Link>
+              <Link to="/terms">Terms & Conditions</Link>
               <Link to="/privacy">Privacy Policy</Link>
             </div>
           </div>
           <div className="col md-3">
-            <h5 className="mb-3">Site-map</h5>
+            <h3 className="mb-3">Site-map</h3>
             <div className="footer-links">
               <Link to="/">Home</Link>
-              <Link to="/">About Us</Link>
-              <Link to="/">Shop</Link>
-              <Link to="/">Showcase</Link>
+              <Link to="/about-us">About Us</Link>
+              <Link to="/search/name">Shop</Link>
+              <Link to="/sellers">Showcase</Link>
               <Link to="/faq">FAQs</Link>
-              <Link to="/">Contact</Link>
+              <Link to="/contact">Contact</Link>
             </div>
           </div>
           <div className="col md-3">
-            <h5 className="mb-3">Insta Feeds</h5>
+            <h3 className="mb-3">Insta Feeds</h3>
           </div>
         </div>
       </div>
-      <div className="container footer-bottom">
+      <div className="text-md footer-bottom">
         <span>Copyright © 2022 The Art of Film</span>
       </div>
     </footer>

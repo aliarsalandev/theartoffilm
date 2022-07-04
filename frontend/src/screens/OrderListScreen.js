@@ -48,7 +48,7 @@ export default function OrderListScreen(props) {
       </div>
       <div className={"ml-3 col-3"}>
         <div>
-          <h1>Orders</h1>
+          <h1 className={"title"}>Orders</h1>
           {loadingDelete && <LoadingBox></LoadingBox>}
           {errorDelete && (
             <MessageBox variant="danger">{errorDelete}</MessageBox>
