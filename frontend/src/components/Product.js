@@ -48,11 +48,6 @@ export default function Product({ product, toshop = false }) {
           <div className="price">
             {symbol} {(rates[currency] * product.price).toFixed(2)}
           </div>
-          <div>
-            <Link to={`/seller/${product.seller?._id}`}>
-              {product.seller?.seller.name}
-            </Link>
-          </div>
         </div>
       </div>
     </div>
