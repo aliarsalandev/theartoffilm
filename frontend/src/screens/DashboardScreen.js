@@ -17,8 +17,8 @@ export default function DashboardScreen() {
     <PageLayout>
       <div className={"ml-3 col-3"}>
         <div>
-          <div className="row">
-            <h1 className={"title"}>Dashboard</h1>
+          <div className="row text-start">
+            <h3 className={"title3"}>Overview</h3>
           </div>
           {loading ? (
             <LoadingBox />
@@ -61,27 +61,25 @@ export default function DashboardScreen() {
                   </div>
                 </li>
               </ul>
-              <div>
-                <div>
-                  <h2>Sales</h2>
-                  {summary.dailyOrders.length === 0 ? (
-                    <MessageBox>No Sale</MessageBox>
-                  ) : (
-                    <Chart
-                      width="100%"
-                      height="400px"
-                      chartType="AreaChart"
-                      loader={<div>Loading Chart</div>}
-                      data={[
-                        ["Date", "Sales"],
-                        ...summary.dailyOrders.map((x) => [x._id, x.sales]),
-                      ]}
-                    ></Chart>
-                  )}
-                </div>
+              <div className={""}>
+                <h3 className={"text-start title3"}>Sales</h3>
+                {summary.dailyOrders.length === 0 ? (
+                  <MessageBox>No Sale</MessageBox>
+                ) : (
+                  <Chart
+                    width="100%"
+                    height="400px"
+                    chartType="AreaChart"
+                    loader={<div>Loading Chart</div>}
+                    data={[
+                      ["Date", "Sales"],
+                      ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+                    ]}
+                  ></Chart>
+                )}
               </div>
               <div>
-                <h2>Categories</h2>
+                <h3 className={"title3"}>Categories</h3>
                 {summary.productCategories.length === 0 ? (
                   <MessageBox>No Category</MessageBox>
                 ) : (

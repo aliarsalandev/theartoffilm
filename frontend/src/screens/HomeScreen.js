@@ -16,6 +16,7 @@ import CoverFlowComponent from "../components/CoverFlow";
 import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import { sellersList } from "../helpers/profile";
+import NoSideBarLayout from "../layouts/NoSideBarLayout";
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function HomeScreen() {
     });
   }, [dispatch]);
   return (
-    <div>
+    <NoSideBarLayout>
       <div
         className="section fh p-2"
         style={{
@@ -92,10 +93,7 @@ export default function HomeScreen() {
                 ]}
               >
                 {products.map((product) => {
-                  const show =
-                    (product.image.length > 0) &
-                    product.visible &
-                    (product.price > 0);
+                  const show = (product.image.length > 0) & product.visible;
                   return (
                     show === 1 && (
                       <div key={product._id}>
@@ -155,9 +153,7 @@ export default function HomeScreen() {
             height={`${isMobile ? "100%" : 425}`}
             itemRatio="21:14"
             background="transparent"
-            onClick={(seller) => {
-              console.log(seller);
-            }}
+            onClick={(seller) => {}}
             handleSelect={(index) => {
               const _seller = sellers?.find((seller, ind) => ind === index);
               navigate(`/seller/${_seller?._id}`);
@@ -166,6 +162,6 @@ export default function HomeScreen() {
           />
         </div>
       </div>
-    </div>
+    </NoSideBarLayout>
   );
 }

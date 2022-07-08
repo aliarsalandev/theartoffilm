@@ -23,7 +23,6 @@ export const uploadFileHandler = async (file, userInfo) => {
         authorization: `Bearer ${userInfo.token}`,
       },
     });
-    console.log("image upload data", data);
     return data.secure_url;
   } catch (err) {
     return err;
@@ -52,8 +51,6 @@ export const getMessages = async (order, userInfo) => {
 };
 
 export const unreadMessages = async (userInfo) => {
-  console.log("unread messages", userInfo);
-
   const { data } = await Axios.get("/api/messages/unread/all", {
     headers: { Authorization: `Bearer ${userInfo.token}` },
   });

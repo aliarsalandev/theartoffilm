@@ -92,7 +92,7 @@ function SubscriptionEditScreen() {
         {false ? (
           <div>Loading...</div>
         ) : (
-          <div>Subscription Created Successfully</div>
+          <div className={"selection"}>Subscription Created Successfully</div>
         )}
         {updating && <div>Updating...</div>}
         {errorUpdate && <div>{errorUpdate}</div>}

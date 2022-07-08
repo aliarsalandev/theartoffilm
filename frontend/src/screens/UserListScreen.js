@@ -32,13 +32,15 @@ export default function UserListScreen(props) {
     }
   };
   return (
-    <div className={"row top"}>
+    <div className={"row top bg-light-dark p-2"}>
       <div className="col-1">
         <SellerSidebar />
       </div>
       <div className={"ml-3 col-3"}>
+        <div className={"mtb-2"}>
+          <h2 className={"title2 text-start"}>Users</h2>
+        </div>
         <div>
-          <h1>Users</h1>
           {loadingDelete && <LoadingBox></LoadingBox>}
           {errorDelete && (
             <MessageBox variant="danger">{errorDelete}</MessageBox>
@@ -66,11 +68,17 @@ export default function UserListScreen(props) {
                 {users.map((user) => (
                   <tr key={user._id}>
                     <td>
-                      {
-                        !user.seller.logo ? <div className={"avatar"} >
-                          {user.name}
-                        </div> : <img width={120} height={120} src={user.seller.logo} alt={user.seller.name} />
-                      }  </td>
+                      {!user.seller.logo ? (
+                        <div className={"avatar"}>{user.name}</div>
+                      ) : (
+                        <img
+                          width={120}
+                          height={120}
+                          src={user.seller.logo}
+                          alt={user.seller.name}
+                        />
+                      )}{" "}
+                    </td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.isSeller ? "YES" : " NO"}</td>

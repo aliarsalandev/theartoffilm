@@ -34,7 +34,6 @@ import PricingScreen from "../screens/PricingScreen";
 import PaymentSuccess from "../screens/PaymentSuccess";
 import { UserSubscriptionScreen } from "../screens/UserSubscriptionScreen";
 import SettingScreen from "../screens/SettingScreen";
-import Chat from "../components/chat-components/Chat/Chat";
 
 const AppRoutes = () => {
   return (
@@ -180,14 +179,7 @@ const AppRoutes = () => {
           </AdminRoute>
         }
       />
-      <Route
-        path="/support"
-        element={
-          <AdminRoute>
-            <SupportScreen />
-          </AdminRoute>
-        }
-      />
+
       <Route
         path="/productlist/seller"
         element={
@@ -208,8 +200,6 @@ const AppRoutes = () => {
       <Route path="/advertise-with-us" element={<AdvertiseWithUs />}></Route>
       <Route path="/faq" element={<FAQScreen />}></Route>
       <Route path="/contact" element={<ContactScreen />}></Route>
-
-      <Route path="/support/:user/:room" element={<Chat />} />
     </Routes>
   );
 };

@@ -113,8 +113,6 @@ export default function ProductEditScreen() {
   useEffect(() => {
     if (director) {
       productDirectorsRef.current = [...productDirectorsRef.current, director];
-      console.log(director);
-      console.log(productDirectorsRef.current);
     }
     // if (director !== undefined || director !== {})
     //   productDirectorsRef.current = [...productDirectorsRef.current, director];
@@ -123,16 +121,12 @@ export default function ProductEditScreen() {
   useEffect(() => {
     if (cast) {
       productCastsRef.current = [...productCastsRef.current, cast];
-      console.log(cast);
-      console.log(productCastsRef.current);
     }
   }, [cast]);
 
   useEffect(() => {
     if (artist) {
       productArtistsRef.current = [...productArtistsRef.current, artist];
-      console.log(artist);
-      console.log(productCastsRef);
     }
   }, [artist]);
   const submitHandler = (e) => {
@@ -183,7 +177,6 @@ export default function ProductEditScreen() {
           authorization: `Bearer ${userInfo.token}`,
         },
       });
-      console.log("image upload data", data);
       if (forImages) {
         setImages([...images, data.secure_url]);
       } else {
@@ -191,7 +184,6 @@ export default function ProductEditScreen() {
       }
       setLoadingUpload(false);
     } catch (err) {
-      console.log(err);
       setErrorUpload(err);
       dispatch({ type: "UPLOAD_FAIL", payload: err });
     }

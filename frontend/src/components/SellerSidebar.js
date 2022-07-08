@@ -15,7 +15,6 @@ function SellerSidebar() {
   };
 
   useEffect(() => {
-    console.log("unread messages");
     unreadMessages(userInfo).then((data) => {
       setUnread(data.messages);
     });
@@ -122,11 +121,6 @@ function SellerSidebar() {
               <Link className={"link"} to="/userlist">
                 <i className={"fas fa-users"} style={{ fontSize: "0.6em" }}></i>{" "}
                 Users
-              </Link>
-            </li>
-            <li>
-              <Link className={"link"} to="/support">
-                <i className={"fas fa-headset"}></i> User Enqueries
               </Link>
             </li>
           </ul>

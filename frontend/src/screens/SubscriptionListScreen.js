@@ -22,7 +22,7 @@ function SubscriptionListScreen() {
 
   return (
     <PageLayout>
-      <div className={"flex"}>
+      <div className={"flex p-2"}>
         <div className="switcher" style={{ margin: "0 auto" }}>
           <input
             type="radio"

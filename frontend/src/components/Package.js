@@ -13,6 +13,7 @@ function Package({
   yearPrice,
   currency,
   perks,
+  enabled = true,
 }) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -20,7 +21,7 @@ function Package({
   const [loading, setLoading] = useState(false);
 
   return (
-    <section className="card premium">
+    <section className={`card premium ${!enabled ? "bg-dark" : ""}`}>
       <article className="bg-accent w-100 text-center">
         <h2 className="name title3 text-dark">{name}</h2>
       </article>
@@ -53,28 +54,30 @@ function Package({
                 <i className="fa fa-spinner fa-spin">Loading....</i>
               </div>
             ) : (
-              <button
-                className="button-free s-b"
-                title={"Get Started"}
-                onClick={(e) => {
-                  setLoading(true);
-                  processCheckout(
-                    currency,
-                    name,
-                    period === "month" ? `${monthPrice}0` : `${yearPrice}0`,
-                    period,
-                    1,
-                    "subscription",
-                    id
-                  ).then((data) => {
-                    // console.log(JSON.stringify(data));
-                    window.open(data.session.url, "_blank");
-                  });
-                  setLoading(false);
-                }}
-              >
-                Get started
-              </button>
+              enabled && (
+                <button
+                  className="button-free s-b"
+                  title={"Get Started"}
+                  disabled={userInfo?.isAdmin}
+                  onClick={(e) => {
+                    setLoading(true);
+                    processCheckout(
+                      currency,
+                      name,
+                      period === "month" ? `${monthPrice}0` : `${yearPrice}0`,
+                      period,
+                      1,
+                      "subscription",
+                      id
+                    ).then((data) => {
+                      window.open(data.session.url, "_blank");
+                    });
+                    setLoading(false);
+                  }}
+                >
+                  Get started
+                </button>
+              )
             )}
           </div>
         )}

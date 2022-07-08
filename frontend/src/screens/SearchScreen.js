@@ -104,7 +104,7 @@ export default function SearchScreen(props) {
                   (product) =>
                     (product.image.length > 0) &
                     product.visible &
-                    (product.price > 0)
+                    product.forSale
                 ).length
               }{" "}
               Results
@@ -271,7 +271,7 @@ export default function SearchScreen(props) {
               <MessageBox variant="danger">{error}</MessageBox>
             ) : (
               <>
-                {products.length === 0 ? (
+                {products && products.length === 0 ? (
                   <div className={"flex column center text-center"}>
                     <h2 className={"title2"}>
                       <span className="selection">No results</span> found
@@ -290,7 +290,7 @@ export default function SearchScreen(props) {
                     const show =
                       (product.image.length > 0) &
                       product.visible &
-                      (product.price > 0);
+                      product.forSale;
                     return (
                       show === 1 && (
                         <Product key={product._id} product={product}></Product>
@@ -303,7 +303,7 @@ export default function SearchScreen(props) {
                     (product) =>
                       (product.image.length > 0) &
                       product.visible &
-                      (product.price > 0)
+                      product.forSale
                   ).length > 4 ? (
                     [...Array(pages).keys()].map((x) => (
                       <button

@@ -19,18 +19,40 @@ settingsRouter.put(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
+    const {
+      commission,
+      stripe_private_key,
+      site_logo,
+      site_favicon,
+      site_keywords,
+    } = req.body;
     const setting = await Setting.findOne();
 
-    setting.commission = req.body.commission;
-    setting.stripe_private_key = req.body.stripe_private_key;
-    setting.site_logo = req.body.site_logo;
-    setting.site_favicon = req.body.site_favicon;
-    setting.site_keywords = req.body.site_keywords;
-    const updated_settings = await setting.save();
-    res.send({
-      message: "Settings Updated",
-      settings: updated_settings,
-    });
+    if (setting === null) {
+      const newSetting = new Setting({
+        commission,
+        stripe_private_key,
+        site_logo,
+        site_favicon,
+        site_keywords,
+      });
+      await newSetting.save();
+      res.send({
+        settings: setting,
+        message: "Setting created",
+      });
+    } else {
+      setting.commission = commission;
+      setting.stripe_private_key = stripe_private_key;
+      setting.site_logo = site_logo;
+      setting.site_favicon = site_favicon;
+      setting.site_keywords = site_keywords;
+      await setting.save();
+      res.send({
+        message: "Settings Updated",
+        settings: setting,
+      });
+    }
   })
 );
 

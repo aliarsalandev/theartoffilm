@@ -75,7 +75,6 @@ export default function OrderScreen(props) {
 
   useEffect(() => {
     getMessages(orderId, userInfo).then((data) => {
-      console.log(data);
       setMessages(data);
     });
     return () => {};
@@ -212,9 +211,9 @@ export default function OrderScreen(props) {
                         message,
                       },
                     ]);
-                    sendMessage(order._id, userInfo, message).then((data) => {
-                      console.log(data);
-                    });
+                    sendMessage(order._id, userInfo, message).then(
+                      (data) => {}
+                    );
                   }}
                   className="btn btn-primary"
                 >
@@ -302,9 +301,6 @@ export default function OrderScreen(props) {
                             "poster",
                             order._id
                           ).then((data) => {
-                            // setInitiatePayment(false);
-
-                            // console.log(JSON.stringify(data));
                             window.open(data.session.url, "_blank");
                           });
                         }}

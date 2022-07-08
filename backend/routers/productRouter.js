@@ -152,8 +152,6 @@ productRouter.get(
       ...priceFilter,
     };
 
-    console.log(filters);
-
     const products = await Product.find({ ...filters })
       .skip(PAGE_SIZE * (pageNumber - 1))
       .limit(PAGE_SIZE);
@@ -245,7 +243,7 @@ productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findById("62c7508b0deb00700c59357c");
+    const seller = await User.findById("62c89cfe4fb2d300a7759c11");
     if (seller) {
       const products = data.products.map((product) => ({
         ...product,

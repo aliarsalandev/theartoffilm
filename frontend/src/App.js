@@ -26,7 +26,6 @@ import SellerScreen from "./screens/SellerScreen";
 import SearchScreen from "./screens/SearchScreen";
 import MapScreen from "./screens/MapScreen";
 import DashboardScreen from "./screens/DashboardScreen";
-import SupportScreen from "./screens/SupportScreen";
 import SellersScreen from "./screens/SellersScreen";
 import AdvertiseWithUs from "./screens/AdvertiseWithUs";
 import FAQScreen from "./screens/FAQScreen";
@@ -207,14 +206,7 @@ function App() {
                 </AdminRoute>
               }
             />
-            <Route
-              path="/support"
-              element={
-                <AdminRoute>
-                  <SupportScreen />
-                </AdminRoute>
-              }
-            />
+
             <Route
               path="/productlist/seller"
               element={
@@ -256,8 +248,6 @@ function App() {
 
             <Route path="/terms" element={<Terms />}></Route>
             <Route path="/contact" element={<ContactScreen />}></Route>
-
-            {/* <Route path="/support/:user/:room" element={<Chat />} /> */}
           </Routes>
         </main>
         <Footer userInfo={userInfo} />

@@ -71,10 +71,10 @@ export default function ProductListScreen(props) {
 
   return (
     <PageLayout>
-      <div className={"ml-3 col-3"}>
+      <div className={"ml-3 col-3 p-2"}>
         <div>
-          <div className="row">
-            <h1 className={"title"}>Posters</h1>
+          <div className="row mtb-2">
+            <h2 className={"title2"}>Posters</h2>
             <UploadPoster />
           </div>
 

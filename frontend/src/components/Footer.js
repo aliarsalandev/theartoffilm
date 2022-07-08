@@ -1,17 +1,13 @@
 import React from "react";
 import "./css/footer.css";
 import { Link } from "react-router-dom";
-import ChatBox from "../components/ChatBox";
 import { isMobile } from "react-device-detect";
 import InstagramFeed from "react-ig-feed";
 import "react-ig-feed/dist/index.css";
 
 export default function Footer(props) {
-  const userInfo = props;
   return (
     <footer>
-      {/* !userInfo.isAdmin && */}
-      {userInfo && <ChatBox userInfo={userInfo} />}
       <div className="plr-2 ptb-2 bg-dark">
         <div className={`${isMobile ? "column top" : "flex between top"}`}>
           <div className="col md-3">

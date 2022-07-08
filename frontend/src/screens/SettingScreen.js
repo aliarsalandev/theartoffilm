@@ -34,7 +34,6 @@ export default function SettingScreen() {
 
   useEffect(() => {
     siteSettings().then(({ setting }) => {
-      console.log(setting);
       setSettings(setting);
     });
   }, []);
@@ -48,17 +47,20 @@ export default function SettingScreen() {
     const data = new FormData(e.target);
     const site_logo = data.get("site_logo");
     const site_favicon = data.get("site_favicon");
+    const stripe_private_key = data.get("stripe_private_key");
+    const commission = data.get("commission");
+    const site_keywords = data.get("site_keywords");
+
     updateSettings(
       {
-        commission: settings.commission,
-        stripe_private_key: settings.stripe_private_key,
-        site_logo: site_logo.name,
-        site_favicon: site_favicon.name,
-        site_keywords: settings.site_keywords,
+        commission,
+        stripe_private_key,
+        site_logo: site_logo?.name,
+        site_favicon: site_favicon?.name,
+        site_keywords,
       },
       userInfo
     ).then((res) => {
-      console.log(res);
       if ((res.message = "Settings Updated")) setUpdated(true);
     });
   };
@@ -78,7 +80,7 @@ export default function SettingScreen() {
             name={"commission"}
             placeholder="Commission"
             onChange={onChangeHandler}
-            defaultValue={settings.commission}
+            defaultValue={settings?.commission}
           />
         </div>
         <div>
@@ -89,7 +91,7 @@ export default function SettingScreen() {
             type="text"
             placeholder="STRIPE PRIVATE KEY"
             onChange={onChangeHandler}
-            defaultValue={settings.stripe_private_key}
+            defaultValue={settings?.stripe_private_key}
           />
         </div>
 
@@ -122,7 +124,7 @@ export default function SettingScreen() {
             type="text"
             placeholder="Site Keywords"
             onChange={onChangeHandler}
-            defaultValue={settings.site_keywords}
+            defaultValue={settings?.site_keywords}
           />
         </div>
         <div>

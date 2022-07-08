@@ -8,6 +8,40 @@ import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import FAQScreen from "./FAQScreen";
 import { useCurrency } from "../hooks/currencyHooks";
 import HeroSection from "../sections/HeroSection";
+import { Link } from "react-router-dom";
+import { isMobile } from "react-device-detect";
+function ShowCaseCard({
+  before,
+  title,
+  text,
+  link,
+  linkText,
+  image,
+  reverse = false,
+}) {
+  return (
+    <div className={`flex between ${reverse ? "row-reverse" : ""} mtb-2`}>
+      <div className={`col-md-6 col-xs-12 ${isMobile ? "" : "plr-2"}`}>
+        <h2 className={"text-start"}>
+          <span className={"selection"}>{before}</span> {title}
+        </h2>
+        <p>{text}</p>
+        <br />
+        <br />
+        <Link to={link} className="button primary">
+          {linkText}
+        </Link>
+      </div>
+      <div className={`col row end top`}>
+        <img
+          src={image}
+          alt=""
+          className={`img ${isMobile ? "w-100" : "w-80"}`}
+        />
+      </div>
+    </div>
+  );
+}
 
 function PricingScreen() {
   const { currency, rates } = useCurrency();
@@ -113,6 +147,19 @@ function PricingScreen() {
         </div>
 
         <FAQScreen showSubscriptionFAQs={true} header={false} />
+
+        <div className="ptb-2 container">
+          <ShowCaseCard
+            before={"Showcase"}
+            title={"your Movie Posters"}
+            text={
+              "Manage and showcase your movie collection. Once you have subscribed to The Art of Film you will have access to a minimum of 500 blank template pages with dropdown menus to populate with your own collection information. Choose the format, country of issue, condition, year of release, cast, and crew, etc. You can then choose to keep movie posters in your own private collection and/or you can choose to sell posters through our Movie Poster Shop."
+            }
+            image={"/images/1512225-1024x576.jpg"}
+            link={"/contact"}
+            linkText={"Contact Us"}
+          />
+        </div>
       </div>
     </NoSideBarLayout>
   );

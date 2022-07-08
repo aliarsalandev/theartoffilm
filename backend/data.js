@@ -21,13 +21,7 @@ const data = {
       email: "henry@theartoffilms.co.uk",
       password: bcrypt.hashSync("Zakaria@369", 8),
       isAdmin: false,
-    },
-
-    {
-      name: "Joanna",
-      email: "jo.welland@magiccaterpillar.co.uk",
-      password: bcrypt.hashSync("Zakaria@369", 8),
-      isAdmin: false,
+      isSeller: true,
     },
   ],
   products: [

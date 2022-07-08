@@ -6,6 +6,8 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { userSubscription } from "../helpers/payment";
 import PageLayout from "../layouts/page";
+import Package from "../components/Package";
+
 export const UserSubscriptionScreen = () => {
   const { userInfo } = useSelector((state) => state.userSignin);
   const [subscription, setSubscription] = React.useState({
@@ -24,7 +26,6 @@ export const UserSubscriptionScreen = () => {
   //   userInfo;
   useEffect(() => {
     userSubscription(userInfo._id).then((data) => {
-      console.log(data);
       const { subscription, period } = data;
       setSubscription({
         ...subscription,
@@ -40,39 +41,17 @@ export const UserSubscriptionScreen = () => {
         className="AppWrapper"
         style={{ maxWidth: "320px", width: "320px", margin: "0 auto" }}
       >
-        <section className="card premium p-2">
-          <article className="title">
-            <h1 className="name">{subscription.name}</h1>
-            <p className="about">{/* <img src={image} alt={"Package"} /> */}</p>
-          </article>
-
-          <div className="payment">
-            <h3 className="price">
-              {subscription.currency}
-              GBP{" "}
-              {subscription.period === "month"
-                ? subscription.monthPrice
-                : subscription.yearPrice}
-            </h3>
-            <p className="billed-other">
-              {/* <strong>Billed annually</strong> or $24 monthly */}
-            </p>
-          </div>
-
-          <div className="perks">
-            <ul>
-              <li>
-                <span className="bold">Products</span>:
-                <strong> {subscription.products}</strong>
-              </li>
-              {subscription.perks?.map((perk, index) => (
-                <li key={index}>
-                  <i className={"fa fa-check"}></i> {perk}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <Package
+          id={subscription._id}
+          name={subscription.name}
+          enabled={false}
+          image={subscription.image}
+          currency={subscription.currency}
+          monthPrice={subscription.monthPrice}
+          yearPrice={subscription.yearPrice}
+          perks={subscription.perks}
+          period={subscription.period}
+        />
       </div>
     </PageLayout>
   );

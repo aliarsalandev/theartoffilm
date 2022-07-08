@@ -37,7 +37,6 @@ export default function PlaceOrderScreen(props) {
   const { userInfo } = useSelector((state) => state.userSignin);
 
   const placeOrderHandler = () => {
-    console.log({ ...cart, orderItems: cart.cartItems });
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
   };
   useEffect(() => {

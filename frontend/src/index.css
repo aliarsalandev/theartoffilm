@@ -1268,8 +1268,7 @@ h4 {
   display: flex;
   max-height: fit-content;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 .subscriptions .card .title {
@@ -1412,7 +1411,7 @@ body > iframe {
 
 .chip {
   background: var(--accent-color);
-  padding: 2px 4px;
+  padding: 4px;
   border-radius: 4px;
   color: var(--light-dark-color);
 }

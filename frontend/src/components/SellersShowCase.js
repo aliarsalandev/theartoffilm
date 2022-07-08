@@ -25,9 +25,7 @@ function SellersShowCase() {
         height={`${isMobile ? "100%" : 425}`}
         itemRatio="21:14"
         background="transparent"
-        onClick={(seller) => {
-          console.log(seller);
-        }}
+        onClick={(seller) => {}}
         handleSelect={(index) => {
           const _seller = sellers?.find((seller, ind) => ind === index);
           navigate(`/seller/${_seller?._id}`);

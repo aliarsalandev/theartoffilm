@@ -20,16 +20,13 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    console.log("SubscriptionEditScreen useEffect");
     setCurrency(JSON.parse(localStorage.getItem("currency")) ?? {});
     CurrencyRates({
       onResult: (result) => {
         const rates = JSON.parse(result).rates;
         updateRates((prevRates) => ({ ...prevRates, ...rates }));
       },
-      onError: (error) => {
-        console.log("41", error);
-      },
+      onError: (error) => {},
     });
     return () => {};
   }, [updateRates]);

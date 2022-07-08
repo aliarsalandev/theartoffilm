@@ -158,15 +158,11 @@ orderRouter.put(
             },
             (error, body) => {
               if (error) {
-                console.log(error);
               } else {
-                console.log(body);
               }
             }
           );
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
 
       res.send({ message: "Order Paid", order: updatedOrder });
     } else {
@@ -272,7 +268,6 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
     user.save();
   } else {
     const order = await Order.findById(session.ref).exec();
-    console.log(order);
     // const order = await Order.findOne({ user: user_id }).exec();
     order.isPaid = true;
     order.paidAt = Date.now();

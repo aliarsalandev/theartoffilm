@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import queryString from "query-string"; //used to get data from URL
 import { io } from "socket.io-client";
 
-import "./Chat.css";
+// import "./Chat.css";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
-import Messages from "../Messages/Messages";
 import UserContainer from "../UserContainer/UserContainer";
-
-import ScrollToBottom from "react-scroll-to-bottom";
-import { useDispatch } from "react-redux";
-import { notifyUser } from "../../../actions/socketActions";
 
 let socket;
 
 const Chat = () => {
   const params = useParams();
-  const dispatch = useDispatch();
   const { user: name, room } = params;
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
@@ -82,10 +75,6 @@ const Chat = () => {
           <div className="chat-title">
             <InfoBar room={room} />
           </div>
-
-          <ScrollToBottom className="chat-message-list">
-            <Messages messages={messages} name={name} />
-          </ScrollToBottom>
 
           <div className="chat-form">
             <Input

@@ -18,11 +18,11 @@ export default function ChatBox(props) {
 
   useEffect(() => {
     if (uiMessagesRef.current) {
-      uiMessagesRef.current.scrollBy({
-        top: uiMessagesRef.current.clientHeight,
-        left: 0,
-        behavior: "smooth",
-      });
+      // uiMessagesRef.current.scrollBy({
+      //   top: uiMessagesRef.current.clientHeight,
+      //   left: 0,
+      //   behavior: "smooth",
+      // });
     }
     if (socket) {
       socket.emit("onLogin", {
@@ -38,7 +38,6 @@ export default function ChatBox(props) {
 
   const supportHandler = () => {
     setIsOpen(true);
-    console.log(ENDPOINT);
     const sk = socketIOClient(ENDPOINT);
     setSocket(sk);
   };

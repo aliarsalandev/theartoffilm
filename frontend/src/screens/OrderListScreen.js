@@ -26,7 +26,6 @@ export default function OrderListScreen(props) {
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("unread messages");
     unreadMessages(userInfo).then((data) => {
       setUnread(data.messages);
     });
@@ -43,9 +42,11 @@ export default function OrderListScreen(props) {
   };
   return (
     <PageLayout>
-      <div className={"ml-3 col-3"}>
+      <div className={"ml-3 col-3 p-2"}>
+        <div className={"mtb-2"}>
+          <h2 className={"title2 text-start"}>Orders</h2>
+        </div>
         <div>
-          <h1 className={"title"}>Orders</h1>
           {loadingDelete && <LoadingBox></LoadingBox>}
           {errorDelete && (
             <MessageBox variant="danger">{errorDelete}</MessageBox>

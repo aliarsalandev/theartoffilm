@@ -49,9 +49,7 @@ export default function ProfileScreen() {
       });
       setSeller({ ...seller, logo: data.secure_url });
       setLogo(data.secure_url);
-      console.log("image upload data", data);
     } catch (err) {
-      console.log(err);
       dispatch({ type: "UPLOAD_FAIL", payload: err });
     }
   };
@@ -133,11 +131,11 @@ export default function ProfileScreen() {
 
   return (
     <PageLayout>
-      <form className="form" onSubmit={submitHandler}>
+      <form className="form p-4" onSubmit={submitHandler}>
         <div>
-          <h1 className={"title"}>
+          <h2 className={"title2"}>
             {userInfo?.isAdmin ? "Admin Profile" : "My Profile"}
-          </h1>
+          </h2>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -196,22 +194,25 @@ export default function ProfileScreen() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
-            <div className="text-start">
-              <h1 className={"title"}>
-                <span className="selection">Address</span> Settings
-              </h1>
-            </div>
-            <div>
-              <label htmlFor="address">Address</label>
-              <input
-                id="address"
-                name={"address"}
-                type="text"
-                placeholder="Enter address"
-                defaultValue={user.address}
-                onChange={updateAddressDetail}
-              ></input>
-            </div>
+            {userInfo?.isSeller && (
+              <>
+                {" "}
+                <div className="text-start">
+                  <h3 className={"title3"}>Address Settings</h3>
+                </div>
+                <div>
+                  <label htmlFor="address">Address</label>
+                  <input
+                    id="address"
+                    name={"address"}
+                    type="text"
+                    placeholder="Enter address"
+                    defaultValue={user.address}
+                    onChange={updateAddressDetail}
+                  ></input>
+                </div>
+              </>
+            )}
             <div>
               <label htmlFor="city">City</label>
               <input
@@ -246,84 +247,93 @@ export default function ProfileScreen() {
               ></input>
             </div>
 
-            <div className="text-start">
-              <h1 className={"title"}>
-                <span className="selection">Payment</span> Settings{" "}
-              </h1>
-            </div>
-            <div>
-              <label htmlFor="stripe_account_id">Stripe Account Id</label>
-              <input
-                id="stripe_account_id"
-                name={"stripe_account_id"}
-                type="text"
-                placeholder="Enter Stripe Account Id"
-                defaultValue={seller.stripe_account_id}
-                onChange={onChange}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="shipping_cost">Shipping Cost</label>
-            </div>
-            <div>
-              <div className="flex row start">
-                {Object.keys(shippingCost)?.map((key, index) => {
-                  return (
-                    <div key={index} className={"mr-2 chip"}>
-                      <span>
-                        {
-                          data.origins.find((country) => country.code === key)[
-                            "name"
-                          ]
-                        }{" "}
-                        : {shippingCost[key]}
-                      </span>
-                      <i
-                        className="ml-2 fas fa-times pointer"
-                        onClick={() => {
-                          delete shippingCost[key];
+            {userInfo?.isSeller && (
+              <>
+                <div className="text-start">
+                  <h3 className={"title3"}>Payment Settings</h3>
+                </div>
+                <div>
+                  <label htmlFor="stripe_account_id">Paypal Email</label>
+                  <input
+                    id="stripe_account_id"
+                    name={"stripe_account_id"}
+                    type="text"
+                    placeholder="Enter Stripe Account Id"
+                    defaultValue={seller.stripe_account_id}
+                    onChange={onChange}
+                  ></input>
+                </div>
+              </>
+            )}
+
+            {userInfo?.isSeller && (
+              <>
+                {" "}
+                <div className="text-start">
+                  <h3 className={"title3"}>Shipping Settings</h3>
+                </div>
+                <div>
+                  <label htmlFor="shipping_cost title3">Shipping Cost</label>
+
+                  <div className={"flex row"}>
+                    <input
+                      id="shipping_cost"
+                      ref={shippingCostRef}
+                      type="number"
+                      placeholder="Enter Shipping Cost"
+                    ></input>
+                    <div>
+                      <Select
+                        className="multi-select"
+                        placeholder={"Select Country of Origin"}
+                        defaultValue={{
+                          value: "GB",
+                          label: "United Kingdom",
+                        }}
+                        options={data.origins?.map((country) => ({
+                          value: country.code,
+                          label: country.name,
+                        }))}
+                        onChange={(__origin) => {
+                          const origin = __origin.value;
+                          const value = shippingCostRef.current.value;
                           setShippingCost({
                             ...shippingCost,
+                            [origin]: value,
                           });
                         }}
-                      ></i>
+                      />
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div>
-              <div className={"flex row"}>
-                <input
-                  id="shipping_cost"
-                  ref={shippingCostRef}
-                  type="number"
-                  placeholder="Enter Shipping Cost"
-                ></input>
-                <div>
-                  <Select
-                    className="multi-select"
-                    placeholder={"Select Country of Origin"}
-                    defaultValue={{
-                      value: "GB",
-                      label: "United Kingdom",
-                    }}
-                    options={data.origins?.map((country) => ({
-                      value: country.code,
-                      label: country.name,
-                    }))}
-                    onChange={(__origin) => {
-                      const origin = __origin.value;
-                      const value = shippingCostRef.current.value;
-                      setShippingCost({
-                        ...shippingCost,
-                        [origin]: value,
-                      });
-                    }}
-                  />
+                  </div>
+
+                  <div className="flex mtb-2">
+                    {Object.keys(shippingCost)?.map((key, index) => {
+                      return (
+                        <div key={index} className={"mr-2 chip p-2"}>
+                          <span>
+                            {
+                              data.origins.find(
+                                (country) => country.code === key
+                              )["name"]
+                            }{" "}
+                            : {shippingCost[key]}
+                          </span>
+                          <i
+                            className="ml-2 fas fa-times pointer"
+                            onClick={() => {
+                              delete shippingCost[key];
+                              setShippingCost({
+                                ...shippingCost,
+                              });
+                            }}
+                          ></i>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
             {userInfo?.isSeller && (
               <div className={"form"}>
                 <div>

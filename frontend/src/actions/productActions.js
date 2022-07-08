@@ -129,7 +129,6 @@ export const listProductDirectors = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(`/api/directors`);
-    // console.log(data, 'the directors list');
     dispatch({ type: PRODUCT_DIRECTOR_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_DIRECTOR_LIST_FAIL, payload: error.message });
@@ -142,7 +141,6 @@ export const listProductCasts = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(`/api/casts`);
-    // console.log(data, 'the casts list');
     dispatch({ type: PRODUCT_CAST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_CAST_LIST_FAIL, payload: error.message });
@@ -207,7 +205,6 @@ export const listProductArtists = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(`/api/artists`);
-    // console.log(data, 'the artists list');
     dispatch({ type: PRODUCT_ARTIST_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_ARTIST_LIST_FAIL, payload: error.message });
