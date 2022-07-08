@@ -12,19 +12,22 @@ export default function Footer(props) {
     <footer>
       {/* !userInfo.isAdmin && */}
       {userInfo && <ChatBox userInfo={userInfo} />}
-      <div className=" footer-top bg-dark">
+      <div className="plr-2 ptb-2 bg-dark">
         <div className={`${isMobile ? "column top" : "flex between top"}`}>
           <div className="col md-3">
             <h3 className="mb-3">Get In Touch</h3>
-            <div className="icon-with-text mb-1">
-              <i className="fa-solid fa-location-dot"></i>
-              <span>London, UK</span>
+            <div className="footer-links">
+              <div className="icon-with-text mb-1">
+                <i className="fa-solid fa-location-dot"></i>
+                <span>London, UK</span>
+              </div>
+              <div className=" icon-with-text mb-3 mt-1">
+                <i className="fa-solid fa-envelope"></i>
+                <span>henry@theartoffilm.co.uk</span>
+              </div>
             </div>
-            <div className=" icon-with-text mb-3 mt-1">
-              <i className="fa-solid fa-envelope"></i>
-              <span>henry@theartoffilm.co.uk</span>
-            </div>
-            <div className="flex row social-icons mb-3">
+
+            <div className="social-icons">
               <a
                 href="https://www.facebook.com/Henry4film/"
                 target={"_blank"}
@@ -36,6 +39,7 @@ export default function Footer(props) {
               <a
                 href="https://www.instagram.com/the_artoffilm/?utm_medium=copy_link"
                 target={"_blank"}
+                className={"plr-2"}
                 rel="noreferrer"
               >
                 <i className="fa-brands fa-instagram"></i>
@@ -60,7 +64,6 @@ export default function Footer(props) {
               </Link>
               <Link to="/terms">Terms & Conditions</Link>
               <Link to="/privacy">Privacy Policy</Link>
-              <Link to="/blog-page">Blog & News Feed</Link>
             </div>
           </div>
           <div className="col md-3">
@@ -76,9 +79,9 @@ export default function Footer(props) {
           </div>
           <div className="col md-3">
             <h3 className="mb-3">NEWS & BLOG FEED</h3>
-            <div className="flex column">
-              <Link to="/grahamhumpreys">GRAHAM HUMPHREYS</Link>
-              <Link to="/why-film-posters">WHY FILM POSTERS?</Link>
+            <div className="footer-links">
+              <Link to="/grahamhumpreys">Graham Humphreys</Link>
+              <Link to="/why-film-posters">Why Film Posters?</Link>
             </div>
           </div>
           <div className="flex column col md-3">

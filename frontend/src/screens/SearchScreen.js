@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   listProductArtists,
   listProductCasts,
   listProductDirectors,
   listProducts,
+  searchProducts,
 } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -17,8 +18,6 @@ import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import { prices } from "../utils";
 
 export default function SearchScreen(props) {
-  const navigate = useNavigate();
-
   const { directors } = useSelector((state) => state.directorList);
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
@@ -47,47 +46,48 @@ export default function SearchScreen(props) {
   // } = productCategoryList;
 
   useEffect(() => {
-    dispatch(
-      listProducts({
-        pageNumber,
-        name: name !== "all" ? name : "",
-        min,
-        max,
-        rating,
-        order,
-      })
-    );
-  }, [dispatch, max, min, name, order, rating, pageNumber]);
-
-  useEffect(() => {
     dispatch(listProductDirectors());
     dispatch(listProductCasts());
     dispatch(listProductArtists());
   }, [dispatch]);
   // category
 
-  const getFilterUrl = (filter) => {
-    const filterPage = filter.page || pageNumber;
-    // const filterCategory = filter.category || category;
-    const filterName = filter.name || name;
-    // const filterRating = filter.rating || rating;
-    const sortOrder = filter.order || order;
-    const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
-    const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    let search_url = `/search/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
-    search_url += filter.directors ? `/directors/${[filter.directors]}` : ``;
-    search_url += filter.casts ? `/casts/${[filter.casts]}` : ``;
-    search_url += filter.artists ? `/artists/${[filter.artists]}` : ``;
-    search_url += filter.origin ? `/origin/${filter.origin}` : ``;
-    search_url += filter.year ? `/year/${filter.year}` : ``;
-    search_url += filter.condition ? `/condition/${filter.condition}` : ``;
-    search_url += filter.format ? `/format/${filter.format}` : ``;
-    search_url += filter.rolledFolded
-      ? `/rolledFolded/${filter.rolledFolded}`
-      : ``;
+  const [currentPage, setCurrentPage] = React.useState(pageNumber);
+  const updateSearchUrl = (e) => {
+    const { name, value } = e.target;
 
-    return search_url;
+    let _search_url = {};
+
+    if (localStorage.getItem("search_query") !== "") {
+      _search_url = JSON.parse(localStorage.getItem("search_query"));
+    }
+
+    _search_url = {
+      ..._search_url,
+      [name]: value,
+    };
+
+    localStorage.setItem("search_query", JSON.stringify(_search_url));
+
+    // localStorage.setItem("search_query", _search_url);
+    const query = Object.keys(_search_url)
+      .map((k) => `${k}=${_search_url[k]}`)
+      .join("&");
+
+    dispatch(searchProducts(`pageNumber=${currentPage}&${query}`));
   };
+
+  useEffect(() => {
+    dispatch(
+      listProducts({
+        pageNumber: currentPage,
+        name: name !== "all" ? name : "",
+        min,
+        max,
+        order,
+      })
+    );
+  }, [currentPage, dispatch, max, min, name, order, rating]);
 
   return (
     <NoSideBarLayout>
@@ -112,12 +112,7 @@ export default function SearchScreen(props) {
           )}
           <div className={"p-2"}>
             Sort by{" "}
-            <select
-              value={order}
-              onChange={(e) => {
-                navigate(getFilterUrl({ order: e.target.value }));
-              }}
-            >
+            <select value={order} name="order" onChange={updateSearchUrl}>
               <option value="newest">Newest Arrivals</option>
               <option value="lowest">Price: Low to High</option>
               <option value="highest">Price: High to Low</option>
@@ -126,42 +121,24 @@ export default function SearchScreen(props) {
         </div>
         <div className={`flex ${isMobile ? "column" : "row"} top`}>
           <div className={`col-1`}>
-            {/* <h3>Department</h3>
-          <div>
-            {loadingCategories ? (
-              <LoadingBox></LoadingBox>
-            ) : errorCategories ? (
-              <MessageBox variant="danger">{errorCategories}</MessageBox>
-            ) : (
-              <ul>
-                <li>
-                  <Link
-                    className={'all' === category ? 'active' : ''}
-                    to={getFilterUrl({ category: 'all' })}
-                  >
-                    Any
-                  </Link>
-                </li>
-                {categories.map((c) => (
-                  <li key={c}>
-                    <Link
-                      className={c === category ? 'active' : ''}
-                      to={getFilterUrl({ category: c })}
-                    >
-                      {c}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div> */}
+            <div className="form-group">
+              <button
+                className={"btn btn-primary"}
+                onClick={() => {
+                  localStorage.setItem("search_query", "");
+                  window.location.reload();
+                }}
+              >
+                clear
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
             <div className="form-group">
               <label>Director</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ directors: [e.target.value] }));
-                }}
+                name="directors"
+                onChange={updateSearchUrl}
               >
                 <option value="">Director</option>
                 {directors?.map((director) => (
@@ -176,9 +153,8 @@ export default function SearchScreen(props) {
               <label>Cast</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ casts: [e.target.value] }));
-                }}
+                name="casts"
+                onChange={updateSearchUrl}
               >
                 <option value="">Cast</option>
                 {casts?.map((cast) => (
@@ -193,9 +169,8 @@ export default function SearchScreen(props) {
               <label>Artist</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ artists: [e.target.value] }));
-                }}
+                name="artists"
+                onChange={updateSearchUrl}
               >
                 <option value="">Artist</option>
                 {artists?.map((artist) => (
@@ -210,9 +185,8 @@ export default function SearchScreen(props) {
               <label>Country of Origin</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ origin: e.target.value }));
-                }}
+                name="origin"
+                onChange={updateSearchUrl}
               >
                 <option value="">Origin</option>
                 {data.origins?.map((origin) => (
@@ -227,9 +201,8 @@ export default function SearchScreen(props) {
               <label>Year</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ year: e.target.value }));
-                }}
+                name="year"
+                onChange={updateSearchUrl}
               >
                 <option value="">Year</option>
                 {Array.from(Array(new Date().getFullYear() - 1929).keys())?.map(
@@ -246,9 +219,8 @@ export default function SearchScreen(props) {
               <label>Condition</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ condition: e.target.value }));
-                }}
+                name="condition"
+                onChange={updateSearchUrl}
               >
                 <option value="">Condition</option>
                 {data.conditions?.map(({ label, value }) => (
@@ -263,9 +235,8 @@ export default function SearchScreen(props) {
               <label>Format</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ format: e.target.value }));
-                }}
+                name="format"
+                onChange={updateSearchUrl}
               >
                 <option value="">Format</option>
                 {data.formats?.map(({ label, value }) => (
@@ -277,59 +248,20 @@ export default function SearchScreen(props) {
             </div>
 
             <div className="form-group">
-              <label>Rolled Folded</label>
+              <label>Price</label>
               <select
                 className={"form-control"}
-                onChange={(e) => {
-                  navigate(getFilterUrl({ rolledFolded: e.target.value }));
-                }}
+                name="price"
+                onChange={updateSearchUrl}
               >
-                <option value="">Rolled Folded</option>
-                {data.rolledFolded?.map(({ label, value }) => (
-                  <option key={value} value={value}>
-                    {value}
+                <option value="">Price</option>
+                {prices?.map((price) => (
+                  <option key={price.name} value={`${price.min}-${price.max}`}>
+                    {price.name.replaceAll("$", symbol)}
                   </option>
                 ))}
               </select>
             </div>
-
-            <div className="form-group">
-              <label>Price</label>
-              <div className={"flex column"}>
-                {prices.map((p) => (
-                  <Link
-                    key={`${p.name}_${Math.random()}`}
-                    style={{ cursor: "pointer" }}
-                    to={getFilterUrl({ min: p.min, max: p.max })}
-                  >
-                    <span
-                      className={
-                        `selection ${p.min}-${p.max}` === `${min}-${max}`
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      {p.name.replaceAll("$", symbol)}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            {/* <div>
-            <h3>Avg. Customer Review</h3>
-            <ul>
-              {ratings.map((r) => (
-                <li key={r.name}>
-                  <Link
-                    to={getFilterUrl({ rating: r.rating })}
-                    className={`${r.rating}` === `${rating}` ? "active" : ""}
-                  >
-                    <Rating caption={" & up"} rating={r.rating}></Rating>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div> */}
           </div>
 
           <div className={`col-3`}>
@@ -354,7 +286,7 @@ export default function SearchScreen(props) {
                     isMobile ? "column center" : "row start top plr-2"
                   } `}
                 >
-                  {products.map((product) => {
+                  {products?.map((product) => {
                     const show =
                       (product.image.length > 0) &
                       product.visible &
@@ -374,13 +306,16 @@ export default function SearchScreen(props) {
                       (product.price > 0)
                   ).length > 4 ? (
                     [...Array(pages).keys()].map((x) => (
-                      <Link
+                      <button
                         className={x + 1 === page ? "active" : ""}
                         key={x + 1}
-                        to={getFilterUrl({ page: x + 1 })}
+                        onClick={() => {
+                          // navigate(search_url);
+                          setCurrentPage(x + 1);
+                        }}
                       >
                         {x + 1}
-                      </Link>
+                      </button>
                     ))
                   ) : (
                     <></>

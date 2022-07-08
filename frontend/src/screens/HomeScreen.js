@@ -86,9 +86,9 @@ export default function HomeScreen() {
               <Carousel
                 breakPoints={[
                   { width: 2, itemsToShow: 1 },
-                  { width: 550, itemsToShow: 4, itemsToScroll: 4 },
-                  { width: 768, itemsToShow: 6 },
-                  { width: 1200, itemsToShow: 6 },
+                  { width: 550, itemsToShow: 3, itemsToScroll: 3 },
+                  { width: 768, itemsToShow: 3 },
+                  { width: 1200, itemsToShow: 3 },
                 ]}
               >
                 {products.map((product) => {
@@ -98,7 +98,7 @@ export default function HomeScreen() {
                     (product.price > 0);
                   return (
                     show === 1 && (
-                      <div key={product._id} style={{ padding: "12px" }}>
+                      <div key={product._id}>
                         <Product
                           toshop={true}
                           key={product._id}

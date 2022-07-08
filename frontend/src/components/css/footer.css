@@ -42,6 +42,11 @@
   margin-bottom: 0.5rem;
 }
 
+.errorMessage {
+  color: var(--accent-color);
+  font-size: 12px;
+}
+
 .footer-links > a:hover {
   color: #fab702;
   text-decoration: none;

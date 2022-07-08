@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-import propTypes from "prop-types";
 import CoverFlowComponent from "./CoverFlow";
 import { isMobile } from "react-device-detect";
 import { useDispatch } from "react-redux";

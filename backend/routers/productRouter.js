@@ -8,89 +8,181 @@ import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 const productRouter = express.Router();
 
 // Filters
+
+productRouter.get(
+  "/search",
+  expressAsyncHandler(async (req, res) => {
+    const { query } = req;
+    const PAGE_SIZE = 10;
+
+    const pageNumber = parseInt(req.query.pageNumber) || 1;
+    const name = query.name !== undefined ? query.name : "";
+    const directors =
+      query.directors !== undefined && query.directors !== ""
+        ? [query.directors]
+        : [];
+    const casts =
+      query.casts !== undefined && query.casts !== "" ? [query.casts] : [];
+    const artists =
+      query.artists !== undefined && query.artists !== ""
+        ? [query.artists]
+        : [];
+    const origin = query.origin !== undefined ? query.origin : "";
+    const format = query.format !== undefined ? query.format : "";
+    const rolledFolded =
+      query.rolledFolded !== undefined ? query.rolledFolded : "";
+    const condition = query.condition !== undefined ? query.condition : "";
+
+    const price = query.price !== undefined ? query.price : "";
+
+    if (name !== "") {
+      var nameFilter =
+        name && name !== ""
+          ? {
+              name: {
+                $regex: name,
+                $options: "i",
+              },
+            }
+          : {};
+    }
+
+    if (directors && directors.length > 0) {
+      var directorFilter =
+        directors && directors.length > 0
+          ? {
+              directors: {
+                $in: directors,
+              },
+            }
+          : {};
+    }
+
+    if (casts && casts.length > 0) {
+      var castFilter =
+        casts && casts.length > 0
+          ? {
+              casts: {
+                $in: casts,
+              },
+            }
+          : {};
+    }
+
+    if (artists && artists.length > 0) {
+      var artistFilter =
+        artists && artists.length > 0
+          ? {
+              artists: {
+                $in: artists,
+              },
+            }
+          : {};
+    }
+
+    if (origin !== "") {
+      var originFilter =
+        origin && origin !== ""
+          ? {
+              origin: {
+                $regex: origin,
+                $options: "i",
+              },
+            }
+          : {};
+    }
+
+    if (format !== "") {
+      var formatFilter =
+        format && format !== ""
+          ? {
+              format: {
+                $regex: format,
+                $options: "i",
+              },
+            }
+          : {};
+    }
+
+    if (rolledFolded !== "") {
+      var rolledFoldedFilter =
+        rolledFolded && rolledFolded !== ""
+          ? {
+              rolledFolded: {
+                $regex: rolledFolded,
+                $options: "i",
+              },
+            }
+          : {};
+    }
+
+    if (condition !== "") {
+      var conditionFilter =
+        condition && condition !== ""
+          ? {
+              condition: {
+                $regex: condition,
+                $options: "i",
+              },
+            }
+          : {};
+    }
+
+    if (price !== "") {
+      var priceFilter =
+        price && price !== 0
+          ? {
+              price: {
+                $gte: Number(price.split("-")[0]),
+                $lte: Number(price.split("-")[1]),
+              },
+            }
+          : {};
+    }
+
+    const filters = {
+      ...nameFilter,
+      ...directorFilter,
+      ...castFilter,
+      ...artistFilter,
+      ...originFilter,
+      ...formatFilter,
+      ...rolledFoldedFilter,
+      ...conditionFilter,
+      ...priceFilter,
+    };
+
+    console.log(filters);
+
+    const products = await Product.find({ ...filters })
+      .skip(PAGE_SIZE * (pageNumber - 1))
+      .limit(PAGE_SIZE);
+
+    const countProducts = await Product.countDocuments({ ...filters });
+
+    res.send({
+      products,
+      countProducts,
+      page: pageNumber,
+      pages: Math.ceil(countProducts / PAGE_SIZE),
+    });
+  })
+);
+
 productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const pageSize = 4;
-    const page = Number(req.query.pageNumber) || 1;
-    const name = req.query.name || "";
-    // const category = req.query.category || '';
-    const director = req.query.directors || "";
-    const cast = req.query.casts || "";
-    const artist = req.query.artists || "";
-    const origin = req.query.origin || "";
-    const format = req.query.format || "";
-    const condition = req.query.condition || "";
-    const rolledFolded = req.query.rolledFolded || "";
-    const seller = req.query.seller || "";
-    const order = req.query.order || "";
-    const min =
-      req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
-    const max =
-      req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
-    const rating =
-      req.query.rating && Number(req.query.rating) !== 0
-        ? Number(req.query.rating)
-        : 0;
+    const page = req.query.pageNumber || 1;
 
-    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
-    const sellerFilter = seller ? { seller } : {};
-    //
-    // const categoryFilter = category ? { category } : {};
-    const directorFilter = director ? { director } : {};
-    const castFilter = cast ? { cast } : {};
-    const artistFilter = artist ? { artist } : {};
-    const originFilter = origin ? { origin } : {};
-    const formatFilter = format ? { format } : {};
-    const conditionFilter = condition ? { condition } : {};
-    const rolledFoldedFilter = rolledFolded ? { rolledFolded } : {};
+    const count = await Product.count().exec();
 
-    //
-    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
-    const ratingFilter = rating ? { rating: { $gte: rating } } : {};
-    const sortOrder =
-      order === "lowest"
-        ? { price: 1 }
-        : order === "highest"
-        ? { price: -1 }
-        : order === "toprated"
-        ? { rating: -1 }
-        : { _id: -1 };
-    const count = await Product.count({
-      ...sellerFilter,
-      ...nameFilter,
-      // ...categoryFilter,
-      ...directorFilter,
-      ...castFilter,
-      ...artistFilter,
-      ...originFilter,
-      ...formatFilter,
-      ...conditionFilter,
-      ...rolledFoldedFilter,
-      ...priceFilter,
-      ...ratingFilter,
-    });
-    const products = await Product.find({
-      ...sellerFilter,
-      ...nameFilter,
-      // ...categoryFilter,
-      ...directorFilter,
-      ...castFilter,
-      ...artistFilter,
-      ...originFilter,
-      ...formatFilter,
-      ...conditionFilter,
-      ...rolledFoldedFilter,
-      ...priceFilter,
-      ...ratingFilter,
-    })
+    const products = await Product.find()
       .populate("seller", "seller.name seller.logo")
       .populate("directors")
       .populate("casts")
-      .populate("artists")
-      .sort(sortOrder)
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
+      .populate("artists");
+
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );

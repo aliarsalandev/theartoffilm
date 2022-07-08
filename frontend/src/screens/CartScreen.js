@@ -35,9 +35,12 @@ export default function CartScreen(props) {
     navigate("/signin?redirect=/shipping");
   };
   return (
-    <div className="flex row align-end">
+    <div className="flex row align-end  bg-light-dark  p-4">
       <div className="col-2">
-        <h1 className={"title"}>Shopping Cart</h1>
+        <h2 className={"title2 text-start mb-2"}>
+          {" "}
+          <span className="selection">Shopping</span> Cart
+        </h2>
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         {cartItems.length === 0 ? (
           <MessageBox>
@@ -76,8 +79,8 @@ export default function CartScreen(props) {
           </ul>
         )}
       </div>
-      <div className="col-1">
-        <div className="card card-body">
+      <div className="col-1 flex column end">
+        <div className="card card-body text-end">
           <ul className={"list-style-none"}>
             <li>
               Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :{" "}
@@ -87,18 +90,16 @@ export default function CartScreen(props) {
                 0
               )}
             </li>
-            <li>
-              <button
-                type="button"
-                onClick={checkoutHandler}
-                className="primary block"
-                disabled={cartItems.length === 0}
-              >
-                Proceed to Checkout
-              </button>
-            </li>
           </ul>
         </div>
+        <button
+          type="button"
+          onClick={checkoutHandler}
+          className="primary block"
+          disabled={cartItems.length === 0}
+        >
+          Proceed
+        </button>
       </div>
     </div>
   );
