@@ -254,12 +254,7 @@ a.brand {
 }
 
 .badge {
-  background-color: var(--accent-color);
-  color: var(--text-color);
-  border-radius: 50%;
-  padding: 0.2rem 0.7rem;
-  font-size: 1.4rem;
-  margin-left: 0.2rem;
+  font-size: 1.6rem;
 }
 
 .row {
@@ -685,6 +680,10 @@ img.mw-100 {
   margin-right: 0.5rem;
 }
 
+input {
+  font-family: "Oswald", sans-serif !important;
+  font-weight: 700;
+}
 .search input {
   /* border-radius: 0.5rem 0 0 0.5rem; */
   border-right: none;

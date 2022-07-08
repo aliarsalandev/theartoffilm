@@ -149,7 +149,7 @@ function Header() {
           {!userInfo && <Link to="/signin">Sign In</Link>}
         </div>
         <div className={"flex row center"}>
-          <Link to="/cart">
+          <Link className={"flex"} to="/cart">
             <i className="fa-solid fa-cart-shopping"></i>
             {cartItems.length > 0 && (
               <span className="badge">{cartItems.length}</span>

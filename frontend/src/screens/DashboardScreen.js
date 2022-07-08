@@ -4,7 +4,7 @@ import Chart from "react-google-charts";
 import { summaryOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import SellerSidebar from "../components/SellerSidebar";
+import PageLayout from "../layouts/page";
 
 export default function DashboardScreen() {
   const orderSummary = useSelector((state) => state.orderSummary);
@@ -14,10 +14,7 @@ export default function DashboardScreen() {
     dispatch(summaryOrder());
   }, [dispatch]);
   return (
-    <div className={"row top"}>
-      <div className="col-1">
-        <SellerSidebar />
-      </div>
+    <PageLayout>
       <div className={"ml-3 col-3"}>
         <div>
           <div className="row">
@@ -29,7 +26,7 @@ export default function DashboardScreen() {
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
             <>
-              <ul className="row summary">
+              <ul className="list-style-none row summary">
                 <li>
                   <div className="summary-title color1">
                     <span>
@@ -104,6 +101,6 @@ export default function DashboardScreen() {
           )}
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

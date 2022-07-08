@@ -9,7 +9,7 @@ export default function SearchBox() {
     navigate(`/search/name/${name}`);
   };
   return (
-    <form className="search" onSubmit={submitHandler}>
+    <form className="flex search" onSubmit={submitHandler}>
       <input
         type="text"
         name="q"

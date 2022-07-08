@@ -49,7 +49,7 @@ export default function HomeScreen() {
           backgroundImage: `url(/images/home.jpg)`,
         }}
       >
-        <h1 className={"title title-xl"}>
+        <h1 className={" title-xl"}>
           <span className="selection">The Art Of</span> Film
         </h1>
         <h2

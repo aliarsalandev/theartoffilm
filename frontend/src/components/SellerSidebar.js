@@ -38,25 +38,30 @@ function SellerSidebar() {
             </Link>
           )}
         </li>
-        <li>
-          <UploadPoster isLink={true} />
-        </li>
-        <li>
-          <Link className={"link"} to="/productlist/seller">
-            <i className={"fas fa-list"}></i> Poster List
-          </Link>
-        </li>
-        <li>
-          <Link className={"link"} to="/user/subscriptions">
-            <i className={"fas fa-list"}></i> My Subscriptions
-          </Link>
-        </li>
-        <li>
-          <Link className={"link"} to={`/seller/${userInfo._id}`}>
-            <i className={"fas fa-images"}></i> My ShowCase
-          </Link>
-        </li>
       </ul>
+
+      {userInfo?.isSeller && (
+        <ul className={"list-type-none"}>
+          <li>
+            <UploadPoster isLink={true} />
+          </li>
+          <li>
+            <Link className={"link"} to="/productlist/seller">
+              <i className={"fas fa-list"}></i> Poster List
+            </Link>
+          </li>
+          <li>
+            <Link className={"link"} to="/user/subscriptions">
+              <i className={"fas fa-list"}></i> My Subscriptions
+            </Link>
+          </li>
+          <li>
+            <Link className={"link"} to={`/seller/${userInfo._id}`}>
+              <i className={"fas fa-images"}></i> My ShowCase
+            </Link>
+          </li>
+        </ul>
+      )}
       {userInfo?.isSeller && (
         <div className="selling-section">
           <div>
@@ -72,7 +77,7 @@ function SellerSidebar() {
         </div>
       )}
 
-      {userInfo && (
+      {userInfo?.isSeller && (
         <div className={"buying-section"}>
           <div>
             <h3>Buying</h3>
@@ -130,22 +135,19 @@ function SellerSidebar() {
 
       {userInfo?.isAdmin && (
         <div className="subscription-section">
-          <div>
-            <h3>Admin Controls</h3>
-          </div>
           <ul>
             <li>
-              <Link to="/subscriptions">
+              <Link className={"link"} to="/subscriptions">
                 <i className={"fas fa-credit-card"}></i> Subscriptions
               </Link>
             </li>
             <li>
-              <Link to="/subscriptions/create">
+              <Link className={"link"} to="/subscriptions/create">
                 <i className={"fas fa-plus"}></i> Add Subscription
               </Link>
             </li>
             <li className={"mt-3"}>
-              <Link to="/settings">
+              <Link className={"link"} to="/settings">
                 <i className={"fas fa-cog"}></i> Settings
               </Link>
             </li>
@@ -156,7 +158,7 @@ function SellerSidebar() {
       <div className={"mt-3"}>
         <ul>
           <li>
-            <Link to="#signout" onClick={signoutHandler}>
+            <Link className={"link"} to="#signout" onClick={signoutHandler}>
               <i className={"fas fa-arrow-right-from-bracket"}></i> Sign Out
             </Link>
           </li>

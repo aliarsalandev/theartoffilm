@@ -7,7 +7,7 @@ const data = {
       email: "aliarsalan.dev@gmail.com",
       password: bcrypt.hashSync("Zakaria360", 8),
       isAdmin: true,
-      isSeller: true,
+      isSeller: false,
       seller: {
         name: "Puma",
         logo: "/images/logo1.png",
