@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap");
 :root {
   --base-color: #0d1117;
   --light-dark-color: #161b22;
@@ -16,12 +16,12 @@ Line Height 62px
 Color #ffffff */
 
 * {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
 }
 
 p {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   line-height: 26px;
 }
 
@@ -41,7 +41,7 @@ body {
   font-size: 1.6rem;
   color: var(--text-color);
   background-color: var(--base-color);
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: "Poppins", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -58,7 +58,7 @@ h5,
 h6,
 a,
 .price {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1.2px;
 }
 
@@ -70,7 +70,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -89,9 +89,9 @@ input[type='number'] {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header'
-    'main'
-    'footer';
+    "header"
+    "main"
+    "footer";
   grid-template-columns: 1fr;
   grid-template-rows: 5rem 1fr auto;
   height: 100%;
@@ -162,7 +162,7 @@ ul {
 }
 ol *,
 ul * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 li {
   margin-top: 1rem;
@@ -173,7 +173,7 @@ li {
 }
 
 label {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
 }
 
 input,
@@ -184,7 +184,7 @@ button {
   /* border-radius: 0.5rem; */
   border: 0.1rem var(--text-color) solid;
   font-size: 1.6rem;
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -206,7 +206,7 @@ button:hover {
   padding: 1rem;
   text-align: center;
   font-size: 1.6rem;
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -596,7 +596,7 @@ img.mw-100 {
 .form div,
 .form span,
 .form a {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 /* Dropdown */
@@ -651,7 +651,7 @@ img.mw-100 {
 }
 
 .table th {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1.2px;
   text-align: left;
   border: 0.1rem solid var(--light-dark-color);
@@ -756,7 +756,7 @@ input {
 .summary-title {
   color: var(--light-dark-color);
   font-size: 1.5rem;
-  font-family: 'Bebas Neue', 'Poppins';
+  font-family: "Bebas Neue", "Poppins";
   padding: 1rem;
 }
 
@@ -781,7 +781,7 @@ input {
 /* Chatbox */
 .chatbox {
   color: var(--text-color);
-  font-family: 'Poppins', 'Times New Roman';
+  font-family: "Poppins", "Times New Roman";
   font-size: 1rem !important;
   position: fixed;
   right: 1rem;
@@ -921,7 +921,7 @@ input {
 
 .multi-select {
   border-radius: 0 !important;
-  font-family: 'Bebas Neue', 'Poppins';
+  font-family: "Bebas Neue", "Poppins";
   color: var(--light-dark-color);
 }
 
@@ -977,7 +977,7 @@ input {
   margin: unset;
   padding: unset;
   text-align: center;
-  font-family: 'Oswald' !important;
+  font-family: "Oswald" !important;
 }
 
 .title-xl {
@@ -1044,7 +1044,7 @@ h5 {
 
 h1 {
   font-size: 3em;
-  font-family: 'Bebas Neue', 'Poppins';
+  font-family: "Bebas Neue", "Poppins";
   letter-spacing: 0.1em;
   margin: 0;
 }
@@ -1053,7 +1053,7 @@ h4 {
   font-size: 1.5em;
   font-weight: lighter;
   letter-spacing: 0.1em;
-  font-family: 'Bebas Neue', 'Poppins';
+  font-family: "Bebas Neue", "Poppins";
   margin: 0;
 }
 .section > h1,
@@ -1133,7 +1133,7 @@ h4 {
 .link {
   color: var(--accent-color);
   text-decoration: none;
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1.2px;
   background-color: transparent;
   border: unset;
@@ -1172,7 +1172,7 @@ h4 {
 }
 
 .poster-details {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
   font-size: 1em;
 }
@@ -1382,9 +1382,9 @@ h4 {
 }
 
 .bold {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: "Bebas Neue", "Times New Roman";
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 1em;
 }
 
 .messages li {
@@ -1427,21 +1427,4 @@ body > iframe {
 
 .text-uppercase {
   text-transform: uppercase;
-}
-.product-page-image-box {
-  min-width: 40%;
-}
-
-.product-page-details-box {
-  min-width: 40%;
-  text-align: start;
-  padding-left: 50px;
-}
-
-.product-page-title {
-  font-size: 2em !important;
-}
-.product-page-table > tbody > td {
-  min-width: 50%;
-  text-align: start;
 }
