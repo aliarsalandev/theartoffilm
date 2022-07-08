@@ -11,7 +11,7 @@ const uploadRouter = express.Router();
 uploadRouter.post(
   "/",
   isAuth,
-  isSellerOrAdmin,
+  // isSellerOrAdmin,
   upload.single("file"),
   async (req, res) => {
     const CLOUDINARY_CLOUD_NAME = "theartoffilms";
@@ -43,7 +43,6 @@ uploadRouter.post(
 uploadRouter.post("/media", async (req, res) => {
   let media;
   let uploadPath;
-  console.log(req.files, req.body);
   res.send({});
   return;
   if (!req.files || Object.keys(req.files).length === 0) {

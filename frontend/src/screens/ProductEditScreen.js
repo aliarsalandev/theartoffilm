@@ -17,7 +17,6 @@ import MessageBox from "../components/MessageBox";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import MultiSelectDropdown from "../components/MultiSelectDropdown";
 import Select from "react-select";
-import SellerSidebar from "../components/SellerSidebar";
 import data from "../data";
 import PageLayout from "../layouts/page";
 
@@ -171,8 +170,7 @@ export default function ProductEditScreen() {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState("");
 
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  const { userInfo } = useSelector((state) => state.userSignin);
   const uploadFileHandler = async (e, forImages = false) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();

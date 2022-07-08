@@ -5,7 +5,6 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
-import HeroSection from "../sections/HeroSection";
 import WelcomeSection from "../sections/WelcomeSection";
 import HowItWorkSection from "../sections/HowItWorkSection";
 import ShowcaseSection from "../sections/ShowcaseSection";
@@ -13,13 +12,17 @@ import Carousel from "react-elastic-carousel";
 import SectionCard from "../components/SectionCard";
 import SearchBox from "../components/SearchBox";
 import { Link } from "react-router-dom";
-
+import CoverFlowComponent from "../components/CoverFlow";
+import { isMobile } from "react-device-detect";
+import { useNavigate } from "react-router-dom";
+import { sellersList } from "../helpers/profile";
 export default function HomeScreen() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const [sellers, setSellers] = React.useState([]);
 
-  // const userTopSellersList = useSelector((state) => state.userTopSellersList);
   // const {
   //   loading: loadingSellers,
   //   error: errorSellers,
@@ -29,6 +32,13 @@ export default function HomeScreen() {
   useEffect(() => {
     dispatch(listProducts({}));
     // dispatch(listTopSellers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(listProducts({}));
+    sellersList().then((data) => {
+      setSellers((prevSellers) => [...prevSellers, ...data]);
+    });
   }, [dispatch]);
   return (
     <div>
@@ -125,9 +135,34 @@ export default function HomeScreen() {
             text={
               "Sign up to The Art of Film YouTube channel today as we regularly upload movie poster related videos content that we know you will love. "
             }
-            linkText={"SUBSCRIBE"}
+            linkText={"SUBSCRIBE Today"}
             link={"https://www.youtube.com/watch?v=ofkryTjra7Q"}
             type={"video"}
+          />
+        </div>
+
+        <div className="flex column">
+          <br />
+          <div className="p-2 flex justify-center">
+            <h2 className={"title2 text-center"}>
+              <span className="selection">Browse</span> Showcases
+            </h2>
+          </div>
+          <CoverFlowComponent
+            imagesArr={sellers?.map(({ seller }) => seller.logo)}
+            direction="horizontal"
+            width={`${isMobile ? "100%" : "100%"}`}
+            height={`${isMobile ? "100%" : 425}`}
+            itemRatio="21:14"
+            background="transparent"
+            onClick={(seller) => {
+              console.log(seller);
+            }}
+            handleSelect={(index) => {
+              const _seller = sellers?.find((seller, ind) => ind === index);
+              navigate(`/seller/${_seller?._id}`);
+            }}
+            labelsArr={sellers?.map(({ seller }) => seller.name)}
           />
         </div>
       </div>

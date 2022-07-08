@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import Package from "../components/Package";
 import { listSubscriptions } from "../actions/subscriptionActions";
 import NoSideBarLayout from "../layouts/NoSideBarLayout";
-import SectionCard from "../components/SectionCard";
 import FAQScreen from "./FAQScreen";
 import { useCurrency } from "../hooks/currencyHooks";
 import HeroSection from "../sections/HeroSection";

@@ -1,5 +1,6 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
+import { Link } from "react-router-dom";
 import Accordion from "../components/Accordion";
 
 import HeroSection from "../sections/HeroSection";
@@ -27,20 +28,34 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
               <br />
               <div className="accordion">
                 <Accordion
-                  title="Item 1 - Lorem ipsum dolor sit amet"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                  title="Can I just subscribe to buy posters? "
+                  text="You do not need a subscription to buy posters but you would need a subscription to sell posters. "
                 />
                 <Accordion
-                  title="Item 2 - Lorem ipsum dolor sit amet"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                  title="If I cancel my subscription will I loose my showcase?"
+                  text="Yes, if you cancel your subscription you will loose access to your showcase and your showcase will not be visible on the site."
                 />
                 <Accordion
-                  title="Item 3 - Lorem ipsum dolor sit amet"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                  title="Do subscriptions auto renew?"
+                  text={
+                    "Yes your subscription will auto renew until you cancel  your subscription via your Dashboard. Please refer to our Terms and Conditions"
+                  }
                 />
                 <Accordion
-                  title="Item 4 - Lorem ipsum dolor sit amet"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                  title="Can I subscribe from anywhere in the world?"
+                  text="Yes, the Site is a global platform."
+                />
+                <Accordion
+                  title={"What subscriptions do you offer? "}
+                  text={
+                    "We offer a range of monthly and annual subscriptions.  Please visit our Pricing page for further information."
+                  }
+                />
+                <Accordion
+                  title="What if I want to display more posters than my subscription will allow? "
+                  text={
+                    "If you require additional poster templates you can upgrade your subscription package on your Dashboard."
+                  }
                 />
               </div>
             </div>
@@ -68,20 +83,20 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
                 <br />
                 <div className="accordion">
                   <Accordion
-                    title="Item 1 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="DO I HAVE TO SUBSCRIBE TO DISPLAY MY MOVIE POSTERS ON THE ART OF FILM?"
+                    text="Yes."
                   />
                   <Accordion
-                    title="Item 2 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="WHAT DOES A SHOWCASE TEMPLATE INCLUDE?"
+                    text="Each template includes frames to upload your poster images, dropdown menus to fill in all the details you want – director, format, condition, artist, cast, year of release etc and notes to fill in any special details you require."
                   />
                   <Accordion
-                    title="Item 3 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="ONCE I SUBSCRIBE, DO I HAVE TO SHOW MY POSTER COLLECTION ON THE WEBSITE?"
+                    text="No – you have the choice whether to keep your collection private or share it with other subscribers around the world. You can share 1 page or your entire collection if you so wish."
                   />
                   <Accordion
-                    title="Item 4 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="IF I CANCEL MY SHOWCASE WILL I LOOSE MY SUBSCRIPTION?"
+                    text="Yes, if you cancel your subscription you will loose access to your showcase and your showcase will not be visible on the site.  share 1 page or your entire collection if you so wish."
                   />
                 </div>
               </div>
@@ -107,20 +122,48 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
                 <br />
                 <div className="accordion">
                   <Accordion
-                    title="Item 1 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="CAN I SELL POSTERS WITHOUT A SUBSCRIPTION"
+                    text="No, you would need a subscription to sell posters and memorabilia.  You can take out a rolling monthly subscription until your poster is sold."
                   />
+
                   <Accordion
-                    title="Item 2 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="CAN I JUST SUBSCRIBE TO BUY POSTERS?"
+                    text="You do not need a subscription to buy posters but you would need a subscription to sell posters."
                   />
+
                   <Accordion
-                    title="Item 3 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="HOW MUCH DOES THE ART OF FILM TAKE FROM POSTER SALES?"
+                    text="We only take 5% of sales from the Poster Pool."
                   />
+
                   <Accordion
-                    title="Item 4 - Lorem ipsum dolor sit amet"
-                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                    title="CAN I SHOWCASE OR SELL OTHER FILM MEMORABILIA?"
+                    text="Yes – you can showcase and sell film related paper items – lobby cards, stills etc."
+                  />
+
+                  <Accordion
+                    title="DOES THE ART OF FILM ORGANISE POSTAGE?"
+                    text="No – if you are selling posters or film memorabilia on the site, it will be down to the seller to set postage rates. We recommend always sending with a tracking number for your piece of mind."
+                  />
+
+                  <Accordion
+                    title="CAN I SELL REPRODUCTIONS?"
+                    text="No – The Art of Film is only for collectors of original film posters."
+                  />
+
+                  <Accordion
+                    title="CAN I SELL MONDO PRINTS"
+                    text="Yes Mondo poster are acceptable on The Art of Film"
+                  />
+
+                  <Accordion
+                    title="WHO GRADES THE POSTERS ON THE WEBSITE?"
+                    text="It is down to the individual subscriber to grade their own poster collection. We have provided a Grading guide on the website."
+                  />
+
+                  <Accordion
+                    title="I OWN AN ONLINE FILM POSTER SHOP – HOW DO I ADD MY LINK TO THE ART OF FILM?"
+                    text="Please contact us to add a live link to your film poster shop – our subscribers will then be able to access your shop at the touch of a button."
                   />
                 </div>
               </div>

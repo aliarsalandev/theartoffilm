@@ -4,7 +4,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Axios from "axios";
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ export default function RegisterScreen(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [isSeller, setisSeller] = useState(true);
+  const [isSeller] = useState(true);
   const [sellerName, setSellerName] = useState("");
   const [description, setDescription] = useState("");
 

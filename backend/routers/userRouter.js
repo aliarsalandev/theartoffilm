@@ -104,17 +104,25 @@ userRouter.put(
   "/profile",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log("profile data", req.body);
     const user = await User.findById(req.user._id);
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.address = req.body.address || user.address;
+      user.city = req.body.city || user.city;
+      user.postalCode = req.body.postalCode || user.postalCode;
+      user.country = req.body.country || user.country;
+
       user.seller.name = req.body.seller.name || user.seller.name;
       user.seller.logo = req.body.seller.logo || user.seller.logo;
       user.seller.stripe_account_id =
         req.body.seller.stripe_account_id || user.seller.stripe_account_id;
       user.seller.description =
         req.body.seller.description || user.seller.description;
+
+      user.seller.shipping_cost =
+        req.body.seller.shipping_cost || user.seller.shipping_cost;
+
       if (req.body.password) {
         user.password = bcrypt.hashSync(req.body.password, 8);
       }

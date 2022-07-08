@@ -11,8 +11,6 @@ directorRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const directors = await Director.find();
-    console.log(directors);
-
     res.send(directors);
   })
 );

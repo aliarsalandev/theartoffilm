@@ -1,6 +1,5 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
-import { Link } from "react-router-dom";
 
 function SectionCard({
   before,
@@ -30,7 +29,9 @@ function SectionCard({
             <a
               href={link}
               target={"_blank"}
-              className="button primary"
+              className={`button primary ${
+                type === "image" ? "" : "btn-youtube"
+              }`}
               rel="noreferrer"
             >
               {linkText}

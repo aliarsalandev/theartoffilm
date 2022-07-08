@@ -51,20 +51,6 @@ export const processCheckout = async (
   return data;
 };
 
-export const allowedToPay = async (orderId, shippingPrice, userInfo) => {
-  const { data } = await Axios.put(
-    `/api/orders/${orderId}/allow-to-pay`,
-    {
-      shippingPrice,
-      allowedToPay: true,
-    },
-    {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    }
-  );
-  return data;
-};
-
 export const paymentStatus = async (session_id, user_id) => {
   const { data } = await Axios.get(
     `/api/orders/payment-status/${session_id}/${user_id}`,

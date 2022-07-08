@@ -14,20 +14,30 @@ export default function PlaceOrderScreen(props) {
 
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const shippingCost = JSON.parse(localStorage.getItem("shippingCost"));
+  const shipping_country = localStorage.getItem("shipping_country");
   if (!cart.paymentMethod) {
     navigate("/payment");
   }
   const orderCreate = useSelector((state) => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
+
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
-  cart.shippingPrice = 0;
+
   cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  cart.shippingCost = +shippingCost[shipping_country];
+  cart.totalPrice =
+    cart.itemsPrice + +shippingCost[shipping_country] + +cart.taxPrice;
+
   const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.userSignin);
+
   const placeOrderHandler = () => {
+    console.log({ ...cart, orderItems: cart.cartItems });
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
   };
   useEffect(() => {
@@ -36,17 +46,18 @@ export default function PlaceOrderScreen(props) {
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [dispatch, order, navigate, success]);
+
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
       <div className="row top">
         <div className="col-2">
-          <ul>
+          <ul className={"list-type-none"}>
             <li>
               <div className="card card-body">
-                <h2>Shipping</h2>
+                <h2 className={"title2"}>Shipping</h2>
                 <p>
-                  <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
+                  <strong>Name:</strong> {userInfo?.name} <br />
                   <strong>Address: </strong> {cart.shippingAddress.address},
                   {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
                   ,{cart.shippingAddress.country}
@@ -55,7 +66,7 @@ export default function PlaceOrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Payment</h2>
+                <h2 className={"title2"}>Payment</h2>
                 <p>
                   <strong>Method:</strong> {cart.paymentMethod}
                 </p>
@@ -63,10 +74,10 @@ export default function PlaceOrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
+                <h2 className={"title2"}>Order Items</h2>
+                <ul className={"list-type-none"}>
                   {cart.cartItems.map((item) => (
-                    <li key={item.product}>
+                    <li key={item.product.product}>
                       <div className="row">
                         <div>
                           <img
@@ -96,9 +107,9 @@ export default function PlaceOrderScreen(props) {
         </div>
         <div className="col-1">
           <div className="card card-body">
-            <ul>
+            <ul className={"list-type-none"}>
               <li>
-                <h2>Order Summary</h2>
+                <h2 className={"title2"}>Order Summary</h2>
               </li>
               <li>
                 <div className="row">
@@ -112,8 +123,12 @@ export default function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Shipping</div>
+
                   <div>
-                    {symbol} {(rates[currency] * cart.shippingPrice).toFixed(2)}
+                    {symbol}{" "}
+                    {(rates[currency] * shippingCost[shipping_country]).toFixed(
+                      2
+                    )}
                   </div>
                 </div>
               </li>

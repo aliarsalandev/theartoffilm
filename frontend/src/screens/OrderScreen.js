@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { deliverOrder, detailsOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -10,7 +10,7 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
-import { allowedToPay, processCheckout } from "../helpers/payment";
+import { processCheckout } from "../helpers/payment";
 import { getMessages, sendMessage } from "../helpers/media";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
@@ -30,6 +30,8 @@ export default function OrderScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const [initiatePayment, setInitiatePayment] = useState(false);
+
   const orderPay = useSelector((state) => state.orderPay);
   const { success: successPay } = orderPay;
   const orderDeliver = useSelector((state) => state.orderDeliver);
@@ -39,7 +41,6 @@ export default function OrderScreen(props) {
     success: successDeliver,
   } = orderDeliver;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await Axios.get("/api/config/paypal");
@@ -87,16 +88,9 @@ export default function OrderScreen(props) {
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
-  const updateShippingPrice = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const orderId = data.get("_id");
-    const shippingPrice = data.get("shippingPrice");
-    allowedToPay(orderId, shippingPrice, userInfo).then((data) => {
-      console.log(data);
-      navigate("/orderlist");
-    });
-  };
+
+  const shippingCost = JSON.parse(localStorage.getItem("shippingCost"));
+  const shipping_country = localStorage.getItem("shipping_country");
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -107,12 +101,12 @@ export default function OrderScreen(props) {
       <h1 className={"title p-2"}>Order</h1>
       <div className="row top">
         <div className="col-2">
-          <ul>
+          <ul className={"list-type-none"}>
             <li>
               <div className="card card-body">
                 <h2>Shipping</h2>
                 <p>
-                  <strong>Name:</strong> {order.shippingAddress.fullName} <br />
+                  <strong>Name:</strong> {order?.seller?.name} <br />
                   <strong>Address: </strong> {order.shippingAddress.address},
                   {order.shippingAddress.city},{" "}
                   {order.shippingAddress.postalCode},
@@ -145,7 +139,7 @@ export default function OrderScreen(props) {
             <li>
               <div className="card card-body">
                 <h2>Order Items</h2>
-                <ul>
+                <ul className={"list-type-none"}>
                   {order.orderItems.map((item) => (
                     <li key={item.product}>
                       <div className="row">
@@ -230,7 +224,7 @@ export default function OrderScreen(props) {
             )}
           </div>
           <div className="card card-body">
-            <ul>
+            <ul className={"list-type-none"}>
               <li>
                 <h2>Order Summary</h2>
               </li>
@@ -240,38 +234,17 @@ export default function OrderScreen(props) {
                   {symbol} {(rates[currency] * order.itemsPrice).toFixed(2)}
                 </div>
               </li>
+
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>
-                    {userInfo._id === order.seller &&
-                    !order.isDelivered &&
-                    !order.isPaid ? (
-                      <form
-                        onSubmit={updateShippingPrice}
-                        className={"flex column"}
-                      >
-                        <input type="hidden" name="_id" value={order._id} />
-                        <input
-                          type="number"
-                          name="shippingPrice"
-                          defaultValue={(
-                            rates[currency] * order.shippingPrice
-                          ).toFixed(2)}
-                        />
-                        <button className="btn btn-primary">
-                          Set Shipping Cost
-                        </button>
-                      </form>
-                    ) : (
-                      <span>
-                        {symbol}{" "}
-                        {(rates[currency] * order.shippingPrice).toFixed(2)}
-                      </span>
-                    )}
-                  </div>
+                  {symbol}{" "}
+                  {(rates[currency] * +shippingCost[shipping_country]).toFixed(
+                    2
+                  )}
                 </div>
               </li>
+
               <li>
                 <div className="row">
                   <div>Tax</div>
@@ -306,13 +279,18 @@ export default function OrderScreen(props) {
                   <div className="row">
                     <div>
                       <strong>Pay</strong>
+                      {setInitiatePayment === true ? (
+                        <i className="fas fa-spinner"></i>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                     <div>
                       <button
                         className="button-free s-b"
                         title={"Get Started"}
                         onClick={(e) => {
-                          // setLoading(true);
+                          setInitiatePayment(true);
                           processCheckout(
                             currency,
                             order._id,
@@ -324,10 +302,11 @@ export default function OrderScreen(props) {
                             "poster",
                             order._id
                           ).then((data) => {
+                            // setInitiatePayment(false);
+
                             // console.log(JSON.stringify(data));
                             window.open(data.session.url, "_blank");
                           });
-                          // setLoading(false);
                         }}
                       >
                         Pay
@@ -350,6 +329,7 @@ export default function OrderScreen(props) {
                     className="primary block"
                     onClick={deliverHandler}
                   >
+                    {initiatePayment === true ? "initiating..." : "Deliver"}
                     Deliver Order
                   </button>
                 </li>

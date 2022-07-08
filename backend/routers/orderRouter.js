@@ -98,10 +98,10 @@ orderRouter.post(
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
-        shippingPrice: req.body.shippingPrice,
+        shippingCost: req.body.shippingCost,
         taxPrice: req.body.taxPrice,
         totalPrice: req.body.totalPrice,
-        allowedToPay: false,
+        allowedToPay: true,
         user: req.user._id,
       });
       const createdOrder = await order.save();
@@ -116,7 +116,10 @@ orderRouter.get(
   "/:id",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate(
+      "seller",
+      "name email"
+    );
     if (order) {
       res.send(order);
     } else {
@@ -211,12 +214,9 @@ orderRouter.put(
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
-    console.log(req.body);
     if (order) {
       order.allowedToPay = req.body.allowedToPay;
-      order.shippingPrice = +req.body.shippingPrice;
-      order.totalPrice =
-        order.itemsPrice + order.shippingPrice + order.taxPrice;
+      order.totalPrice = order.itemsPrice + order.taxPrice;
       const updatedOrder = await order.save();
       res.send({
         message: "Order Shipping Price Updated",
@@ -271,7 +271,9 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
 
     user.save();
   } else {
-    const order = await Order.findOne({ user: user_id }).exec();
+    const order = await Order.findById(session.ref).exec();
+    console.log(order);
+    // const order = await Order.findOne({ user: user_id }).exec();
     order.isPaid = true;
     order.paidAt = Date.now();
     await order.save();
@@ -296,7 +298,6 @@ orderRouter.post("/transfer", async (req, res) => {
     source_transaction: order._id,
   });
 
-  console.log(JSON.stringify(transfer));
   res.send({ transfer });
 });
 export default orderRouter;

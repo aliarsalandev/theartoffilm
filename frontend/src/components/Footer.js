@@ -3,6 +3,8 @@ import "./css/footer.css";
 import { Link } from "react-router-dom";
 import ChatBox from "../components/ChatBox";
 import { isMobile } from "react-device-detect";
+import InstagramFeed from "react-ig-feed";
+import "react-ig-feed/dist/index.css";
 
 export default function Footer(props) {
   const userInfo = props;
@@ -22,7 +24,7 @@ export default function Footer(props) {
               <i className="fa-solid fa-envelope"></i>
               <span>henry@theartoffilm.co.uk</span>
             </div>
-            <div className="social-icons mb-3">
+            <div className="flex row social-icons mb-3">
               <a
                 href="https://www.facebook.com/Henry4film/"
                 target={"_blank"}
@@ -58,6 +60,7 @@ export default function Footer(props) {
               </Link>
               <Link to="/terms">Terms & Conditions</Link>
               <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/blog-page">Blog & News Feed</Link>
             </div>
           </div>
           <div className="col md-3">
@@ -72,7 +75,22 @@ export default function Footer(props) {
             </div>
           </div>
           <div className="col md-3">
+            <h3 className="mb-3">NEWS & BLOG FEED</h3>
+            <div className="flex column">
+              <Link to="/grahamhumpreys">GRAHAM HUMPHREYS</Link>
+              <Link to="/why-film-posters">WHY FILM POSTERS?</Link>
+            </div>
+          </div>
+          <div className="flex column col md-3">
             <h3 className="mb-3">Insta Feeds</h3>
+            <div>
+              <InstagramFeed
+                token={
+                  "EAADnl4w17Q8BAPvriAK3SdLL7smNeL4ZAi17IvetyC8ZC77accQnTTeMPqMVgNo7Nx67W4SEbcs48px2jKPeD6LvJTZCoWGrE0oIDhJomItBqFlYwrlrP7b0dFnTM9kM01xdarqoPgI7TrOMkckkMqp9ILBaWd38rDMCm5HLWfJxkYyWIhS"
+                }
+                counter="6"
+              />
+            </div>
           </div>
         </div>
       </div>

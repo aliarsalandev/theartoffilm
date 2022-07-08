@@ -23,7 +23,7 @@ export default function SearchScreen(props) {
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
 
-  const { currency, rates } = useCurrency();
+  const { currency } = useCurrency();
   const symbol = useSymbol(currency);
 
   const {
@@ -339,7 +339,15 @@ export default function SearchScreen(props) {
               <MessageBox variant="danger">{error}</MessageBox>
             ) : (
               <>
-                {!products && <MessageBox>No Poster Found</MessageBox>}
+                {products.length === 0 ? (
+                  <div className={"flex column center text-center"}>
+                    <h2 className={"title2"}>
+                      <span className="selection">No results</span> found
+                    </h2>
+                  </div>
+                ) : (
+                  <></>
+                )}
 
                 <div
                   className={`flex ${

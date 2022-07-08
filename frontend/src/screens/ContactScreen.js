@@ -1,6 +1,5 @@
 import React from "react";
 import ContactForm from "../components/ContactForm";
-import Footer from "../components/Footer";
 import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import HeroSection from "../sections/HeroSection";
 

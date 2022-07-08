@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { listSellers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Rating from "../components/Rating";
-import HeadingSection from "../components/HeadingSection";
 
 export default function SellersScreen(props) {
   const params = useParams();

@@ -154,9 +154,13 @@ function SellerSidebar() {
       )}
 
       <div className={"mt-3"}>
-        <Link to="#signout" onClick={signoutHandler}>
-          <i className={"fas fa-arrow-right-from-bracket"}></i> Sign Out
-        </Link>
+        <ul>
+          <li>
+            <Link to="#signout" onClick={signoutHandler}>
+              <i className={"fas fa-arrow-right-from-bracket"}></i> Sign Out
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );

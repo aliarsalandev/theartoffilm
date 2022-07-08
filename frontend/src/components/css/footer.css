@@ -48,3 +48,19 @@
   margin-bottom: 0.5rem;
   font-size: 14px;
 }
+
+footer h3 {
+  font-size: 3rem;
+}
+
+.fa-facebook {
+  color: #3b5998;
+}
+
+.fa-instagram {
+  color: #c13584;
+}
+
+.fa-youtube {
+  color: #ff0000;
+}

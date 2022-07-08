@@ -35,7 +35,7 @@ export default function CartScreen(props) {
     navigate("/signin?redirect=/shipping");
   };
   return (
-    <div className="row top">
+    <div className="flex row align-end">
       <div className="col-2">
         <h1 className={"title"}>Shopping Cart</h1>
         {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -44,7 +44,7 @@ export default function CartScreen(props) {
             Cart is empty. <Link to="/">Go Shopping</Link>
           </MessageBox>
         ) : (
-          <ul className={"p-2"}>
+          <ul className={"list-style-none p-2"}>
             {cartItems.map((item) => (
               <li key={item.product}>
                 <div className="row">
@@ -58,22 +58,7 @@ export default function CartScreen(props) {
                   <div className="">
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
-                  <div>
-                    <select
-                      value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
-                    >
-                      {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+
                   <div>
                     {symbol} {(rates[currency] * item.price).toFixed(1)}
                   </div>
@@ -93,16 +78,14 @@ export default function CartScreen(props) {
       </div>
       <div className="col-1">
         <div className="card card-body">
-          <ul>
+          <ul className={"list-style-none"}>
             <li>
-              <h2>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :{" "}
-                {symbol}
-                {cartItems.reduce(
-                  (a, c) => a + (rates[currency] * c.price).toFixed(1) * c.qty,
-                  0
-                )}
-              </h2>
+              Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :{" "}
+              {symbol}
+              {cartItems.reduce(
+                (a, c) => a + (rates[currency] * c.price).toFixed(1) * c.qty,
+                0
+              )}
             </li>
             <li>
               <button

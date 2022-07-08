@@ -42,6 +42,8 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Terms from "./screens/Terms";
 import BlogPage from "./screens/BlogPage";
 import PosterGradingCategoriesPage from "./screens/PosterGradingCategoriesPage";
+import GrahamHumpreys from "./screens/GrahamHumpreys";
+import WhyFilmPosters from "./screens/WhyFilmPosters";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -237,6 +239,11 @@ function App() {
             ></Route>
 
             <Route path="/blog-page" element={<BlogPage />}></Route>
+            <Route path="/grahamhumpreys" element={<GrahamHumpreys />}></Route>
+            <Route
+              path={"/why-film-posters"}
+              element={<WhyFilmPosters />}
+            ></Route>
 
             <Route path="/about-us" element={<AboutUS />}></Route>
 

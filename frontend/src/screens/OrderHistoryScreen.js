@@ -5,11 +5,15 @@ import { listOrderMine } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import SellerSidebar from "../components/SellerSidebar";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 
 export default function OrderHistoryScreen(props) {
   const navigate = useNavigate();
   const orderMineList = useSelector((state) => state.orderMineList);
   const { loading, error, orders } = orderMineList;
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listOrderMine());
@@ -43,7 +47,9 @@ export default function OrderHistoryScreen(props) {
                   <tr key={order._id}>
                     <td>{order._id}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>{order.totalPrice.toFixed(2)}</td>
+                    <td>
+                      {symbol} {(rates[currency] * order.totalPrice).toFixed(2)}{" "}
+                    </td>
                     <td>
                       {order.isPaid ? order.paidAt.substring(0, 10) : "No"}
                     </td>

@@ -4,7 +4,6 @@ import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { deleteProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import SellerSidebar from "../components/SellerSidebar";
 import UploadPoster from "../components/UploadPoster";
 import {
   PRODUCT_CREATE_RESET,

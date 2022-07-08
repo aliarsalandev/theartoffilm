@@ -1,7 +1,6 @@
 const chat_users = [];
 
 export const addUser = ({ id, name, room }) => {
-  console.log("name,room", name, room);
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
 

@@ -153,7 +153,7 @@ productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findOne({ isSeller: true });
+    const seller = await User.findById("62c7508b0deb00700c59357c");
     if (seller) {
       const products = data.products.map((product) => ({
         ...product,
@@ -173,10 +173,7 @@ productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
-      .populate(
-        "seller",
-        "seller.name seller.logo seller.rating seller.numReviews"
-      )
+      .populate("seller", "seller")
       .populate("directors")
       .populate("casts")
       .populate("artists");
@@ -191,7 +188,7 @@ productRouter.get(
 productRouter.post(
   "/",
   isAuth,
-  isSellerOrAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: `Poster ${Date.now()}`,
@@ -223,7 +220,7 @@ productRouter.post(
 productRouter.put(
   "/:id",
   isAuth,
-  isSellerOrAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);

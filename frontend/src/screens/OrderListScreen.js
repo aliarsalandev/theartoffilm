@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { deleteOrder, listOrders } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import SellerSidebar from "../components/SellerSidebar";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 import { unreadMessages } from "../helpers/media";
 import PageLayout from "../layouts/page";
@@ -86,9 +85,7 @@ export default function OrderListScreen(props) {
                     <td>
                       {order.isPaid ? order.paidAt.substring(0, 10) : "No"}
                     </td>
-                    <td>
-                      {order.shippingPrice ? order.shippingPrice.toFixed(2) : 0}
-                    </td>
+
                     <td>
                       {order.isDelivered
                         ? order.deliveredAt?.substring(0, 10)

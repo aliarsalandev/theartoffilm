@@ -6,7 +6,6 @@ import { detailsUser } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import ShowCase from "../components/ShowCase";
-import { useNavigate } from "react-router-dom";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 import data from "../data";
 
@@ -81,7 +80,7 @@ export default function SellerScreen(props) {
                       {currentProduct.name}
                     </td>
                     <td className="director-label text-right">
-                      {currentProduct?.seller._id === userInfo._id && (
+                      {currentProduct?.seller?._id === userInfo?._id && (
                         <Link to={`/product/${currentProduct._id}/edit`}>
                           Edit
                         </Link>

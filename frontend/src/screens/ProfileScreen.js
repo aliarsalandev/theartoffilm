@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
+
 import { useDispatch, useSelector } from "react-redux";
 import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
@@ -6,9 +8,13 @@ import MessageBox from "../components/MessageBox";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import Axios from "axios";
 import PageLayout from "../layouts/page";
+import data from "../data";
 
 export default function ProfileScreen() {
+  const shippingCostRef = useRef("");
+  const [shippingCost, setShippingCost] = useState({});
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [address_detail, setAddressDetail] = useState({});
   const [seller, setSeller] = useState({
     name: "",
     email: "",
@@ -17,6 +23,7 @@ export default function ProfileScreen() {
     collection_name: "",
     stripe_account_id: "",
     description: "",
+    shipping_cost: {},
   });
 
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -50,11 +57,11 @@ export default function ProfileScreen() {
   };
 
   const onChange = (e) => {
-    console.log({
-      ...seller,
-      [e.target.name]: e.target.value,
-    });
     setSeller({ ...seller, [e.target.name]: e.target.value });
+  };
+
+  const updateAddressDetail = (e) => {
+    setAddressDetail({ ...address_detail, [e.target.name]: e.target.value });
   };
 
   const dispatch = useDispatch();
@@ -66,29 +73,34 @@ export default function ProfileScreen() {
     }
   }, [dispatch, user, userInfo]);
 
-  const updateSeller = (user) => {
-    const { name, email, password, seller } = user;
-    const {
-      logo,
-      name: collection_name,
-      stripe_account_id,
-      description,
-    } = seller;
-    setSeller({
-      ...seller,
-      name,
-      email,
-      password,
-      logo,
-      collection_name,
-      stripe_account_id,
-      description,
-    });
-  };
   useEffect(() => {
     if (user) {
-      updateSeller(user);
+      const { name, email, password, seller: _seller } = user;
+      const {
+        logo,
+        name: collection_name,
+        shipping_cost,
+        stripe_account_id,
+        description,
+      } = _seller;
+      setSeller((prevState) => ({
+        ...prevState,
+        name,
+        email,
+        password,
+        logo,
+        collection_name,
+        stripe_account_id,
+        shipping_cost,
+        description,
+      }));
+
+      setShippingCost((prevState) => ({
+        ...prevState,
+        ...shipping_cost,
+      }));
     }
+
     return () => {};
   }, [user]);
 
@@ -100,21 +112,25 @@ export default function ProfileScreen() {
     } else {
       password = seller.password;
     }
+
     dispatch(
       updateUserProfile({
         userId: user._id,
         name: seller.name,
         email: seller.email,
         password,
+        ...address_detail,
         seller: {
           name: seller.collection_name,
           logo,
           description: seller.description,
+          shipping_cost: shippingCost,
           stripe_account_id: seller.stripe_account_id,
         },
       })
     );
   };
+
   return (
     <PageLayout>
       <form className="form" onSubmit={submitHandler}>
@@ -180,6 +196,61 @@ export default function ProfileScreen() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
+            <div className="text-start">
+              <h1 className={"title"}>
+                <span className="selection">Address</span> Settings
+              </h1>
+            </div>
+            <div>
+              <label htmlFor="address">Address</label>
+              <input
+                id="address"
+                name={"address"}
+                type="text"
+                placeholder="Enter address"
+                defaultValue={user.address}
+                onChange={updateAddressDetail}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="city">City</label>
+              <input
+                id="city"
+                name={"city"}
+                type="text"
+                placeholder="Enter city"
+                defaultValue={user.city}
+                onChange={updateAddressDetail}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="country">Country</label>
+              <input
+                id="country"
+                name={"country"}
+                type="text"
+                placeholder="Enter country"
+                defaultValue={user.country}
+                onChange={updateAddressDetail}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="postalCode">Zipcode</label>
+              <input
+                id="postalCode"
+                name={"postalCode"}
+                type="text"
+                placeholder="Enter zipcode"
+                defaultValue={user.postalCode}
+                onChange={updateAddressDetail}
+              ></input>
+            </div>
+
+            <div className="text-start">
+              <h1 className={"title"}>
+                <span className="selection">Payment</span> Settings{" "}
+              </h1>
+            </div>
             <div>
               <label htmlFor="stripe_account_id">Stripe Account Id</label>
               <input
@@ -190,6 +261,68 @@ export default function ProfileScreen() {
                 defaultValue={seller.stripe_account_id}
                 onChange={onChange}
               ></input>
+            </div>
+            <div>
+              <label htmlFor="shipping_cost">Shipping Cost</label>
+            </div>
+            <div>
+              <div className="flex row start">
+                {Object.keys(shippingCost)?.map((key, index) => {
+                  return (
+                    <div key={index} className={"mr-2 chip"}>
+                      <span>
+                        {
+                          data.origins.find((country) => country.code === key)[
+                            "name"
+                          ]
+                        }{" "}
+                        : {shippingCost[key]}
+                      </span>
+                      <i
+                        className="ml-2 fas fa-times pointer"
+                        onClick={() => {
+                          delete shippingCost[key];
+                          setShippingCost({
+                            ...shippingCost,
+                          });
+                        }}
+                      ></i>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div>
+              <div className={"flex row"}>
+                <input
+                  id="shipping_cost"
+                  ref={shippingCostRef}
+                  type="number"
+                  placeholder="Enter Shipping Cost"
+                ></input>
+                <div>
+                  <Select
+                    className="multi-select"
+                    placeholder={"Select Country of Origin"}
+                    defaultValue={{
+                      value: "GB",
+                      label: "United Kingdom",
+                    }}
+                    options={data.origins?.map((country) => ({
+                      value: country.code,
+                      label: country.name,
+                    }))}
+                    onChange={(__origin) => {
+                      const origin = __origin.value;
+                      const value = shippingCostRef.current.value;
+                      setShippingCost({
+                        ...shippingCost,
+                        [origin]: value,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
             </div>
             {userInfo?.isSeller && (
               <div className={"form"}>

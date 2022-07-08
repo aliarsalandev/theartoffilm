@@ -14,7 +14,6 @@ function PaymentSuccess() {
   useEffect(() => {
     paymentStatus(session_id, userInfo._id).then((data) => {
       console.log(data);
-
       const { status, type } = data.session;
       setStatus(status);
       setType(type);

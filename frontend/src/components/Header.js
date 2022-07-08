@@ -16,10 +16,7 @@ function Header() {
 
   const [selected_currency, setCurrency] = React.useState({});
   const updateRates = useCallback((_rates) => {
-    setRates({
-      ...rates,
-      ..._rates,
-    });
+    setRates((prevRates) => ({ ...prevRates, ..._rates }));
   }, []);
 
   useEffect(() => {
@@ -28,15 +25,14 @@ function Header() {
     CurrencyRates({
       onResult: (result) => {
         const rates = JSON.parse(result).rates;
-        console.log(rates);
-        updateRates(rates);
+        updateRates((prevRates) => ({ ...prevRates, ...rates }));
       },
       onError: (error) => {
         console.log("41", error);
       },
     });
     return () => {};
-  }, []);
+  }, [updateRates]);
 
   return (
     <header className="flex column header bg-dark">

@@ -37,8 +37,6 @@
     "streamifier": "^0.1.1",
     "stripe": "^9.9.0"
   },
-  "engines": {
-    "node": "16.15.1"
-  },
+  "engines": {},
   "homepage": "https://github.com/basir/theartoffilm#readme"
 }
