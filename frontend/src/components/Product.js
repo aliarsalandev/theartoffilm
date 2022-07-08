@@ -7,7 +7,7 @@ export default function Product({ product, toshop = false }) {
   const symbol = useSymbol(currency);
 
   return (
-    <div key={product._id} className="card bg-dark">
+    <div key={product._id} className="flex column start top card bg-dark ">
       <Link
         to={toshop ? `/search/name/${product.name}` : `/product/${product._id}`}
       >
@@ -17,9 +17,8 @@ export default function Product({ product, toshop = false }) {
         >
           <img
             style={{
-              width: "300px",
-              height: "300px",
-              objectFit: "cover",
+              height: "240px",
+              objectFit: "fill",
               overflow: "hidden",
             }}
             src={product.image.replace(/\\/, "/")}

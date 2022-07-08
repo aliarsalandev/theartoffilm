@@ -91,13 +91,25 @@ export const listProducts =
     try {
       const { data } = await Axios.get(
         // &category=${category}
-        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/api/products?pageNumber=${pageNumber}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&order=${order}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
     }
   };
+
+export const searchProducts = (query) => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/api/products/search?${query}`);
+    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+  }
+};
 
 // export const listProductCategories = () => async (dispatch) => {
 //   dispatch({

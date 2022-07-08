@@ -21,9 +21,8 @@ function Package({
 
   return (
     <section className="card premium">
-      <article className="title">
-        <h2 className="name">{name}</h2>
-        <p className="about">{/* <img src={image} alt={"Package"} /> */}</p>
+      <article className="bg-accent w-100 text-center">
+        <h2 className="name title3 text-dark">{name}</h2>
       </article>
 
       <div className="p-2">
@@ -38,7 +37,7 @@ function Package({
         </div>
 
         <div className="perks">
-          <ul>
+          <ul className={"list-style-none"}>
             {perks?.map((perk, index) => (
               <li key={index}>
                 <i className={"fa fa-check"}></i> {perk}

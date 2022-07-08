@@ -69,15 +69,7 @@ export default function SellersScreen(props) {
                       </div>
                     </div>
                   </li>
-                  {/* <li>
-                    <Rating
-                      rating={seller.seller.rating}
-                      numReviews={seller.seller.numReviews}
-                    ></Rating>
-                  </li> */}
-                  <li>
-                    <a href={`mailto:${seller.email}`}>Contact Seller</a>
-                  </li>
+
                   <li>{seller.seller.description}</li>
                   <li className="p-3" style={{ textAlign: "end" }}>
                     <Link to={`/seller/${seller._id}`}>View ShowCase</Link>
