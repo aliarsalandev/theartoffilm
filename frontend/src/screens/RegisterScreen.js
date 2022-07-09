@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -115,8 +115,7 @@ export default function RegisterScreen(props) {
         <div>
           <label />
           <div>
-            Already have an account?{" "}
-            <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
+            Already have an account? <Link to={`/signin`}>Sign-In</Link>
           </div>
         </div>
       </form>
