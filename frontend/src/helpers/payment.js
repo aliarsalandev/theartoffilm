@@ -9,13 +9,15 @@ export function CurrencyRates({ onResult, onError }) {
     headers: myHeaders,
   };
 
-  fetch(
-    "https://api.apilayer.com/fixer/latest?base=GBP&?symbols=JPY%2CEUR%2CUSD",
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then(onResult)
-    .catch(onError);
+  try {
+    fetch(
+      "https://api.apilayer.com/fixer/latest?base=GBP&?symbols=JPY%2CEUR%2CUSD",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then(onResult)
+      .catch(onError);
+  } catch (error) {}
 }
 
 export const processCheckout = async (

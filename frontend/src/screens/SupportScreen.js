@@ -24,11 +24,11 @@ export default function SupportScreen() {
 
   useEffect(() => {
     if (uiMessagesRef.current) {
-      uiMessagesRef.current.scrollBy({
-        top: uiMessagesRef.current.clientHeight,
-        left: 0,
-        behavior: "smooth",
-      });
+      // uiMessagesRef.current.scrollBy({
+      //   top: uiMessagesRef.current.clientHeight,
+      //   left: 0,
+      //   behavior: "smooth",
+      // });
     }
 
     if (!socket) {

@@ -16,10 +16,6 @@ export default function RegisterScreen(props) {
   const [sellerName, setSellerName] = useState("");
   const [description, setDescription] = useState("");
 
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get("redirect");
-  const redirect = redirectInUrl ? redirectInUrl : "/";
-
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
 
@@ -37,9 +33,9 @@ export default function RegisterScreen(props) {
   };
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect);
+      navigate("/");
     }
-  }, [navigate, redirect, userInfo]);
+  }, [navigate, userInfo]);
   return (
     <div className={"bg-light-dark"} style={{ padding: "4em 0" }}>
       <form className="form" onSubmit={submitHandler}>

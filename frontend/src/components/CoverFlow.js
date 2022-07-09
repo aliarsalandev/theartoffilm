@@ -8,7 +8,6 @@ class CoverFlowComponent extends React.Component {
     this.passPropCheckbox = this.passPropCheckbox.bind(this);
     this.inputRow = this.inputRow.bind(this);
     this.itemRatio = this.itemRatio.bind(this);
-    this.code = this.code.bind(this);
     this.state = {
       width: document.body.offsetWidth,
       passWidth: true,
@@ -116,23 +115,6 @@ class CoverFlowComponent extends React.Component {
         {axisInput("x")}
         {axisInput("y")}
       </div>
-    );
-  }
-  code() {
-    return (
-      <code>
-        {`<CoverFlow imagesArr={imagesArr}
-  direction="${this.state.direction}"
-  ${this.state.passWidth ? `width="${this.state.width}"` : ""}
-  ${this.state.passHeight ? `height="${this.state.height}"` : ""}
-  ${
-    this.state.passItemRatio
-      ? `itemRatio="${this.state.itemRatio.x}:${this.state.itemRatio.y}"`
-      : ""
-  }
-  ${this.state.passBackground ? `background="${this.state.background}"` : ""}
-  ${this.state.passLabels ? `labelsArr={labelsArr}` : ""} />`}
-      </code>
     );
   }
 }

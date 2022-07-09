@@ -41,6 +41,13 @@ export default function HomeScreen() {
       setSellers((prevSellers) => [...prevSellers, ...data]);
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    window.onload = () => {
+      window.scrollTo(0, 0);
+    };
+  }, []);
+
   return (
     <NoSideBarLayout>
       <div
