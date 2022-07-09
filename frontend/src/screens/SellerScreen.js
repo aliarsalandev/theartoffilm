@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../actions/productActions";
-import { detailsUser } from "../actions/userActions";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
-import ShowCase from "../components/ShowCase";
-import { useCurrency, useSymbol } from "../hooks/currencyHooks";
-import data from "../data";
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProducts } from '../actions/productActions';
+import { detailsUser } from '../actions/userActions';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import ShowCase from '../components/ShowCase';
+import { useCurrency, useSymbol } from '../hooks/currencyHooks';
+import data from '../data';
 
 export default function SellerScreen(props) {
   const params = useParams();
@@ -54,11 +54,11 @@ export default function SellerScreen(props) {
         <>
           <div className="flex center pt-2">
             {currentProduct?.seller._id === sellerId ? (
-              <h2 className={"title2"}>
+              <h2 className={'title2'}>
                 {currentProduct?.seller.seller?.name}
               </h2>
             ) : (
-              ""
+              ''
             )}
           </div>
 
@@ -73,11 +73,16 @@ export default function SellerScreen(props) {
 
           <div className="flex p-2 poster-details">
             {currentProduct && (
-              <table style={{ width: "100%" }}>
+              <table
+                style={{ width: '50%', margin: '0 auto' }}
+                className="product-page-table"
+              >
                 <tbody>
-                  <tr className={"flex row start"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
-                      {currentProduct.name}
+                  <tr className={'flex row start'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>
+                      <h1 className="product-page-title">
+                        {currentProduct.name}
+                      </h1>
                     </td>
                     <td className="director-label text-right">
                       {currentProduct?.seller?._id === userInfo?._id && (
@@ -88,32 +93,32 @@ export default function SellerScreen(props) {
                     </td>
                   </tr>
 
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Directors</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Directors</td>
                     <td className="director-label text-right">
                       {currentProduct.directors?.map((director) => (
                         <span key={director.name}>{director.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Casts</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Casts</td>
                     <td className="cast-label text-right">
                       {currentProduct.casts?.map((cast) => (
                         <span key={cast.name}>{cast.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Artists</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Artists</td>
                     <td className="artist-label text-right">
                       {currentProduct.artists?.map((artist) => (
                         <span key={artist.name}>{artist.name} | </span>
                       ))}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>
                       Country of Origin
                     </td>
                     <td className="origin-label text-right">
@@ -124,57 +129,57 @@ export default function SellerScreen(props) {
                       }
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Year</td>
-                    <td className={" text-right"}>{currentProduct.year}</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Year</td>
+                    <td className={' text-right'}>{currentProduct.year}</td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Format</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Format</td>
                     <td className="format-label  text-right">
                       {currentProduct.format}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Condition</td>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>Condition</td>
                     <td className="condition-label  text-right">
                       {currentProduct.condition}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
+                  <tr className={'flex'} style={{ width: '100%' }}>
+                    <td className={'bold td-title text-accent'}>
                       Rolled / Folded
                     </td>
                     <td className="rolledFolded-label  text-right">
                       {currentProduct.rolledFolded}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
+                  <tr className={'flex'} style={{ width: '100%' }}>
                     <td className="bold td-title text-accent">Description</td>
-                    <td className={" text-right"}>
+                    <td className={' text-right'}>
                       {currentProduct.description}
                     </td>
                   </tr>
                   {currentProduct.salePrice > 0 && (
                     <tr
-                      className={"flex align-center"}
+                      className={'flex align-center'}
                       style={{
                         textDecoration: currentProduct.salePrice
-                          ? "trne-through"
-                          : "",
+                          ? 'trne-through'
+                          : '',
                       }}
                     >
                       <td className="bold td-title text-accent">Price</td>
                       <td className="line-through price text-right">
-                        {symbol}{" "}
+                        {symbol}{' '}
                         {(rates[currency] * currentProduct.price).toFixed(2)}
                       </td>
                     </tr>
                   )}
                   {currentProduct.salePrice > 0 && (
-                    <tr className={"flex"}>
+                    <tr className={'flex'}>
                       <td className="bold td-title text-accent">Sale Price</td>
-                      <td className={"text-right"}>
-                        {symbol}{" "}
+                      <td className={'text-right'}>
+                        {symbol}{' '}
                         {(rates[currency] * currentProduct.salePrice).toFixed(
                           2
                         )}
