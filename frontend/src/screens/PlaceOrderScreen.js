@@ -14,7 +14,7 @@ export default function PlaceOrderScreen(props) {
 
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  const shippingCost = JSON.parse(localStorage.getItem("shippingCost"));
+  const shippingCost = JSON.parse(localStorage.getItem("shippingCost") ?? {});
   const shipping_country = localStorage.getItem("shipping_country");
   if (!cart.paymentMethod) {
     navigate("/payment");
