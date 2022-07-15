@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema(
         type: String,
         enum: ["month", "year"],
       },
+      stripe_account_id: { type: String, required: false },
     },
   },
   {

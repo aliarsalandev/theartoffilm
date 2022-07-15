@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import data from "../data.js";
 import User from "../models/userModel.js";
 import { generateToken, isAdmin, isAuth, isSeller } from "../utils.js";
+import Stripe from "stripe";
+import Setting from "../models/settingModel.js";
 
 const userRouter = express.Router();
 
@@ -50,23 +52,48 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-      seller: req.body.seller ?? {},
-      isSeller: req.body.isSeller ?? true,
-    });
-    const createdUser = await user.save();
-    res.send({
-      _id: createdUser._id,
-      name: createdUser.name,
-      email: createdUser.email,
-      seller: createdUser.seller,
-      isAdmin: createdUser.isAdmin,
-      isSeller: user.isSeller,
-      token: generateToken(createdUser),
-    });
+    const { stripe_private_key } = await Setting.findOne();
+    const stripe = new Stripe(stripe_private_key);
+    try {
+      const account = await stripe.accounts.create({
+        type: "custom",
+        email: req.body.email,
+        business_type: "individual",
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true },
+        },
+        metadata: {
+          name: req.body.name,
+        },
+      });
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+        seller:
+          {
+            ...req.body.seller,
+            stripe_account_id: account.id,
+          } ?? {},
+        isSeller: req.body.isSeller ?? true,
+      });
+
+      const createdUser = await user.save();
+      res.send({
+        _id: createdUser._id,
+        name: createdUser.name,
+        email: createdUser.email,
+        seller: createdUser.seller,
+        isAdmin: createdUser.isAdmin,
+        isSeller: user.isSeller,
+        token: generateToken(createdUser),
+      });
+    } catch (error) {
+      res.send({
+        error,
+      });
+    }
   })
 );
 
@@ -106,6 +133,62 @@ userRouter.put(
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
     if (user) {
+      const { stripe_private_key } = await Setting.findOne();
+      const stripe = new Stripe(stripe_private_key);
+      account = await stripe.accounts.create({
+        type: "custom",
+        email: req.body.email,
+        business_type: "individual",
+        business_profile: {
+          url: "https://www.example.com",
+          support_address: {
+            line1: "123 Main Street",
+            line2: "Suite 800",
+            city: "San Francisco",
+            state: "CA",
+            postal_code: "94107",
+            country: "US",
+          },
+        },
+
+        individual: {
+          email: req.body.email,
+          first_name: req.body.name.split(" ")[0],
+          last_name: req.body.name.split(" ")[1] ?? "",
+          dob: {
+            day: 1,
+            month: 1,
+            year: 1970,
+          },
+          phone: "555-867-5309",
+        },
+        external_account: {
+          object: "bank_account",
+          country: "US",
+          currency: "usd",
+          account_holder_name: req.body.name,
+          account_holder_type: "individual",
+          routing_number: req.body.routing_number,
+          account_number: req.body.account_number,
+        },
+
+        settings: {
+          card_issuing: {
+            tos_acceptance: {
+              date: Math.floor(Date.now() / 1000),
+              ip: req.body.ip,
+            },
+          },
+        },
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true },
+        },
+        metadata: {
+          name: req.body.name,
+        },
+      });
+
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.address = req.body.address || user.address;
