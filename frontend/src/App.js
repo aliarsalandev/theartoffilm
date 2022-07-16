@@ -130,7 +130,7 @@ function App() {
               }
             />
             <Route
-              path="/productlist"
+              path="/posters"
               element={
                 <AdminRoute>
                   <ProductListScreen />
@@ -185,11 +185,11 @@ function App() {
             <Route path="/page/subscriptions" element={<PricingScreen />} />
 
             <Route
-              path="/productlist/pageNumber/:pageNumber"
+              path="/posters/seller/pageNumber/:pageNumber"
               element={
-                <AdminRoute>
+                <PrivateRoute>
                   <ProductListScreen />
-                </AdminRoute>
+                </PrivateRoute>
               }
             />
             <Route
@@ -226,7 +226,7 @@ function App() {
             />
 
             <Route
-              path="/productlist/seller"
+              path="/posters/seller"
               element={
                 <SellerRoute>
                   <ProductListScreen />
