@@ -1,47 +1,47 @@
-import express from "express";
-import expressAsyncHandler from "express-async-handler";
-import data from "../data.js";
-import Product from "../models/productModel.js";
-import User from "../models/userModel.js";
-import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
+import express from 'express';
+import expressAsyncHandler from 'express-async-handler';
+import data from '../data.js';
+import Product from '../models/productModel.js';
+import User from '../models/userModel.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const productRouter = express.Router();
 
 // Filters
 
 productRouter.get(
-  "/search",
+  '/search',
   expressAsyncHandler(async (req, res) => {
     const { query } = req;
     const PAGE_SIZE = 10;
 
     const pageNumber = parseInt(req.query.pageNumber) || 1;
-    const name = query.name !== undefined ? query.name : "";
+    const name = query.name !== undefined ? query.name : '';
     const directors =
-      query.directors !== undefined && query.directors !== ""
+      query.directors !== undefined && query.directors !== ''
         ? [query.directors]
         : [];
     const casts =
-      query.casts !== undefined && query.casts !== "" ? [query.casts] : [];
+      query.casts !== undefined && query.casts !== '' ? [query.casts] : [];
     const artists =
-      query.artists !== undefined && query.artists !== ""
+      query.artists !== undefined && query.artists !== ''
         ? [query.artists]
         : [];
-    const origin = query.origin !== undefined ? query.origin : "";
-    const format = query.format !== undefined ? query.format : "";
+    const origin = query.origin !== undefined ? query.origin : '';
+    const format = query.format !== undefined ? query.format : '';
     const rolledFolded =
-      query.rolledFolded !== undefined ? query.rolledFolded : "";
-    const condition = query.condition !== undefined ? query.condition : "";
+      query.rolledFolded !== undefined ? query.rolledFolded : '';
+    const condition = query.condition !== undefined ? query.condition : '';
 
-    const price = query.price !== undefined ? query.price : "";
+    const price = query.price !== undefined ? query.price : '';
 
-    if (name !== "") {
+    if (name !== '') {
       var nameFilter =
-        name && name !== ""
+        name && name !== ''
           ? {
               name: {
                 $regex: name,
-                $options: "i",
+                $options: 'i',
               },
             }
           : {};
@@ -80,61 +80,61 @@ productRouter.get(
           : {};
     }
 
-    if (origin !== "") {
+    if (origin !== '') {
       var originFilter =
-        origin && origin !== ""
+        origin && origin !== ''
           ? {
               origin: {
                 $regex: origin,
-                $options: "i",
+                $options: 'i',
               },
             }
           : {};
     }
 
-    if (format !== "") {
+    if (format !== '') {
       var formatFilter =
-        format && format !== ""
+        format && format !== ''
           ? {
               format: {
                 $regex: format,
-                $options: "i",
+                $options: 'i',
               },
             }
           : {};
     }
 
-    if (rolledFolded !== "") {
+    if (rolledFolded !== '') {
       var rolledFoldedFilter =
-        rolledFolded && rolledFolded !== ""
+        rolledFolded && rolledFolded !== ''
           ? {
               rolledFolded: {
                 $regex: rolledFolded,
-                $options: "i",
+                $options: 'i',
               },
             }
           : {};
     }
 
-    if (condition !== "") {
+    if (condition !== '') {
       var conditionFilter =
-        condition && condition !== ""
+        condition && condition !== ''
           ? {
               condition: {
                 $regex: condition,
-                $options: "i",
+                $options: 'i',
               },
             }
           : {};
     }
 
-    if (price !== "") {
+    if (price !== '') {
       var priceFilter =
         price && price !== 0
           ? {
               price: {
-                $gte: Number(price.split("-")[0]),
-                $lte: Number(price.split("-")[1]),
+                $gte: Number(price.split('-')[0]),
+                $lte: Number(price.split('-')[1]),
               },
             }
           : {};
@@ -168,7 +168,7 @@ productRouter.get(
 );
 
 productRouter.get(
-  "/",
+  '/',
   expressAsyncHandler(async (req, res) => {
     const pageSize = 4;
     const page = req.query.pageNumber || 1;
@@ -176,10 +176,10 @@ productRouter.get(
     const count = await Product.count().exec();
 
     const products = await Product.find()
-      .populate("seller", "seller.name seller.logo")
-      .populate("directors")
-      .populate("casts")
-      .populate("artists");
+      .populate('seller', 'seller.name seller.logo')
+      .populate('directors')
+      .populate('casts')
+      .populate('artists');
 
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
   })
@@ -209,41 +209,41 @@ productRouter.get(
 // );
 
 productRouter.get(
-  "/origins",
+  '/origins',
   expressAsyncHandler(async (req, res) => {
-    const origins = await Product.find().distinct("origin");
+    const origins = await Product.find().distinct('origin');
     res.send(origins);
   })
 );
 
 productRouter.get(
-  "/formats",
+  '/formats',
   expressAsyncHandler(async (req, res) => {
-    const formats = await Product.find().distinct("format");
+    const formats = await Product.find().distinct('format');
     res.send(formats);
   })
 );
 productRouter.get(
-  "/conditions",
+  '/conditions',
   expressAsyncHandler(async (req, res) => {
-    const conditions = await Product.find().distinct("condition");
+    const conditions = await Product.find().distinct('condition');
     res.send(conditions);
   })
 );
 
 productRouter.get(
-  "/rolledFoldeds",
+  '/rolledFoldeds',
   expressAsyncHandler(async (req, res) => {
-    const rolledFoldeds = await Product.find().distinct("rolledFolded");
+    const rolledFoldeds = await Product.find().distinct('rolledFolded');
     res.send(rolledFoldeds);
   })
 );
 
 productRouter.get(
-  "/seed",
+  '/seed',
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findById("62d11b4b6eeb7e4a2906f6d1");
+    const seller = await User.findById('62d2940fada05438d4ab9a9d');
     if (seller) {
       const products = data.products.map((product) => ({
         ...product,
@@ -254,48 +254,48 @@ productRouter.get(
     } else {
       res
         .status(500)
-        .send({ message: "No seller found. first run /api/users/seed" });
+        .send({ message: 'No seller found. first run /api/users/seed' });
     }
   })
 );
 
 productRouter.get(
-  "/:id",
+  '/:id',
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
-      .populate("seller", "seller")
-      .populate("directors")
-      .populate("casts")
-      .populate("artists");
+      .populate('seller', 'seller')
+      .populate('directors')
+      .populate('casts')
+      .populate('artists');
     if (product) {
       res.send(product);
     } else {
-      res.status(404).send({ message: "Product Not Found" });
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );
 
 productRouter.post(
-  "/",
+  '/',
   isAuth,
   // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: `Poster ${Date.now()}`,
       seller: req.user._id,
-      image: "",
+      image: '',
       images: [],
       casts: [],
       artists: [],
-      origin: "UK",
-      year: "2010",
-      format: "US Insert",
-      condition: "Good",
-      rolledFolded: "Rolled",
+      origin: 'UK',
+      year: '2010',
+      format: 'US Insert',
+      condition: 'Good',
+      rolledFolded: 'Rolled',
       countInStock: 10,
       price: 12,
       salePrice: 10,
-      description: "Lorem ipsum dore",
+      description: 'Lorem ipsum dore',
       rating: 4,
       numReviews: 10,
       visible: false,
@@ -304,11 +304,11 @@ productRouter.post(
       directors: [],
     });
     const createdProduct = await product.save();
-    res.send({ message: "Product Created", product: createdProduct });
+    res.send({ message: 'Product Created', product: createdProduct });
   })
 );
 productRouter.put(
-  "/:id",
+  '/:id',
   isAuth,
   // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -336,30 +336,30 @@ productRouter.put(
       product.visible = req.body.visible;
       product.forSale = req.body.forSale;
       const updatedProduct = await product.save();
-      res.send({ message: "Product Updated", product: updatedProduct });
+      res.send({ message: 'Product Updated', product: updatedProduct });
     } else {
-      res.status(404).send({ message: "Product Not Found" });
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );
 
 productRouter.delete(
-  "/:id",
+  '/:id',
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
       const deleteProduct = await product.remove();
-      res.send({ message: "Product Deleted", product: deleteProduct });
+      res.send({ message: 'Product Deleted', product: deleteProduct });
     } else {
-      res.status(404).send({ message: "Product Not Found" });
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );
 
 productRouter.post(
-  "/:id/reviews",
+  '/:id/reviews',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
@@ -368,7 +368,7 @@ productRouter.post(
       if (product.reviews.find((x) => x.name === req.user.name)) {
         return res
           .status(400)
-          .send({ message: "You already submitted a review" });
+          .send({ message: 'You already submitted a review' });
       }
       const review = {
         name: req.user.name,
@@ -382,11 +382,11 @@ productRouter.post(
         product.reviews.length;
       const updatedProduct = await product.save();
       res.status(201).send({
-        message: "Review Created",
+        message: 'Review Created',
         review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
       });
     } else {
-      res.status(404).send({ message: "Product Not Found" });
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );

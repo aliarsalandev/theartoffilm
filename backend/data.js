@@ -11,7 +11,7 @@ const data = {
     },
     {
       name: 'Henry',
-      email: 'henry4film@theartoffilms.com',
+      email: 'henry4film@aol.com',
       password: bcrypt.hashSync('Zakaria360', 8),
       isAdmin: false,
       isSeller: true,
