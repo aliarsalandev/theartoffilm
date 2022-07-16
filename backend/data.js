@@ -10,7 +10,7 @@ const data = {
       isSeller: false,
     },
     {
-      name: 'Henry',
+      name: 'Henry Coleman',
       email: 'henry4film@aol.com',
       password: bcrypt.hashSync('Zakaria360', 8),
       isAdmin: false,
