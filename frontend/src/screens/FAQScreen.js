@@ -1,27 +1,27 @@
-import React from "react";
-import { isMobile } from "react-device-detect";
-import Accordion from "../components/Accordion";
+import React from 'react';
+import { isMobile } from 'react-device-detect';
+import Accordion from '../components/Accordion';
 
-import HeroSection from "../sections/HeroSection";
+import HeroSection from '../sections/HeroSection';
 
 function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
   return (
-    <div className={"bg-light-dark"}>
+    <div className={'bg-light-dark'}>
       {header && (
         <HeroSection
-          heading={"FAQs"}
+          heading={'FAQs'}
           heading2="Home/FAQs"
           image="/images/theater.jpeg"
         />
       )}
 
-      <div className="faq-section p-4">
+      <div className="faq-section boxed">
         {showSubscriptionFAQs && (
           <div
-            className={`faq-item ${isMobile ? "flex column-reverse" : "flex"}`}
+            className={`faq-item ${isMobile ? 'flex column-reverse' : 'flex'}`}
           >
             <div className="faq-accordion">
-              <h3 className={"title2 text-start"}>
+              <h3 className={'title2 text-start'}>
                 <span className="selection">SUBSCRIPTION</span> FAQS
               </h3>
               <br />
@@ -31,13 +31,13 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
                   text="You do not need a subscription to buy posters but you would need a subscription to sell posters. "
                 />
                 <Accordion
-                  title="If I cancel my subscription will I loose my showcase?"
-                  text="Yes, if you cancel your subscription you will loose access to your showcase and your showcase will not be visible on the site."
+                  title="If I cancel my subscription will I lose my showcase?"
+                  text="Yes, if you cancel your subscription you will lose access to your showcase and your showcase will not be visible on the site."
                 />
                 <Accordion
                   title="Do subscriptions auto renew?"
                   text={
-                    "Yes your subscription will auto renew until you cancel  your subscription via your Dashboard. Please refer to our Terms and Conditions"
+                    'Yes your subscription will auto renew until you cancel  your subscription via your Dashboard. Please refer to our Terms and Conditions'
                   }
                 />
                 <Accordion
@@ -45,15 +45,15 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
                   text="Yes, the Site is a global platform."
                 />
                 <Accordion
-                  title={"What subscriptions do you offer? "}
+                  title={'What subscriptions do you offer? '}
                   text={
-                    "We offer a range of monthly and annual subscriptions.  Please visit our Pricing page for further information."
+                    'We offer a range of monthly and annual subscriptions.  Please visit our Pricing page for further information.'
                   }
                 />
                 <Accordion
                   title="What if I want to display more posters than my subscription will allow? "
                   text={
-                    "If you require additional poster templates you can upgrade your subscription package on your Dashboard."
+                    'If you require additional poster templates you can upgrade your subscription package on your Dashboard.'
                   }
                 />
               </div>
@@ -61,9 +61,9 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
 
             <div className="faq-image text-end">
               <img
-                src={"/images/faq.jpg"}
+                src={'/images/faq.jpg'}
                 alt=""
-                className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+                className={`img ${isMobile ? 'mw-100' : 'mw-80'}`}
               />
             </div>
           </div>
@@ -72,11 +72,11 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
           <div className="faq-section p-4">
             <div
               className={`faq-item ${
-                isMobile ? "flex column-reverse" : "flex row-reverse"
+                isMobile ? 'flex column-reverse' : 'flex row-reverse'
               }`}
             >
               <div className="faq-accordion">
-                <h3 className={"title2 text-start"}>
+                <h3 className={'title2 text-start'}>
                   <span className="selection">SHOWCASE</span> FAQS
                 </h3>
                 <br />
@@ -94,28 +94,28 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
                     text="No – you have the choice whether to keep your collection private or share it with other subscribers around the world. You can share 1 page or your entire collection if you so wish."
                   />
                   <Accordion
-                    title="IF I CANCEL MY SHOWCASE WILL I LOOSE MY SUBSCRIPTION?"
-                    text="Yes, if you cancel your subscription you will loose access to your showcase and your showcase will not be visible on the site.  share 1 page or your entire collection if you so wish."
+                    title="IF I CANCEL MY SHOWCASE WILL I LOSE MY SUBSCRIPTION?"
+                    text="Yes, if you cancel your subscription you will lose access to your showcase and your showcase will not be visible on the site."
                   />
                 </div>
               </div>
 
               <div className="faq-image">
                 <img
-                  src={"/images/faq1.jpg"}
+                  src={'/images/faq1.jpg'}
                   alt=""
-                  className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+                  className={`img ${isMobile ? 'mw-100' : 'mw-80'}`}
                 />
               </div>
             </div>
 
             <div
               className={`faq-item ${
-                isMobile ? "flex column-reverse" : "flex"
+                isMobile ? 'flex column-reverse' : 'flex'
               }`}
             >
               <div className="faq-accordion">
-                <h3 className={"title2 text-start"}>
+                <h3 className={'title2 text-start'}>
                   <span className="selection">BUY & SELL</span> FAQS
                 </h3>
                 <br />
@@ -132,7 +132,7 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
 
                   <Accordion
                     title="HOW MUCH DOES THE ART OF FILM TAKE FROM POSTER SALES?"
-                    text="We only take 5% of sales from the Poster Pool."
+                    text="We only take 6% of sales from the Poster Shop."
                   />
 
                   <Accordion
@@ -147,31 +147,32 @@ function FAQScreen({ showSubscriptionFAQs = false, header = true }) {
 
                   <Accordion
                     title="CAN I SELL REPRODUCTIONS?"
-                    text="No – The Art of Film is only for collectors of original film posters."
+                    text="No – The Art of Film is only for collectors of original film posters and memorabilia."
                   />
 
                   <Accordion
                     title="CAN I SELL MONDO PRINTS"
-                    text="Yes Mondo poster are acceptable on The Art of Film"
+                    text="Yes Mondo prints are acceptable on The Art of Film"
                   />
 
                   <Accordion
                     title="WHO GRADES THE POSTERS ON THE WEBSITE?"
-                    text="It is down to the individual subscriber to grade their own poster collection. We have provided a Grading guide on the website."
+                    text="It is down to the individual subscriber to grade their own poster collection. We have provided a Grading Guide on the website."
                   />
 
                   <Accordion
                     title="I OWN AN ONLINE FILM POSTER SHOP – HOW DO I ADD MY LINK TO THE ART OF FILM?"
-                    text="Please contact us to add a live link to your film poster shop – our subscribers will then be able to access your shop at the touch of a button."
+                    text="To add a live link to your film poster shop – our subscribers will then be able to access your shop at the touch of a button."
+                    link="Contact Us"
                   />
                 </div>
               </div>
 
               <div className="faq-image text-end">
                 <img
-                  src={"/images/faq2.jpg"}
+                  src={'/images/faq2.jpg'}
                   alt=""
-                  className={`img ${isMobile ? "mw-100" : "mw-80"}`}
+                  className={`img ${isMobile ? 'mw-100' : 'mw-80'}`}
                 />
               </div>
             </div>

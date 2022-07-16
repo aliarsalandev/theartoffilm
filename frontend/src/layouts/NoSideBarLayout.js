@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 function NoSideBarLayout(props) {
-  return <div>{props.children}</div>;
+  return <div className="">{props.children}</div>;
 }
 
 export default NoSideBarLayout;

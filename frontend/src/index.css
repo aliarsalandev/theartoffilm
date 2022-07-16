@@ -1481,3 +1481,7 @@ body>iframe {
   min-width: 50%;
   text-align: start;
 }
+
+.boxed {
+  padding: 3em 7em;
+}

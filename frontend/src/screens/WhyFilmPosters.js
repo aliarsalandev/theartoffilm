@@ -1,22 +1,22 @@
-import React from "react";
-import { isMobile } from "react-device-detect";
-import SellersShowCase from "../components/SellersShowCase";
-import NoSideBarLayout from "../layouts/NoSideBarLayout";
+import React from 'react';
+import { isMobile } from 'react-device-detect';
+import SellersShowCase from '../components/SellersShowCase';
+import NoSideBarLayout from '../layouts/NoSideBarLayout';
 
 function ShowCaseCard({ before, title, text, image, reverse = false }) {
   return (
-    <div className={`flex between ${reverse ? "row-reverse" : ""} mtb-2`}>
-      <div className={`col-md-6 col-xs-12 ${isMobile ? "" : "plr-2"}`}>
-        <h2 className={"title2 text-start"}>
-          <span className={"selection"}>{before}</span> {title}
+    <div className={`flex between ${reverse ? 'row-reverse' : ''} mtb-2`}>
+      <div className={`col-md-6 col-xs-12 ${isMobile ? '' : 'plr-2'}`}>
+        <h2 className={'title2 text-start'}>
+          <span className={'selection'}>{before}</span> {title}
         </h2>
         <p>{text}</p>
       </div>
-      <div className={`col flex ${reverse ? "start" : "end"} `}>
+      <div className={`col flex ${reverse ? 'start' : 'end'} `}>
         <img
           src={image}
           alt=""
-          className={`img ${isMobile ? "w-100" : "w-80"} border-accent`}
+          className={`img ${isMobile ? 'w-100' : 'w-80'} border-accent`}
         />
       </div>
     </div>
@@ -26,38 +26,38 @@ function ShowCaseCard({ before, title, text, image, reverse = false }) {
 function WhyFilmPosters() {
   return (
     <NoSideBarLayout>
-      <div className={" flex top start"}>
+      <div className={' flex top start'}>
         <div
           className={`container showcase-section p-4 ${
-            isMobile ? "" : "col-3"
+            isMobile ? '' : 'col-3'
           }`}
-          style={{ padding: "4em" }}
+          style={{ padding: '4em' }}
         >
           <div className="p-4">
             <ShowCaseCard
-              before={"PASSIONATE"}
-              title={"FILM POSTER COLLECTOR"}
+              before={'PASSIONATE'}
+              title={'FILM POSTER COLLECTOR'}
               text={`Film posters are my passion and  I’ve been collecting film posters and movie memorabilia probably since I was about 13 years old – I became friends with my local cinema managers and video shop owners in the 1980s. They used to give me film and video posters once the run was over – anything film-related that was destined for the bin would inevitably land up in my bedroom as a teenager.By the time I was in my mid-teens, I had no wall space or even ceiling space left. Most of my friends had pictures of movie stars or favourite bands up on their walls I had Kubrick posters, Coppola posters,  Spielberg posters, DePalma posters and so much more on my walls (OK – and 1 poster of my favourite group back then Queen!). Arriving in London in my late teens, I discovered Film Fairs – 4 shows a year or so, which reignited my passion for collecting film posters. My interest started growing again – initially I was only collecting Stanley Kubrick material, however over time it has widened to encompass a huge range of titles.`}
-              image={"/images/Henry-Bedroom-1.jpg"}
+              image={'/images/Henry-Bedroom-1.jpg'}
             />
           </div>
 
           <div className="p-4">
             <img
-              className={"border-accent"}
-              src={"/images/Henry-Bedroom-2-1024x688.jpg"}
+              className={'border-accent'}
+              src={'/images/Henry-Bedroom-2-1024x688.jpg'}
               alt=""
             />
           </div>
 
-          <div className={"flex column between mtb-2"}>
-            <div className={`${isMobile ? "" : "plr-2"}`}>
-              <h2 className={"text-start"}>
-                <span className={"selection"}>WHY I STARTED</span> COLLECTING
+          <div className={'flex column between mtb-2'}>
+            <div className={`${isMobile ? '' : 'plr-2'}`}>
+              <h2 className={'text-start'}>
+                <span className={'selection'}>WHY I STARTED</span> COLLECTING
                 POSTERS
               </h2>
               <p>
-                {" "}
+                {' '}
                 There are 3 main reasons why I collect film posters – firstly I
                 love the artwork that encapsulates the film – as soon as you
                 look at a specific poster, the film comes flooding back to you.
@@ -86,10 +86,10 @@ function WhyFilmPosters() {
             </div>
           </div>
 
-          <div className={"flex column between mtb-2"}>
-            <div className={`${isMobile ? "" : "plr-2"}`}>
-              <h2 className={"text-start"}>
-                <span className={"selection"}>THE ART OF</span> FILM
+          <div className={'flex column between mtb-2'}>
+            <div className={`${isMobile ? '' : 'plr-2'}`}>
+              <h2 className={'text-start'}>
+                <span className={'selection'}>THE ART OF</span> FILM
               </h2>
               <p>
                 I have founded The Art of Film as a complete umbrella website
@@ -112,14 +112,14 @@ function WhyFilmPosters() {
               </p>
             </div>
           </div>
-          <div className={"flex column mt-2"}>
+          <div className={'flex column mt-2'}>
             <img
-              className={"border-accent"}
-              src={"/images/news-paper.png"}
+              className={'border-accent'}
+              src={'/images/news-paper.png'}
               alt=""
             />
-            <p className={"text-uppercase"}>
-              Contact Henry Coleman the author{" "}
+            <p className={'text-uppercase'}>
+              Contact Henry Coleman the author{' '}
               <a
                 className="selection"
                 href="mailto:henrhenry@theartoffilm.co.uk"
@@ -129,7 +129,7 @@ function WhyFilmPosters() {
             </p>
           </div>
         </div>
-        <div className={`flex column pt-2 ${isMobile ? "" : "col-1"}`}>
+        <div className={`flex column pt-2 ${isMobile ? '' : 'col-1'}`}>
           <h3>SPONSORED</h3>
           <a
             href="http://www.vertigoposters.com"
@@ -137,14 +137,14 @@ function WhyFilmPosters() {
             rel="noreferrer"
           >
             <img
-              alt={"vertigoposters"}
-              className={"img w-80"}
+              alt={'vertigoposters'}
+              className={'img w-80'}
               src="https://theartoffilms.kinsta.cloud/wp-content/uploads/2021/07/Vertigo-Ad-2021-1024x607.jpg"
             />
           </a>
         </div>
       </div>
-      <div className={"p-4"}>
+      <div className={'p-4'}>
         <SellersShowCase />
       </div>
     </NoSideBarLayout>

@@ -1,11 +1,11 @@
-import React from "react";
-import HowOneImage from "../assets/images/How-1.jpg";
-import HowTwoImage from "../assets/images/How-2.png";
-import HowThreeImage from "../assets/images/How-3.jpg";
+import React from 'react';
+import HowOneImage from '../assets/images/How-1.jpg';
+import HowTwoImage from '../assets/images/How-2.png';
+import HowThreeImage from '../assets/images/How-3.jpg';
 
 function HowItWorkSection() {
   return (
-    <div className="section" style={{ padding: "4em" }}>
+    <div className="section " style={{ padding: '4em' }}>
       <h2>
         <span>How</span> It Works
       </h2>
