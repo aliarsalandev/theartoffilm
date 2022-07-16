@@ -11,6 +11,8 @@ import {
   payOrderEmailTemplate,
 } from "../utils.js";
 import Session from "../models/sessionModel.js";
+import Setting from "../models/settingModel.js";
+import Stripe from "stripe";
 
 const orderRouter = express.Router();
 
@@ -223,7 +225,9 @@ orderRouter.put(
 );
 
 orderRouter.post("/create-checkout-session", async (req, res) => {
-  const session = await stripe_app().checkout.sessions.create({
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+  const session = await stripe.checkout.sessions.create({
     line_items: req.body.line_items,
     mode: "payment",
     success_url: `http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}`,
@@ -245,11 +249,10 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
 orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
   const session_id = req.params.session_id;
   const user_id = req.params.user_id;
-  const { stripe_private_key } = await Setting.findOne();
 
-  const stripe_session = await stripe_app().checkout.sessions.retrieve(
-    session_id
-  );
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+  const stripe_session = await stripe.checkout.sessions.retrieve(session_id);
   // select only the adventures name and length
   const session = await Session.findOne(
     { id: session_id },
@@ -278,8 +281,9 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
 orderRouter.post("/transfer", async (req, res) => {
   const order = await Order.findById(req.body.orderId);
 
-  // Create a Transfer to the connected account (later):
-  const transfer = await stripe_app().transfers.create({
+  const { stripe_private_key } = await Setting.findOne();
+  const stripe = new Stripe(stripe_private_key);
+  const transfer = await stripetransfers.create({
     amount: parseInt(order.totalPrice - order.totalPrice * 0.07),
     currency: "gbp",
     destination: "acct_18LHw7GFDcM4wUS8",

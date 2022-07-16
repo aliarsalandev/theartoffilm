@@ -23,6 +23,7 @@ import {
   getUsersOfRoom,
 } from "./data/chat-users.js";
 import messageRouter from "./routers/messageRouter.js";
+import paymentRouter from "./routers/paymentRouter.js";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/settings", settingsRouter);
+app.use("/api/payment-info", paymentRouter);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });

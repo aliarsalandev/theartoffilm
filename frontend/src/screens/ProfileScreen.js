@@ -224,16 +224,29 @@ export default function ProfileScreen() {
                 onChange={updateAddressDetail}
               ></input>
             </div>
+
             <div>
               <label htmlFor="country">Country</label>
-              <input
-                id="country"
-                name={"country"}
-                type="text"
-                placeholder="Enter country"
-                defaultValue={user.country}
-                onChange={updateAddressDetail}
-              ></input>
+              <Select
+                className="multi-select"
+                placeholder={"Select Country of Origin"}
+                defaultValue={{
+                  value: user?.country ?? "GB",
+                  label: data.stripe_origins.find(
+                    (country) => country.code === user?.country
+                  )?.name,
+                }}
+                options={data.stripe_origins?.map((country) => ({
+                  value: country.code,
+                  label: country.name,
+                }))}
+                onChange={(__origin) => {
+                  setAddressDetail({
+                    ...address_detail,
+                    country: __origin.value,
+                  });
+                }}
+              />
             </div>
             <div>
               <label htmlFor="postalCode">Zipcode</label>

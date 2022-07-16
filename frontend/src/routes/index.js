@@ -59,20 +59,20 @@ const AppRoutes = () => {
         path="/payment/success/session/:id"
         element={<PaymentSuccess />}
       ></Route>
-      <Route path="/search/name" element={<SearchScreen />} exact></Route>
-      <Route path="/search/name/:name" element={<SearchScreen />} exact></Route>
+      <Route path="/shop/name" element={<SearchScreen />} exact></Route>
+      <Route path="/shop/name/:name" element={<SearchScreen />} exact></Route>
       <Route
-        path="/search/category/:category"
+        path="/shop/category/:category"
         element={<SearchScreen />}
         exact
       ></Route>
       <Route
-        path="/search/category/:category/name/:name"
+        path="/shop/category/:category/name/:name"
         element={<SearchScreen />}
         exact
       ></Route>
       <Route
-        path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
+        path="/shop/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
         element={<SearchScreen />}
         exact
       ></Route>
@@ -137,7 +137,7 @@ const AppRoutes = () => {
           </AdminRoute>
         }
       />
-      <Route path="/pricing" element={<PricingScreen />} />
+      <Route path="/page/subscriptions" element={<PricingScreen />} />
 
       <Route
         path="/productlist/pageNumber/:pageNumber"

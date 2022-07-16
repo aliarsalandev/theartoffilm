@@ -52,21 +52,31 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
-    const { stripe_private_key } = await Setting.findOne();
-    const stripe = new Stripe(stripe_private_key);
     try {
+      const { stripe_private_key } = await Setting.findOne();
+      const stripe = new Stripe(stripe_private_key);
       const account = await stripe.accounts.create({
         type: "custom",
+        country: "GB",
         email: req.body.email,
-        business_type: "individual",
         capabilities: {
-          card_payments: { requested: true },
-          transfers: { requested: true },
-        },
-        metadata: {
-          name: req.body.name,
+          card_payments: {
+            requested: true,
+          },
+          transfers: {
+            requested: true,
+          },
         },
       });
+
+      const accountLink = await stripe.accountLinks.create({
+        account: account.id,
+        success_url: "http://localhost:3000/stripe/link",
+        failure_url: "http://localhost:3000/stripe/link",
+        type: "custom_account_verification",
+        collect: "eventually_due",
+      });
+
       const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -75,6 +85,7 @@ userRouter.post(
           {
             ...req.body.seller,
             stripe_account_id: account.id,
+            account_link: accountLink.url,
           } ?? {},
         isSeller: req.body.isSeller ?? true,
       });
@@ -90,6 +101,7 @@ userRouter.post(
         token: generateToken(createdUser),
       });
     } catch (error) {
+      console.log(error);
       res.send({
         error,
       });
@@ -100,7 +112,9 @@ userRouter.post(
 userRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate(
+      "seller.subscription"
+    );
     if (user) {
       res.send(user);
     } else {
@@ -131,92 +145,43 @@ userRouter.put(
   "/profile",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id);
-    if (user) {
-      const { stripe_private_key } = await Setting.findOne();
-      const stripe = new Stripe(stripe_private_key);
-      account = await stripe.accounts.create({
-        type: "custom",
-        email: req.body.email,
-        business_type: "individual",
-        business_profile: {
-          url: "https://www.example.com",
-          support_address: {
-            line1: "123 Main Street",
-            line2: "Suite 800",
-            city: "San Francisco",
-            state: "CA",
-            postal_code: "94107",
-            country: "US",
-          },
-        },
+    try {
+      const user = await User.findById(req.user._id);
+      if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.address = req.body.address || user.address;
+        user.city = req.body.city || user.city;
+        user.postalCode = req.body.postalCode || user.postalCode;
+        user.country = req.body.country || user.country;
 
-        individual: {
-          email: req.body.email,
-          first_name: req.body.name.split(" ")[0],
-          last_name: req.body.name.split(" ")[1] ?? "",
-          dob: {
-            day: 1,
-            month: 1,
-            year: 1970,
-          },
-          phone: "555-867-5309",
-        },
-        external_account: {
-          object: "bank_account",
-          country: "US",
-          currency: "usd",
-          account_holder_name: req.body.name,
-          account_holder_type: "individual",
-          routing_number: req.body.routing_number,
-          account_number: req.body.account_number,
-        },
+        user.seller.name = req.body.seller.name || user.seller.name;
+        user.seller.logo = req.body.seller.logo || user.seller.logo;
+        user.seller.stripe_account_id =
+          req.body.seller.stripe_account_id || user.seller.stripe_account_id;
+        user.seller.description =
+          req.body.seller.description || user.seller.description;
 
-        settings: {
-          card_issuing: {
-            tos_acceptance: {
-              date: Math.floor(Date.now() / 1000),
-              ip: req.body.ip,
-            },
-          },
-        },
-        capabilities: {
-          card_payments: { requested: true },
-          transfers: { requested: true },
-        },
-        metadata: {
-          name: req.body.name,
-        },
-      });
+        user.seller.shipping_cost =
+          req.body.seller.shipping_cost || user.seller.shipping_cost;
 
-      user.name = req.body.name || user.name;
-      user.email = req.body.email || user.email;
-      user.address = req.body.address || user.address;
-      user.city = req.body.city || user.city;
-      user.postalCode = req.body.postalCode || user.postalCode;
-      user.country = req.body.country || user.country;
-
-      user.seller.name = req.body.seller.name || user.seller.name;
-      user.seller.logo = req.body.seller.logo || user.seller.logo;
-      user.seller.stripe_account_id =
-        req.body.seller.stripe_account_id || user.seller.stripe_account_id;
-      user.seller.description =
-        req.body.seller.description || user.seller.description;
-
-      user.seller.shipping_cost =
-        req.body.seller.shipping_cost || user.seller.shipping_cost;
-
-      if (req.body.password) {
-        user.password = bcrypt.hashSync(req.body.password, 8);
+        if (req.body.password) {
+          user.password = bcrypt.hashSync(req.body.password, 8);
+        }
+        const updatedUser = await user.save();
+        res.send({
+          _id: updatedUser._id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          isAdmin: updatedUser.isAdmin,
+          isSeller: user.isSeller,
+          token: generateToken(updatedUser),
+        });
       }
-      const updatedUser = await user.save();
+    } catch (error) {
+      console.log(error);
       res.send({
-        _id: updatedUser._id,
-        name: updatedUser.name,
-        email: updatedUser.email,
-        isAdmin: updatedUser.isAdmin,
-        isSeller: user.isSeller,
-        token: generateToken(updatedUser),
+        error,
       });
     }
   })

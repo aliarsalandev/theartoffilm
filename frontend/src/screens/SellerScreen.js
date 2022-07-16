@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import { detailsUser } from '../actions/userActions';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import ShowCase from '../components/ShowCase';
-import { useCurrency, useSymbol } from '../hooks/currencyHooks';
-import data from '../data';
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
+import { detailsUser } from "../actions/userActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import ShowCase from "../components/ShowCase";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
+import data from "../data";
 
 export default function SellerScreen(props) {
   const params = useParams();
@@ -27,9 +27,7 @@ export default function SellerScreen(props) {
     products,
   } = productList;
   const [currentProduct, setCurrentProduct] = React.useState();
-
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  const { user } = useSelector((state) => state.userDetails);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -52,18 +50,16 @@ export default function SellerScreen(props) {
         <MessageBox variant="danger">{errorProducts}</MessageBox>
       ) : (
         <>
-          <div className="flex center pt-2">
-            {currentProduct?.seller._id === sellerId ? (
-              <h2 className={'title2'}>
-                {currentProduct?.seller.seller?.name}
-              </h2>
+          <div className="flex center p-4">
+            {user?._id === sellerId ? (
+              <h2 className={"title2"}>{user?.seller.name}</h2>
             ) : (
-              ''
+              ""
             )}
           </div>
 
           <ShowCase
-            products={products.filter((product) => product.visible)}
+            products={products?.filter((product) => product.visible)}
             onClick={(product) => {
               setCurrentProduct(product);
             }}
@@ -71,21 +67,29 @@ export default function SellerScreen(props) {
 
           {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
 
-          <div className="flex p-2 poster-details">
-            {currentProduct && (
+          {currentProduct && (
+            <div className="flex top p-2 poster-details">
+              <div>
+                <img
+                  className={"w-80 border-accent border-2 m-2"}
+                  src={currentProduct?.image}
+                  alt="poster"
+                />
+              </div>
+
               <table
-                style={{ width: '50%', margin: '0 auto' }}
+                style={{ width: "50%", margin: "0 auto" }}
                 className="product-page-table"
               >
                 <tbody>
-                  <tr className={'flex row start'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>
+                  <tr className={"flex row start"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
                       <h1 className="product-page-title">
                         {currentProduct.name}
                       </h1>
                     </td>
                     <td className="director-label text-right">
-                      {currentProduct?.seller?._id === userInfo?._id && (
+                      {currentProduct?.seller?._id === user?._id && (
                         <Link to={`/product/${currentProduct._id}/edit`}>
                           Edit
                         </Link>
@@ -93,32 +97,46 @@ export default function SellerScreen(props) {
                     </td>
                   </tr>
 
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Directors</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Director</td>
                     <td className="director-label text-right">
-                      {currentProduct.directors?.map((director) => (
-                        <span key={director.name}>{director.name} | </span>
-                      ))}
+                      {currentProduct.directors?.map((director, index) => {
+                        if (index < currentProduct.directors.length - 1) {
+                          return (
+                            <span key={director._id}>
+                              {director.name}
+                              <span className="comma">, </span>
+                            </span>
+                          );
+                        }
+                        return <span key={director.name}>{director.name}</span>;
+                      })}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Casts</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Cast</td>
                     <td className="cast-label text-right">
-                      {currentProduct.casts?.map((cast) => (
-                        <span key={cast.name}>{cast.name} | </span>
-                      ))}
+                      {currentProduct.casts?.map((cast, index) => {
+                        if (index < currentProduct.casts.length - 1) {
+                          return <span key={cast.name}>{cast.name},</span>;
+                        }
+                        return <span key={cast.name}>{cast.name}</span>;
+                      })}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Artists</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Artist</td>
                     <td className="artist-label text-right">
-                      {currentProduct.artists?.map((artist) => (
-                        <span key={artist.name}>{artist.name} | </span>
-                      ))}
+                      {currentProduct.artists?.map((artist, index) => {
+                        if (index < currentProduct.artists.length - 1) {
+                          return <span key={artist.name}>{artist.name},</span>;
+                        }
+                        return <span key={artist.name}>{artist.name}</span>;
+                      })}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
                       Country of Origin
                     </td>
                     <td className="origin-label text-right">
@@ -129,57 +147,57 @@ export default function SellerScreen(props) {
                       }
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Year</td>
-                    <td className={' text-right'}>{currentProduct.year}</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Year</td>
+                    <td className={" text-right"}>{currentProduct.year}</td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Format</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Format</td>
                     <td className="format-label  text-right">
                       {currentProduct.format}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>Condition</td>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>Condition</td>
                     <td className="condition-label  text-right">
                       {currentProduct.condition}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
-                    <td className={'bold td-title text-accent'}>
+                  <tr className={"flex"} style={{ width: "100%" }}>
+                    <td className={"bold td-title text-accent"}>
                       Rolled / Folded
                     </td>
                     <td className="rolledFolded-label  text-right">
                       {currentProduct.rolledFolded}
                     </td>
                   </tr>
-                  <tr className={'flex'} style={{ width: '100%' }}>
+                  <tr className={"flex"} style={{ width: "100%" }}>
                     <td className="bold td-title text-accent">Description</td>
-                    <td className={' text-right'}>
+                    <td className={" text-right"}>
                       {currentProduct.description}
                     </td>
                   </tr>
                   {currentProduct.salePrice > 0 && (
                     <tr
-                      className={'flex align-center'}
+                      className={"flex align-center"}
                       style={{
                         textDecoration: currentProduct.salePrice
-                          ? 'trne-through'
-                          : '',
+                          ? "trne-through"
+                          : "",
                       }}
                     >
                       <td className="bold td-title text-accent">Price</td>
                       <td className="line-through price text-right">
-                        {symbol}{' '}
+                        {symbol}{" "}
                         {(rates[currency] * currentProduct.price).toFixed(2)}
                       </td>
                     </tr>
                   )}
                   {currentProduct.salePrice > 0 && (
-                    <tr className={'flex'}>
+                    <tr className={"flex"}>
                       <td className="bold td-title text-accent">Sale Price</td>
-                      <td className={'text-right'}>
-                        {symbol}{' '}
+                      <td className={"text-right"}>
+                        {symbol}{" "}
                         {(rates[currency] * currentProduct.salePrice).toFixed(
                           2
                         )}
@@ -188,9 +206,8 @@ export default function SellerScreen(props) {
                   )}
                 </tbody>
               </table>
-            )}
-          </div>
-
+            </div>
+          )}
           {/* <div className="row center">
               {products.map((product) => (
                 <Product key={product._id} product={product}></Product>
@@ -198,8 +215,6 @@ export default function SellerScreen(props) {
             </div> */}
         </>
       )}
-
-      {/*  */}
     </div>
   );
 }

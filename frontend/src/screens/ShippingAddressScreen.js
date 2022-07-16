@@ -128,7 +128,8 @@ export default function ShippingAddressScreen(props) {
               placeholder={"Select Country of Origin"}
               defaultValue={{
                 value: code,
-                label: user?.country,
+                label: data.origins.find(({ code }) => code === user?.country)
+                  ?.name,
               }}
               options={data.origins?.map((country) => ({
                 value: country.code,

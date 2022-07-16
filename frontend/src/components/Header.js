@@ -65,6 +65,7 @@ function Header() {
           <div className="flex" style={{ justifyContent: "end" }}>
             <select
               className={"select"}
+              defaultValue={selected_currency.code}
               onChange={(e) => {
                 setCurrency(e.target.value);
                 localStorage.setItem(
@@ -133,10 +134,9 @@ function Header() {
         <div className={"flex row center w-100"}>
           <Link to="/">Home</Link>
           <Link to="/sellers">Showcase</Link>
-          <Link to={"/search/name"}>Shop</Link>
+          <Link to={"/shop/name"}>Shop</Link>
           <Link to="/faq">FAQ</Link>
-          <Link to="/pricing">Subscriptions</Link>
-          <Link to="/blog-page">Why Film Poster</Link>
+          <Link to="/page/subscriptions">Subscriptions</Link>
           {userInfo?.isSeller ? (
             <Link to={`/seller/${userInfo._id}`}>My ShowCase</Link>
           ) : (

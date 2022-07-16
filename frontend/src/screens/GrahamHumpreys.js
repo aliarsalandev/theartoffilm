@@ -16,7 +16,7 @@ function ShowCaseCard({ before, title, text, image, reverse = false }) {
         <img
           src={image}
           alt=""
-          className={`img ${isMobile ? "w-100" : "w-80"}`}
+          className={`img ${isMobile ? "w-100" : "w-100"}`}
         />
       </div>
     </div>

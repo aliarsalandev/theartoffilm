@@ -4,37 +4,41 @@
   padding-left: 10rem;
   padding-right: 10rem;
 }
+
 .footer-bottom {
   background-color: #080808;
   text-align: center;
   padding: 0.5rem 10rem;
 }
 
-.footer-bottom > span {
+.footer-bottom>span {
   color: #eee;
   font-family: "Poppins", sans-serif !important;
   font-size: 12px;
 }
 
-.social-icons > a {
+.social-icons>a {
   margin: 0px;
   font-size: 2rem;
 }
-.icon-with-text > span {
+
+.icon-with-text>span {
   font-family: "Poppins", "Times New Roman";
   font-size: 12px;
   margin-left: 10px;
 }
-.icon-with-text > span:hover {
+
+.icon-with-text>span:hover {
   color: #fab702;
   cursor: hand;
 }
+
 .footer-links {
   display: flex;
   flex-direction: column;
 }
 
-.footer-links > a {
+.footer-links>a {
   color: #eee;
   font-family: "Poppins", "Times New Roman";
   font-size: 12px !important;
@@ -47,7 +51,7 @@
   font-size: 12px;
 }
 
-.footer-links > a:hover {
+.footer-links>a:hover {
   color: #fab702;
   text-decoration: none;
   margin-bottom: 0.5rem;

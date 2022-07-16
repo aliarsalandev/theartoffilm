@@ -61,19 +61,16 @@ export default function SearchScreen(props) {
     if (localStorage.getItem("search_query") !== "") {
       _search_url = JSON.parse(localStorage.getItem("search_query"));
     }
-
-    _search_url = {
-      ..._search_url,
-      [name]: value,
-    };
-
-    localStorage.setItem("search_query", JSON.stringify(_search_url));
-
-    // localStorage.setItem("search_query", _search_url);
+    if (name !== "") {
+      _search_url = {
+        ..._search_url,
+        [name]: value,
+      };
+      localStorage.setItem("search_query", JSON.stringify(_search_url));
+    }
     const query = Object.keys(_search_url)
       .map((k) => `${k}=${_search_url[k]}`)
       .join("&");
-
     dispatch(searchProducts(`pageNumber=${currentPage}&${query}`));
   };
 
@@ -111,8 +108,7 @@ export default function SearchScreen(props) {
             </div>
           )}
           <div className={"p-2"}>
-            Sort by{" "}
-            <select value={order} name="order" onChange={updateSearchUrl}>
+            <select value={order} name="order">
               <option value="newest">Newest Arrivals</option>
               <option value="lowest">Price: Low to High</option>
               <option value="highest">Price: High to Low</option>
@@ -133,6 +129,11 @@ export default function SearchScreen(props) {
                 <i className="fas fa-times"></i>
               </button>
             </div>
+            <div className="form-group">
+              <label>Movie Title</label>
+              <input type="text" name="name" onChange={updateSearchUrl} />
+            </div>
+
             <div className="form-group">
               <label>Director</label>
               <select
@@ -257,7 +258,7 @@ export default function SearchScreen(props) {
                 <option value="">Price</option>
                 {prices?.map((price) => (
                   <option key={price.name} value={`${price.min}-${price.max}`}>
-                    {price.name.replaceAll("$", symbol)}
+                    {price.name.replaceAll("£", symbol)}
                   </option>
                 ))}
               </select>

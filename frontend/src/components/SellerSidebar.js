@@ -149,6 +149,18 @@ function SellerSidebar() {
         </div>
       )}
 
+      {userInfo?.isSeller && (
+        <div className="subscription-section">
+          <ul>
+            <li>
+              <Link className={"link"} to="/payment">
+                <i className={"fas fa-credit-card"}></i> Payment Settings
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+
       <div className={"mt-3"}>
         <ul>
           <li>

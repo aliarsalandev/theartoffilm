@@ -1,4 +1,23 @@
 const data = {
+  flags: {
+    GB: "🇬🇧",
+    JP: "🇯🇵",
+    US: "🇺🇸",
+  },
+  stripe_origins: [
+    {
+      code: "GB",
+      name: "United Kingdom",
+    },
+    {
+      code: "US",
+      name: "United States",
+    },
+    {
+      code: "JP",
+      name: "Japan",
+    },
+  ],
   origins: [
     { name: "Afghanistan", code: "AF" },
     { name: "Åland Islands", code: "AX" },
@@ -257,6 +276,12 @@ const data = {
     { value: "Folded", label: "Folded" },
   ],
   formats: [
+    { value: "UK Quad", label: "UK Quad" },
+    { value: "UK 1 Sheet", label: "UK 1 Sheet" },
+    { value: "UK Double Crown", label: "UK Double Crown" },
+    { value: "UK 3 Sheet", label: "UK 3 Sheet" },
+    { value: "UK 6 Sheet", label: "UK 6 Sheet" },
+    { value: "UK Front of House set", label: "UK Front of House set" },
     { value: "US 1 Sheet", label: "US 1 Sheet" },
     { value: "US Halfsheet", label: "US Halfsheet" },
     { value: "US Lobby Se", label: "US Lobby Se" },
@@ -282,12 +307,6 @@ const data = {
     { value: "Italian 4 Foglio", label: "Italian 4 Foglio" },
     { value: "Italian Locandina", label: "Italian Locandina" },
     { value: " Italian Photobusta", label: " Italian Photobusta" },
-    { value: "UK Quad", label: "UK Quad" },
-    { value: "UK 1 Sheet", label: "UK 1 Sheet" },
-    { value: "UK Double Crown", label: "UK Double Crown" },
-    { value: "UK 3 Sheet", label: "UK 3 Sheet" },
-    { value: "UK 6 Sheet", label: "UK 6 Sheet" },
-    { value: "UK Front of House set", label: "UK Front of House set" },
   ],
   products: [
     {

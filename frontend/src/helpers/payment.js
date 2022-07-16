@@ -63,6 +63,28 @@ export const paymentStatus = async (session_id, user_id) => {
   return data;
 };
 
+export const getPaymentInfo = async (userInfo) => {
+  const { data } = await Axios.get(`/api/payment-info/${userInfo.email}`, {
+    headers: { Authorization: `Bearer ${userInfo.token}` },
+  });
+  return data;
+};
+
+export const updatePaymentInfo = async (info, userInfo) => {
+  const { _id } = userInfo;
+  const { data } = await Axios.put(
+    `/api/payment-info`,
+    {
+      ...info,
+      user: { id: _id },
+    },
+    {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    }
+  );
+  return data;
+};
+
 export const userSubscription = async (user_id) => {
   const { data } = await Axios.get(`/api/users/${user_id}/subscription`, {
     headers: {},

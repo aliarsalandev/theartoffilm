@@ -41,9 +41,15 @@ function Package({
           <ul className={"list-style-none"}>
             {perks?.map((perk, index) => (
               <li key={index}>
-                <i className={"fa fa-check"}></i> {perk}
+                <i className={"fa fa-check mr-2"}></i> {perk}
               </li>
             ))}
+            {period === "year" && (
+              <li>
+                <i className={"fa fa-check mr-2"}></i>
+                Get 2 months free with annual subscription
+              </li>
+            )}
           </ul>
         </div>
 

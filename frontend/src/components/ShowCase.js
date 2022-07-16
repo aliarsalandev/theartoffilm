@@ -49,7 +49,7 @@ function ShowCase({ products = [], onClick }) {
 
         <span
           onClick={() => {
-            const _products = products.filter((product) => {
+            const _products = products?.filter((product) => {
               let name = product.name.toLowerCase();
               if (name.indexOf("the") === 0) {
                 name = name.replace("the", "").trim();
@@ -68,8 +68,8 @@ function ShowCase({ products = [], onClick }) {
       </div>
 
       <CoverFlowComponent
-        products={filteredProducts}
-        imagesArr={filteredProducts.map((product) => product.image)}
+        products={filteredProducts ?? []}
+        imagesArr={filteredProducts?.map((product) => product.image)}
         direction="horizontal"
         width={`${isMobile ? "100%" : "100%"}`}
         height={`${isMobile ? "100%" : 425}`}
@@ -77,12 +77,11 @@ function ShowCase({ products = [], onClick }) {
         background="transparent"
         onClick={onClick}
         handleSelect={(index) => {
-          const product = filteredProducts.find(
+          const product = filteredProducts?.find(
             (product, ind) => ind === index
           );
           onClick(product);
         }}
-        labelsArr={filteredProducts.map((product) => product.name)}
       />
     </div>
   );

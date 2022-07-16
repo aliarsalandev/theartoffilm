@@ -33,7 +33,8 @@ export default function RegisterScreen(props) {
   };
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      window.open(userInfo.seller?.account_link, "_blank");
+      navigate("/payment");
     }
   }, [navigate, userInfo]);
   return (

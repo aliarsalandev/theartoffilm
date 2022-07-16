@@ -128,7 +128,7 @@ export default function HomeScreen() {
           </h2>
           <br />
           <div className="flex column column-center">
-            <Link to={"/search/name"} className={"button primary"}>
+            <Link to={"/shop/name"} className={"button primary"}>
               VISIT SHOP
             </Link>
           </div>

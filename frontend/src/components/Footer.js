@@ -8,7 +8,7 @@ import "react-ig-feed/dist/index.css";
 export default function Footer(props) {
   return (
     <footer>
-      <div className="plr-2 ptb-2 bg-dark">
+      <div className="container plr-2 ptb-2">
         <div className={`${isMobile ? "column top" : "flex between top"}`}>
           <div className="col md-3">
             <h3 className="mb-3">Get In Touch</h3>
@@ -53,7 +53,7 @@ export default function Footer(props) {
           <div className="col md-3">
             <h3 className="mb-3">Things to know</h3>
             <div className="footer-links">
-              <Link to="/pricing">Our Subscriptions</Link>
+              <Link to="/page/subscriptions">Subscribe</Link>
               <Link to="/advertise-with-us">Advertise With Us</Link>
               <Link to="/poster-grading-categories">
                 Posters Condition Grading
@@ -67,7 +67,7 @@ export default function Footer(props) {
             <div className="footer-links">
               <Link to="/">Home</Link>
               <Link to="/about-us">About Us</Link>
-              <Link to="/search/name">Shop</Link>
+              <Link to="/shop/name">Shop</Link>
               <Link to="/sellers">Showcase</Link>
               <Link to="/faq">FAQs</Link>
               <Link to="/contact">Contact</Link>
@@ -94,7 +94,13 @@ export default function Footer(props) {
         </div>
       </div>
       <div className="text-md footer-bottom">
-        <span>Copyright © 2022 The Art of Film</span>
+        <div className="container">
+          <div>
+            <span className={"text-small"}>
+              Copyright © 2022 The Art of Film
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   );

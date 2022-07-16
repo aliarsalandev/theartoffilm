@@ -14,37 +14,40 @@ uploadRouter.post(
   // isSellerOrAdmin,
   upload.single("file"),
   async (req, res) => {
-    const CLOUDINARY_CLOUD_NAME = "theartoffilms";
-    const CLOUDINARY_API_SECRET = "u9PT2614sk7pwSpATGDQvWiVhg0";
-    const CLOUDINARY_API_KEY = "563822985559768";
+    try {
+      const CLOUDINARY_CLOUD_NAME = "theartoffilms";
+      const CLOUDINARY_API_SECRET = "u9PT2614sk7pwSpATGDQvWiVhg0";
+      const CLOUDINARY_API_KEY = "563822985559768";
 
-    cloudinary.config({
-      cloud_name: CLOUDINARY_CLOUD_NAME,
-      api_key: CLOUDINARY_API_KEY,
-      api_secret: CLOUDINARY_API_SECRET,
-    });
-    const streamUpload = (req) => {
-      return new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream((error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(error);
-          }
-        });
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      cloudinary.config({
+        cloud_name: CLOUDINARY_CLOUD_NAME,
+        api_key: CLOUDINARY_API_KEY,
+        api_secret: CLOUDINARY_API_SECRET,
       });
-    };
-    const result = await streamUpload(req);
-    res.send(result);
+      const streamUpload = (req) => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream((error, result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(error);
+            }
+          });
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+      };
+      const result = await streamUpload(req);
+      res.send(result);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
   }
 );
 
 uploadRouter.post("/media", async (req, res) => {
   let media;
   let uploadPath;
-  res.send({});
-  return;
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }

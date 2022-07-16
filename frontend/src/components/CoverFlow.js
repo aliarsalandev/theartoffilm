@@ -3,6 +3,11 @@ import CoverFlow from "coverflow-react";
 import "./css/coverflow.css";
 
 class CoverFlowComponent extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+  }
   constructor(props) {
     super(props);
     this.passPropCheckbox = this.passPropCheckbox.bind(this);

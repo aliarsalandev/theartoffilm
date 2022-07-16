@@ -9,7 +9,7 @@ export default function Product({ product, toshop = false }) {
   return (
     <div key={product._id} className="flex column start top card bg-dark ">
       <Link
-        to={toshop ? `/search/name/${product.name}` : `/product/${product._id}`}
+        to={toshop ? `/shop/name/${product.name}` : `/product/${product._id}`}
       >
         <div
           title={product.name}

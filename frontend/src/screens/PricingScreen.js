@@ -28,9 +28,10 @@ function ShowCaseCard({
         <p>{text}</p>
         <br />
         <br />
-        <Link to={link} className="button primary">
+
+        <a className="button primary" href={`mailto:${link}`}>
           {linkText}
-        </Link>
+        </a>
       </div>
       <div className={`col row end top`}>
         <img
@@ -69,7 +70,7 @@ function PricingScreen() {
       />
 
       <div>
-        <div className="p-2" style={{ padding: "4em 0" }}>
+        <div className="p-2  bg-light-dark" style={{ padding: "4em 0" }}>
           <div className={"flex center"}>
             <div className="switcher" style={{ margin: "0 auto" }}>
               <input
@@ -97,7 +98,7 @@ function PricingScreen() {
                 className="switcher__input switcher__input--year"
               />
               <label htmlFor="year" className="switcher__label">
-                Yearly
+                Annual
               </label>
 
               <span className="switcher__toggle"></span>
@@ -146,20 +147,19 @@ function PricingScreen() {
           )}
         </div>
 
-        <FAQScreen showSubscriptionFAQs={true} header={false} />
-
         <div className="ptb-2 container">
           <ShowCaseCard
-            before={"Showcase"}
-            title={"your Movie Posters"}
+            before={"FOR LARGER"}
+            title={"POSTER COLLECTIONS"}
             text={
-              "Manage and showcase your movie collection. Once you have subscribed to The Art of Film you will have access to a minimum of 500 blank template pages with dropdown menus to populate with your own collection information. Choose the format, country of issue, condition, year of release, cast, and crew, etc. You can then choose to keep movie posters in your own private collection and/or you can choose to sell posters through our Movie Poster Shop."
+              "If your movie poster collection is larger than 1000 posters please get in touch to arrange a bespoke subscription."
             }
             image={"/images/1512225-1024x576.jpg"}
-            link={"/contact"}
+            link={"admin@theartoffilm.co.uk"}
             linkText={"Contact Us"}
           />
         </div>
+        <FAQScreen showSubscriptionFAQs={true} header={false} />
       </div>
     </NoSideBarLayout>
   );

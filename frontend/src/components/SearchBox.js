@@ -6,7 +6,7 @@ export default function SearchBox() {
   const [name, setName] = useState("");
   const submitHandler = (e) => {
     e.preventDefault();
-    navigate(`/search/name/${name}`);
+    navigate(`/shop/name/${name}`);
   };
   return (
     <form className="flex search" onSubmit={submitHandler}>
