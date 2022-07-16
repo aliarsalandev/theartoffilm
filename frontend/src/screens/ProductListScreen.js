@@ -73,10 +73,12 @@ export default function ProductListScreen(props) {
     <PageLayout>
       <div className={"ml-3 col-3 p-2"}>
         <div>
-          <div className="row mtb-2">
-            <h2 className={"title2"}>Posters</h2>
-            <UploadPoster />
-          </div>
+          {userInfo?.isSeller && (
+            <div className="row mtb-2">
+              <h2 className={"title2"}>Posters</h2>
+              <UploadPoster />
+            </div>
+          )}
 
           {loadingDelete && <LoadingBox></LoadingBox>}
           {errorDelete && (
@@ -155,7 +157,7 @@ export default function ProductListScreen(props) {
                   <Link
                     className={x + 1 === page ? "active" : ""}
                     key={x + 1}
-                    to={`/productlist/pageNumber/${x + 1}`}
+                    to={`/posters/seller/pageNumber/${x + 1}`}
                   >
                     {x + 1}
                   </Link>

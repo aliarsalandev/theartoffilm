@@ -45,7 +45,7 @@ function SellerSidebar() {
             <UploadPoster isLink={true} />
           </li>
           <li>
-            <Link className={"link"} to="/productlist/seller">
+            <Link className={"link"} to="/posters/seller">
               <i className={"fas fa-list"}></i> Poster List
             </Link>
           </li>
@@ -103,7 +103,7 @@ function SellerSidebar() {
               </Link>
             </li>
             <li>
-              <Link className={"link"} to="/productlist">
+              <Link className={"link"} to="/posters">
                 <i className={"fas fa-list"}></i> All Posters
               </Link>
             </li>
