@@ -11,12 +11,12 @@ const data = {
     },
     {
       name: 'Henry',
-      email: 'henry@theartoffilms.co.uk',
+      email: 'henry4film@theartoffilms.com',
       password: bcrypt.hashSync('Zakaria360', 8),
       isAdmin: false,
       isSeller: true,
       seller: {
-        name: 'Puma',
+        name: 'henry4film',
         logo: '/images/logo1.png',
         description: 'best seller',
         rating: 4.5,
