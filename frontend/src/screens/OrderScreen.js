@@ -87,8 +87,20 @@ export default function OrderScreen(props) {
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
-
-  const shippingCost = JSON.parse(localStorage.getItem("shippingCost"));
+  let localStorage_shippingCost = {
+    US: 0,
+    CA: 0,
+    UK: 0,
+    GB: 0,
+    JP: 0,
+  };
+  const cart = useSelector((state) => state.cart);
+  if (localStorage.getItem("shippingCost") !== "undefined") {
+    localStorage_shippingCost = JSON.parse(
+      localStorage.getItem("shippingCost") ?? {}
+    );
+  }
+  const shippingCost = localStorage_shippingCost;
   const shipping_country = localStorage.getItem("shipping_country");
 
   return loading ? (
@@ -103,7 +115,7 @@ export default function OrderScreen(props) {
           <ul className={"list-type-none"}>
             <li>
               <div className="card card-body">
-                <h2>Shipping</h2>
+                <h2 className={"title3 selection text-start"}>Shipping</h2>
                 <p>
                   <strong>Name:</strong> {order?.seller?.name} <br />
                   <strong>Address: </strong> {order.shippingAddress.address},
@@ -122,7 +134,7 @@ export default function OrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Payment</h2>
+                <h2 className={"title3 selection text-start"}>Payment</h2>
                 <p>
                   <strong>Method:</strong> {order.paymentMethod}
                 </p>
@@ -137,7 +149,7 @@ export default function OrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Order Items</h2>
+                <h2 className={"title3 selection text-start"}>Order Items</h2>
                 <ul className={"list-type-none"}>
                   {order.orderItems.map((item) => (
                     <li key={item.product}>
@@ -170,62 +182,10 @@ export default function OrderScreen(props) {
         </div>
 
         <div className="col-1">
-          <div className="card">
-            <h3>Chat</h3>
-            <div>
-              <ul className="messages">
-                {messages?.map(({ message, read }, index) => (
-                  <li key={index}>
-                    <div className="flex message between">
-                      <span className="message">{message}</span>
-                      <span>
-                        {read ? (
-                          <i className="fas fa-check-circle"></i>
-                        ) : (
-                          <i className="fas fa-check"></i>
-                        )}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {!order?.isDelivered && !order?.isPaid && (
-              <div>
-                <div className="form-group">
-                  <label>Message</label>
-                  <textarea
-                    name={"message"}
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                    }}
-                    className="form-control"
-                    rows="3"
-                  ></textarea>
-                </div>
-                <button
-                  onClick={(e) => {
-                    setMessages([
-                      ...messages,
-                      {
-                        message,
-                      },
-                    ]);
-                    sendMessage(order._id, userInfo, message).then(
-                      (data) => {}
-                    );
-                  }}
-                  className="btn btn-primary"
-                >
-                  Send
-                </button>
-              </div>
-            )}
-          </div>
           <div className="card card-body">
             <ul className={"list-type-none"}>
               <li>
-                <h2>Order Summary</h2>
+                <h2 className={"title3 selection text-start"}>Order Summary</h2>
               </li>
               <li>
                 <div className="row">

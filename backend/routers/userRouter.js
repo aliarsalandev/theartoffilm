@@ -6,6 +6,7 @@ import User from "../models/userModel.js";
 import { generateToken, isAdmin, isAuth, isSeller } from "../utils.js";
 import Stripe from "stripe";
 import Setting from "../models/settingModel.js";
+import Subscription from "../models/subscriptionModel.js";
 
 const userRouter = express.Router();
 
@@ -33,6 +34,14 @@ userRouter.post(
   expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
+      if (!user.seller?.subscription) {
+        const subscription = await Subscription.findOne({
+          monthPrice: 0,
+        }).exec();
+        user.seller.subscription = subscription._id;
+        user.seller.subscription_period = "year";
+        await user.save();
+      }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         res.send({
           _id: user._id,
@@ -77,6 +86,7 @@ userRouter.post(
         collect: "eventually_due",
       });
 
+      const subscription = await Subscription.findOne({ monthPrice: 0 }).exec();
       const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -86,6 +96,8 @@ userRouter.post(
             ...req.body.seller,
             stripe_account_id: account.id,
             account_link: accountLink.url,
+            subscription: subscription._id,
+            subscription_period: "year",
           } ?? {},
         isSeller: req.body.isSeller ?? true,
       });

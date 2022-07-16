@@ -12,11 +12,10 @@ import Carousel from "react-elastic-carousel";
 import SectionCard from "../components/SectionCard";
 import SearchBox from "../components/SearchBox";
 import { Link } from "react-router-dom";
-import CoverFlowComponent from "../components/CoverFlow";
-import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import { sellersList } from "../helpers/profile";
 import NoSideBarLayout from "../layouts/NoSideBarLayout";
+import data from "../data";
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -146,14 +145,96 @@ export default function HomeScreen() {
           />
         </div>
 
-        <div className="flex column">
+        <div className="flex column p-4">
           <br />
           <div className="p-2 flex justify-center">
             <h2 className={"title2 text-center"}>
               <span className="selection">Browse</span> Showcases
             </h2>
           </div>
-          <CoverFlowComponent
+          <br />
+          <div className={"flex col "}>
+            <Carousel
+              breakPoints={[
+                { width: 2, itemsToShow: 1 },
+                { width: 550, itemsToShow: 3, itemsToScroll: 3 },
+                { width: 768, itemsToShow: 3 },
+                { width: 1200, itemsToShow: 3 },
+              ]}
+            >
+              {sellers?.map((seller) => {
+                return (
+                  <div className={"bg-light-dark"}>
+                    <ul
+                      className="card card-body bg-dark"
+                      style={{ listStyle: "none" }}
+                    >
+                      <li>
+                        <div className="row top">
+                          <Link to={`/seller/${seller._id}`}>
+                            <div
+                              className="p-1"
+                              title={seller.seller.name}
+                              style={{
+                                overflow: "hidden",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "120px",
+                                  height: "120px",
+                                }}
+                              >
+                                <img
+                                  style={{
+                                    width: "120px",
+                                    height: "120px",
+                                    objectFit: "contain",
+                                    overflow: "hidden",
+                                  }}
+                                  src={seller.seller.logo}
+                                  alt={seller.seller.name}
+                                ></img>
+                              </div>
+                            </div>
+                          </Link>
+                          <div className="p-1">
+                            <Link to={`/seller/${seller._id}`}>
+                              <h2 className={"title3"}>{seller.seller.name}</h2>
+                            </Link>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div className={"row between"}>
+                          <div className="row start">
+                            <span className={"mr-2"}>
+                              {
+                                data.stripe_origins.find(
+                                  (stripe_origin) =>
+                                    stripe_origin.code === seller?.country
+                                )?.name
+                              }
+                            </span>
+                            <span style={{ fontSize: "2.5rem" }}>
+                              {data.flags[seller?.country]}
+                            </span>
+                          </div>
+                          <div className={"large"}>
+                            <Link to={`/seller/${seller._id}`}>
+                              <i className="fas fa-arrow-right"></i>
+                            </Link>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                );
+              })}
+            </Carousel>
+          </div>
+          {/* <CoverFlowComponent
             imagesArr={sellers?.map(({ seller }) => seller.logo)}
             direction="horizontal"
             width={`${isMobile ? "100%" : "100%"}`}
@@ -166,7 +247,7 @@ export default function HomeScreen() {
               navigate(`/seller/${_seller?._id}`);
             }}
             labelsArr={sellers?.map(({ seller }) => seller.name)}
-          />
+          /> */}
         </div>
       </div>
     </NoSideBarLayout>

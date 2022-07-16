@@ -59,7 +59,7 @@ h5,
 h6,
 a,
 .price {
-  font-family: 'Bebas Neue', 'Times New Roman';
+  font-family: 'Bebas Neue', 'Times New Roman' !important;
   letter-spacing: 1.2px;
 }
 

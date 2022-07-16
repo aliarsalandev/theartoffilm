@@ -69,7 +69,7 @@ export default function ProductScreen() {
       ) : (
         <div>
           <div>
-            <Link to={userInfo ? `/shop/${product._id}/edit` : `/shop/name`}>
+            <Link to={userInfo ? `/product/${product._id}/edit` : `/shop/name`}>
               {userInfo?.isSeller || userInfo?.isAdmin
                 ? "Back to result"
                 : "Back to Shop"}
@@ -109,41 +109,74 @@ export default function ProductScreen() {
                     <td></td>
                   </tr>
 
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Director</td>
-                    <td className="bold director-label text-right">
-                      {product.directors?.map((director) => (
-                        <span key={director.name}>{director.name} | </span>
-                      ))}
-                    </td>
-                  </tr>
+                  {product.directors && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Director</td>
+                      <td className="bold director-label text-right">
+                        {product.directors?.map((director, index) => {
+                          if (index < product.directors.length - 1) {
+                            return (
+                              <span key={director._id}>
+                                {director.name}
+                                <span className="comma">, </span>
+                              </span>
+                            );
+                          }
+                          return (
+                            <span key={director.name}>{director.name}</span>
+                          );
+                        })}
+                      </td>
+                    </tr>
+                  )}
                   <tr className={"flex"} style={{ width: "100%" }}>
                     <td className={"bold td-title text-accent"}>Cast</td>
                     <td className="bold cast-label text-right">
-                      {product.casts?.map((cast) => (
-                        <span key={cast.name}>{cast.name} | </span>
-                      ))}
+                      {product.casts?.map((casts, index) => {
+                        if (index < product.casts.length - 1) {
+                          return (
+                            <span key={casts._id}>
+                              {casts.name}
+                              <span className="comma">, </span>
+                            </span>
+                          );
+                        }
+                        return <span key={casts.name}>{casts.name}</span>;
+                      })}
                     </td>
                   </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Artist</td>
-                    <td className="bold artist-label text-right">
-                      {product.artists?.map((artist) => (
-                        <span key={artist.name}>{artist.name} | </span>
-                      ))}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
-                      Country of Origin
-                    </td>
-                    <td className="bold   text-right">
-                      {
-                        data.origins.find(({ code }) => code === product.origin)
-                          ?.name
-                      }
-                    </td>
-                  </tr>
+                  {product.artists && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Artist</td>
+                      <td className="bold artist-label text-right">
+                        {product.artists?.map((artists, index) => {
+                          if (index < product.artists.length - 1) {
+                            return (
+                              <span key={artists._id}>
+                                {artists.name}
+                                <span className="comma">, </span>
+                              </span>
+                            );
+                          }
+                          return <span key={artists.name}>{artists.name}</span>;
+                        })}
+                      </td>
+                    </tr>
+                  )}
+                  {product?.origin && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>
+                        Country of Origin
+                      </td>
+                      <td className="bold   text-right">
+                        {
+                          data.origins.find(
+                            ({ code }) => code === product.origin
+                          )?.name
+                        }
+                      </td>
+                    </tr>
+                  )}
                   <tr className={"flex"} style={{ width: "100%" }}>
                     <td className={"bold td-title text-accent"}>Year</td>
                     <td className={"bold text-right"}>{product.year}</td>

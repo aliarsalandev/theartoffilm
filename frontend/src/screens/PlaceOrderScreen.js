@@ -13,8 +13,20 @@ export default function PlaceOrderScreen(props) {
   const symbol = useSymbol(currency);
 
   const navigate = useNavigate();
+  let localStorage_shippingCost = {
+    US: 0,
+    CA: 0,
+    UK: 0,
+    GB: 0,
+    JP: 0,
+  };
   const cart = useSelector((state) => state.cart);
-  const shippingCost = JSON.parse(localStorage.getItem("shippingCost") ?? {});
+  if (localStorage.getItem("shippingCost") !== "undefined") {
+    localStorage_shippingCost = JSON.parse(
+      localStorage.getItem("shippingCost") ?? {}
+    );
+  }
+  const shippingCost = localStorage_shippingCost;
   const shipping_country = localStorage.getItem("shipping_country");
   if (!cart.paymentMethod) {
     navigate("/payment");

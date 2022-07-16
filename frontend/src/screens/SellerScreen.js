@@ -71,7 +71,7 @@ export default function SellerScreen(props) {
             <div className="flex top p-2 poster-details">
               <div>
                 <img
-                  className={"w-80 border-accent border-2 m-2"}
+                  className={"w-80  m-2"}
                   src={currentProduct?.image}
                   alt="poster"
                 />
@@ -96,45 +96,55 @@ export default function SellerScreen(props) {
                       )}
                     </td>
                   </tr>
-
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Director</td>
-                    <td className="director-label text-right">
-                      {currentProduct.directors?.map((director, index) => {
-                        if (index < currentProduct.directors.length - 1) {
+                  {currentProduct.directors && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Director</td>
+                      <td className="director-label text-right">
+                        {currentProduct.directors?.map((director, index) => {
+                          if (index < currentProduct.directors.length - 1) {
+                            return (
+                              <span key={director._id}>
+                                {director.name}
+                                <span className="comma">, </span>
+                              </span>
+                            );
+                          }
                           return (
-                            <span key={director._id}>
-                              {director.name}
-                              <span className="comma">, </span>
-                            </span>
+                            <span key={director.name}>{director.name}</span>
                           );
-                        }
-                        return <span key={director.name}>{director.name}</span>;
-                      })}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Cast</td>
-                    <td className="cast-label text-right">
-                      {currentProduct.casts?.map((cast, index) => {
-                        if (index < currentProduct.casts.length - 1) {
-                          return <span key={cast.name}>{cast.name},</span>;
-                        }
-                        return <span key={cast.name}>{cast.name}</span>;
-                      })}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Artist</td>
-                    <td className="artist-label text-right">
-                      {currentProduct.artists?.map((artist, index) => {
-                        if (index < currentProduct.artists.length - 1) {
-                          return <span key={artist.name}>{artist.name},</span>;
-                        }
-                        return <span key={artist.name}>{artist.name}</span>;
-                      })}
-                    </td>
-                  </tr>
+                        })}
+                      </td>
+                    </tr>
+                  )}
+                  {currentProduct.casts && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Cast</td>
+                      <td className="cast-label text-right">
+                        {currentProduct.casts?.map((cast, index) => {
+                          if (index < currentProduct.casts.length - 1) {
+                            return <span key={cast.name}>{cast.name},</span>;
+                          }
+                          return <span key={cast.name}>{cast.name}</span>;
+                        })}
+                      </td>
+                    </tr>
+                  )}
+
+                  {currentProduct.artists && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Artist</td>
+                      <td className="artist-label text-right">
+                        {currentProduct.artists?.map((artist, index) => {
+                          if (index < currentProduct.artists.length - 1) {
+                            return (
+                              <span key={artist.name}>{artist.name},</span>
+                            );
+                          }
+                          return <span key={artist.name}>{artist.name}</span>;
+                        })}
+                      </td>
+                    </tr>
+                  )}
                   <tr className={"flex"} style={{ width: "100%" }}>
                     <td className={"bold td-title text-accent"}>
                       Country of Origin

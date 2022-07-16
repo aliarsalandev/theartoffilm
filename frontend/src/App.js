@@ -48,16 +48,6 @@ function App() {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  useEffect(() => {
-    window.onload = function () {
-      console.log("window loaded");
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 100);
-    };
-    return () => {};
-  }, []);
-
   return (
     <BrowserRouter>
       <div className="">

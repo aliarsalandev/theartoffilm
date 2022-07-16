@@ -296,7 +296,7 @@ export default function ProductEditScreen() {
                 )}
               </div>
               <div>
-                <label htmlFor="directors">Directors</label>
+                <label htmlFor="directors">Director</label>
                 <MultiSelectDropdown
                   placeholder={"Select Director"}
                   defaultValue={product.directors?.map((director) => ({
@@ -330,7 +330,7 @@ export default function ProductEditScreen() {
                 />
               </div>
               <div>
-                <label htmlFor="casts">Casts</label>
+                <label htmlFor="casts">Cast</label>
                 <MultiSelectDropdown
                   placeholder={"Select Cast"}
                   defaultValue={product.casts?.map((cast) => ({
@@ -364,7 +364,7 @@ export default function ProductEditScreen() {
                 />
               </div>
               <div>
-                <label htmlFor="directors">Artists</label>
+                <label htmlFor="directors">Artist</label>
                 <MultiSelectDropdown
                   placeholder={"Select Artist"}
                   defaultValue={product.artists?.map((artist) => ({
@@ -519,20 +519,18 @@ export default function ProductEditScreen() {
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></input>
               </div> */}
-              {forSale && (
-                <div>
-                  <label htmlFor="price">PRODUCT MARKET VALUE</label>
-                  <input
-                    id="price"
-                    type="number"
-                    placeholder="Enter price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  ></input>
-                </div>
-              )}
+              <div>
+                <label htmlFor="price">PRODUCT MARKET VALUE</label>
+                <input
+                  id="price"
+                  type="number"
+                  placeholder="Enter price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                ></input>
+              </div>
 
-              <div className="row">
+              <div className="">
                 <div>
                   <label htmlFor="visible">Keep Poster Public</label>
                   <input
