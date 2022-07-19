@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,6 @@ import PageLayout from "../layouts/page";
 import data from "../data";
 
 export default function ProfileScreen() {
-  const shippingCostRef = useRef("");
   const [shippingCost, setShippingCost] = useState({});
   const [confirmPassword, setConfirmPassword] = useState("");
   const [address_detail, setAddressDetail] = useState({});
@@ -152,6 +151,7 @@ export default function ProfileScreen() {
                 Profile Updated Successfully
               </MessageBox>
             )}
+
             <div>
               <label htmlFor="name">Name</label>
               <input
@@ -194,6 +194,44 @@ export default function ProfileScreen() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
+            <hr />
+            {userInfo?.isSeller && (
+              <div className={"form"}>
+                <div>
+                  <label htmlFor="collection_name">Collection Name</label>
+                  <input
+                    id="collection_name"
+                    name={"collection_name"}
+                    type="text"
+                    placeholder="Enter Collection Name"
+                    defaultValue={seller.name}
+                    onChange={onChange}
+                  ></input>
+                </div>
+                <div>
+                  <label htmlFor="logo">Logo</label>
+                  <input
+                    id="logo"
+                    name={"logo"}
+                    type="file"
+                    placeholder="Enter Logo"
+                    onChange={uploadFileHandler}
+                  ></input>
+                </div>
+                <div>
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    id="description"
+                    name={"description"}
+                    type="text"
+                    placeholder="Enter Description"
+                    defaultValue={seller.description}
+                    onChange={onChange}
+                  ></textarea>
+                </div>
+              </div>
+            )}
+
             {userInfo?.isSeller && (
               <>
                 {" "}
@@ -260,129 +298,6 @@ export default function ProfileScreen() {
               ></input>
             </div>
 
-            {userInfo?.isSeller && (
-              <>
-                <div className="text-start">
-                  <h3 className={"title3"}>Payment Settings</h3>
-                </div>
-                <div>
-                  <label htmlFor="stripe_account_id">Paypal Email</label>
-                  <input
-                    id="stripe_account_id"
-                    name={"stripe_account_id"}
-                    type="text"
-                    placeholder="Enter Stripe Account Id"
-                    defaultValue={seller.stripe_account_id}
-                    onChange={onChange}
-                  ></input>
-                </div>
-              </>
-            )}
-
-            {userInfo?.isSeller && (
-              <>
-                {" "}
-                <div className="text-start">
-                  <h3 className={"title3"}>Shipping Settings</h3>
-                </div>
-                <div>
-                  <label htmlFor="shipping_cost title3">Shipping Cost</label>
-
-                  <div className={"flex row"}>
-                    <input
-                      id="shipping_cost"
-                      ref={shippingCostRef}
-                      type="number"
-                      placeholder="Enter Shipping Cost"
-                    ></input>
-                    <div>
-                      <Select
-                        className="multi-select"
-                        placeholder={"Select Country of Origin"}
-                        defaultValue={{
-                          value: "GB",
-                          label: "United Kingdom",
-                        }}
-                        options={data.origins?.map((country) => ({
-                          value: country.code,
-                          label: country.name,
-                        }))}
-                        onChange={(__origin) => {
-                          const origin = __origin.value;
-                          const value = shippingCostRef.current.value;
-                          setShippingCost({
-                            ...shippingCost,
-                            [origin]: value,
-                          });
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex mtb-2">
-                    {Object.keys(shippingCost)?.map((key, index) => {
-                      return (
-                        <div key={index} className={"mr-2 chip p-2"}>
-                          <span>
-                            {
-                              data.origins.find(
-                                (country) => country.code === key
-                              )["name"]
-                            }{" "}
-                            : {shippingCost[key]}
-                          </span>
-                          <i
-                            className="ml-2 fas fa-times pointer"
-                            onClick={() => {
-                              delete shippingCost[key];
-                              setShippingCost({
-                                ...shippingCost,
-                              });
-                            }}
-                          ></i>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </>
-            )}
-            {userInfo?.isSeller && (
-              <div className={"form"}>
-                <div>
-                  <label htmlFor="collection_name">Collection Name</label>
-                  <input
-                    id="collection_name"
-                    name={"collection_name"}
-                    type="text"
-                    placeholder="Enter Collection Name"
-                    defaultValue={seller.name}
-                    onChange={onChange}
-                  ></input>
-                </div>
-                <div>
-                  <label htmlFor="logo">Logo</label>
-                  <input
-                    id="logo"
-                    name={"logo"}
-                    type="file"
-                    placeholder="Enter Logo"
-                    onChange={uploadFileHandler}
-                  ></input>
-                </div>
-                <div>
-                  <label htmlFor="description">Description</label>
-                  <textarea
-                    id="description"
-                    name={"description"}
-                    type="text"
-                    placeholder="Enter Description"
-                    defaultValue={seller.description}
-                    onChange={onChange}
-                  ></textarea>
-                </div>
-              </div>
-            )}
             <div>
               <label />
               <button className="primary" type="submit">

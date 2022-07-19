@@ -109,7 +109,7 @@ export default function ProductScreen() {
                     <td></td>
                   </tr>
 
-                  {product.directors && (
+                  {product.directors.length > 0 && (
                     <tr className={"flex"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>Director</td>
                       <td className="bold director-label text-right">
@@ -129,23 +129,25 @@ export default function ProductScreen() {
                       </td>
                     </tr>
                   )}
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Cast</td>
-                    <td className="bold cast-label text-right">
-                      {product.casts?.map((casts, index) => {
-                        if (index < product.casts.length - 1) {
-                          return (
-                            <span key={casts._id}>
-                              {casts.name}
-                              <span className="comma">, </span>
-                            </span>
-                          );
-                        }
-                        return <span key={casts.name}>{casts.name}</span>;
-                      })}
-                    </td>
-                  </tr>
-                  {product.artists && (
+                  {product.casts.length > 0 && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Cast</td>
+                      <td className="bold cast-label text-right">
+                        {product.casts?.map((casts, index) => {
+                          if (index < product.casts.length - 1) {
+                            return (
+                              <span key={casts._id}>
+                                {casts.name}
+                                <span className="comma">, </span>
+                              </span>
+                            );
+                          }
+                          return <span key={casts.name}>{casts.name}</span>;
+                        })}
+                      </td>
+                    </tr>
+                  )}
+                  {product.artists.length > 0 && (
                     <tr className={"flex"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>Artist</td>
                       <td className="bold artist-label text-right">
@@ -177,36 +179,48 @@ export default function ProductScreen() {
                       </td>
                     </tr>
                   )}
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Year</td>
-                    <td className={"bold text-right"}>{product.year}</td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Format</td>
-                    <td className="bold format-label  text-right">
-                      {product.format}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold bold td-title text-accent"}>
-                      Condition
-                    </td>
-                    <td className="bold condition-label  text-right">
-                      {product.condition}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
-                      Rolled / Folded
-                    </td>
-                    <td className="bold rolledFolded-label  text-right">
-                      {product.rolledFolded}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className="bold td-title text-accent">Description</td>
-                    <td className={"bold text-right"}>{product.description}</td>
-                  </tr>
+                  {product.year && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Year</td>
+                      <td className={"bold text-right"}>{product.year}</td>
+                    </tr>
+                  )}
+                  {product.format && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Format</td>
+                      <td className="bold format-label  text-right">
+                        {product.format}
+                      </td>
+                    </tr>
+                  )}
+                  {product.condition && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold bold td-title text-accent"}>
+                        Condition
+                      </td>
+                      <td className="bold condition-label  text-right">
+                        {product.condition}
+                      </td>
+                    </tr>
+                  )}
+                  {product.rolledFolded && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>
+                        Rolled / Folded
+                      </td>
+                      <td className="bold rolledFolded-label  text-right">
+                        {product.rolledFolded}
+                      </td>
+                    </tr>
+                  )}
+                  {product.description && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className="bold td-title text-accent">Description</td>
+                      <td className={"bold text-right"}>
+                        {product.description}
+                      </td>
+                    </tr>
+                  )}
                   {product.salePrice > 0 && (
                     <tr
                       className={"flex align-center"}

@@ -56,40 +56,43 @@ function SellerSidebar() {
   return (
     <div className={"seller-sidebar bg-dark"} style={{ height: "100vh" }}>
       <ul className={"list-type-none"}>
-        <li className={"flex flex-column between"}>
-          <div>
-            <div>Available</div>
+        {userInfo?.isSeller && (
+          <li className={"flex flex-column between link bebas"}>
             <div>
-              {symbol}{" "}
-              {(
-                rates[currency] *
-                (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
-                  100)
-              ).toFixed(2)}
+              <div className={"bebas"}>Available</div>
+              <div className={"bebas"}>
+                {symbol}{" "}
+                {(
+                  rates[currency] *
+                  (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
+                    100)
+                ).toFixed(2)}
+              </div>
             </div>
-          </div>
-          <div>
-            <div>Pending</div>
             <div>
-              {symbol}{" "}
-              {(
-                rates[currency] *
-                (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) / 100)
-              ).toFixed(2)}
+              <div className={"bebas"}>Pending</div>
+              <div className={"bebas"}>
+                {symbol}{" "}
+                {(
+                  rates[currency] *
+                  (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) /
+                    100)
+                ).toFixed(2)}
+              </div>
             </div>
-          </div>
 
-          {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && (
-            <button className={"btn"} onClick={withdraw}>
-              Withdraw
-            </button>
-          )}
-        </li>
+            {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && (
+              <button className={"btn"} onClick={withdraw}>
+                Withdraw
+              </button>
+            )}
+          </li>
+        )}
         <li className={""}>
           {userInfo && (
             <Link to="/profile">
               <span className={"link"}>
-                <i className={"fas fa-user"}></i> My Account Information
+                <i className={"fas fa-user"}></i> My Account
               </span>
             </Link>
           )}
@@ -147,7 +150,11 @@ function SellerSidebar() {
           </ul>
         </div>
       )}
-
+      <div className={"buying-section"}>
+        <div>
+          <h3>Settings</h3>
+        </div>
+      </div>
       {userInfo?.isAdmin && (
         <div className="admin-section">
           <div>
@@ -212,6 +219,17 @@ function SellerSidebar() {
             <li>
               <Link className={"link"} to="/payment">
                 <i className={"fas fa-credit-card"}></i> Payment Settings
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+      {userInfo?.isSeller && (
+        <div className="subscription-section">
+          <ul>
+            <li>
+              <Link className={"link"} to="/shipment-settings">
+                <i class="fa-solid fa-truck"></i> Shipment Settings
               </Link>
             </li>
           </ul>

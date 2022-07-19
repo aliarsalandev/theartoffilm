@@ -21,6 +21,7 @@ Color #ffffff */
   font-weight: 400;
 }
 
+
 p {
   font-family: 'Poppins', sans-serif !important;
   line-height: 26px;
@@ -1484,4 +1485,9 @@ body>iframe {
 
 .boxed {
   padding: 3em 7em;
+}
+
+
+.bebas {
+  font-family: 'Bebas Neue', sans-serif !important;
 }

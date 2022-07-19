@@ -96,7 +96,7 @@ export default function SellerScreen(props) {
                       )}
                     </td>
                   </tr>
-                  {currentProduct.directors && (
+                  {currentProduct.directors.length > 0 && (
                     <tr className={"flex"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>Director</td>
                       <td className="director-label text-right">
@@ -116,7 +116,7 @@ export default function SellerScreen(props) {
                       </td>
                     </tr>
                   )}
-                  {currentProduct.casts && (
+                  {currentProduct.casts.length > 0 && (
                     <tr className={"flex"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>Cast</td>
                       <td className="cast-label text-right">
@@ -129,8 +129,7 @@ export default function SellerScreen(props) {
                       </td>
                     </tr>
                   )}
-
-                  {currentProduct.artists && (
+                  {currentProduct.artists.length > 0 && (
                     <tr className={"flex"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>Artist</td>
                       <td className="artist-label text-right">
@@ -145,48 +144,60 @@ export default function SellerScreen(props) {
                       </td>
                     </tr>
                   )}
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
-                      Country of Origin
-                    </td>
-                    <td className="origin-label text-right">
-                      {
-                        data.origins.find(
-                          ({ code }) => code === currentProduct.origin
-                        )?.name
-                      }
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Year</td>
-                    <td className={" text-right"}>{currentProduct.year}</td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Format</td>
-                    <td className="format-label  text-right">
-                      {currentProduct.format}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>Condition</td>
-                    <td className="condition-label  text-right">
-                      {currentProduct.condition}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className={"bold td-title text-accent"}>
-                      Rolled / Folded
-                    </td>
-                    <td className="rolledFolded-label  text-right">
-                      {currentProduct.rolledFolded}
-                    </td>
-                  </tr>
-                  <tr className={"flex"} style={{ width: "100%" }}>
-                    <td className="bold td-title text-accent">Description</td>
-                    <td className={" text-right"}>
-                      {currentProduct.description}
-                    </td>
-                  </tr>
+                  {currentProduct.origin && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>
+                        Country of Origin
+                      </td>
+                      <td className="origin-label text-right">
+                        {
+                          data.origins.find(
+                            ({ code }) => code === currentProduct.origin
+                          )?.name
+                        }
+                      </td>
+                    </tr>
+                  )}
+                  {currentProduct.origin && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Year</td>
+                      <td className={" text-right"}>{currentProduct.year}</td>
+                    </tr>
+                  )}
+                  {currentProduct.format && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Format</td>
+                      <td className="format-label  text-right">
+                        {currentProduct.format}
+                      </td>
+                    </tr>
+                  )}
+                  {currentProduct.condition && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>Condition</td>
+                      <td className="condition-label  text-right">
+                        {currentProduct.condition}
+                      </td>
+                    </tr>
+                  )}
+                  {currentProduct.rolledFolded && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className={"bold td-title text-accent"}>
+                        Rolled / Folded
+                      </td>
+                      <td className="rolledFolded-label  text-right">
+                        {currentProduct.rolledFolded}
+                      </td>
+                    </tr>
+                  )}
+                  {currentProduct.description && (
+                    <tr className={"flex"} style={{ width: "100%" }}>
+                      <td className="bold td-title text-accent">Description</td>
+                      <td className={" text-right"}>
+                        {currentProduct.description}
+                      </td>
+                    </tr>
+                  )}
                   {currentProduct.salePrice > 0 && (
                     <tr
                       className={"flex align-center"}
