@@ -20,13 +20,13 @@ advertiseRouter.put(
   "/",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const { _id, title, image, type } = req.body;
+    const advertisment = req.body.advertise;
     try {
-      const advertise = await Advertise.findById(_id);
-      advertise.title = title;
-      advertise.image = image;
-      advertise.type = type;
-      await advertise.save();
+      console.log("put", advertisment);
+
+      const advertise = await Advertise.findByIdAndUpdate(advertisment._id, {
+        ...advertisment,
+      });
       res.send({ advertise });
     } catch (error) {
       console.log(error);

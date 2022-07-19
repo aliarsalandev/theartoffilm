@@ -18,6 +18,7 @@ export default function AdvertiseScreen() {
 
   const [advertisement, setAdvertisement] = useState({
     title: "",
+    link: "",
     image: "",
     type: "",
   });
@@ -127,6 +128,16 @@ export default function AdvertiseScreen() {
                   name={"title"}
                   type="text"
                   placeholder="Enter title"
+                  onChange={onChange}
+                ></input>
+              </div>
+              <div className={"form"}>
+                <label htmlFor="link">Link</label>
+                <input
+                  id="link"
+                  name={"link"}
+                  type="text"
+                  placeholder="Link to follow"
                   onChange={onChange}
                 ></input>
               </div>
