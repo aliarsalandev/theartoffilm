@@ -11,13 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/basir/theartoffilm.git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/basir/theartoffilm/issues"
-  },
+  "bugs": {},
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.1",
     "@stripe/react-stripe-js": "^1.9.0",
