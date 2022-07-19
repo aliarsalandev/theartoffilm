@@ -10,14 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/basir/theartoffilm.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/basir/theartoffilm/issues"
-  },
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.1",
     "@stripe/react-stripe-js": "^1.9.0",
