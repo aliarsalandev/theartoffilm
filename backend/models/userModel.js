@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
     postalCode: { type: String, required: false },
     country: { type: String, required: false },
     seller: {
+      balance: String,
+      sessions: Array,
       name: String,
       logo: String,
       description: String,

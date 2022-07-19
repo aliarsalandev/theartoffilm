@@ -12,6 +12,8 @@ export default function PlaceOrderScreen(props) {
   const { currency, rates } = useCurrency();
   const symbol = useSymbol(currency);
 
+  const [shippingAddress, setShippingAddress] = React.useState({});
+
   const navigate = useNavigate();
   let localStorage_shippingCost = {
     US: 0,
@@ -58,6 +60,12 @@ export default function PlaceOrderScreen(props) {
     }
   }, [dispatch, order, navigate, success]);
 
+  useEffect(() => {
+    if (localStorage.getItem("shipping_country")) {
+      setShippingAddress(JSON.parse(localStorage.getItem("shippingAddress")));
+    }
+  }, []);
+
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -69,9 +77,9 @@ export default function PlaceOrderScreen(props) {
                 <h2 className={"title2"}>Shipping</h2>
                 <p>
                   <strong>Name:</strong> {userInfo?.name} <br />
-                  <strong>Address: </strong> {cart.shippingAddress.address},
-                  {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
-                  ,{cart.shippingAddress.country}
+                  <strong>Address: </strong> {shippingAddress.address},
+                  {shippingAddress.city}, {shippingAddress.postalCode},
+                  {shippingAddress.country}
                 </p>
               </div>
             </li>

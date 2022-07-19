@@ -29,6 +29,10 @@ export const processCheckout = async (
   type = "subscription",
   ref
 ) => {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const stripe_account_id = cartItems[0].seller.seller.stripe_account_id;
+  const subtotal = cartItems.reduce((pv, cv) => pv + cv.price, 0);
+
   const { data } = await Axios.post(
     "/api/orders/create-checkout-session",
     {
@@ -37,7 +41,7 @@ export const processCheckout = async (
           price_data: {
             currency,
             product_data: {
-              name: product_name,
+              name: type !== "subscription" ? cartItems[0].name : product_name,
             },
             unit_amount: +unit_amount.replace(".", ""),
           },
@@ -47,9 +51,12 @@ export const processCheckout = async (
       type,
       period,
       ref,
+      stripe_account_id,
+      subtotal,
     },
     { headers: {} }
   );
+
   return data;
 };
 
@@ -61,6 +68,30 @@ export const paymentStatus = async (session_id, user_id) => {
     }
   );
   return data;
+};
+
+export const stripeBalance = async (userInfo, stripe_account_id) => {
+  const { data } = await Axios.post(
+    "/api/users/balance",
+    {
+      stripe_account_id,
+    },
+    { headers: { Authorization: `Bearer ${userInfo.token}` } }
+  );
+  const { balance } = data;
+  return balance;
+};
+
+export const withdrawStripeBalance = async (userInfo, stripe_account_id) => {
+  const { data } = await Axios.post(
+    "/api/users/withdraw",
+    {
+      stripe_account_id,
+    },
+    { headers: { Authorization: `Bearer ${userInfo.token}` } }
+  );
+  const { payout } = data;
+  return payout;
 };
 
 export const getPaymentInfo = async (userInfo) => {

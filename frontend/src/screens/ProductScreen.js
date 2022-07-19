@@ -26,8 +26,8 @@ export default function ProductScreen() {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  const { userInfo } = useSelector((state) => state.userSignin);
+
   const navigate = useNavigate();
 
   const { user: seller } = useSelector((state) => state.userDetails);

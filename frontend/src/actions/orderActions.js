@@ -38,8 +38,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     });
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
-    dispatch({ type: CART_EMPTY });
-    localStorage.removeItem("cartItems");
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,

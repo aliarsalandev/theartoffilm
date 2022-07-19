@@ -43,6 +43,7 @@ import PosterGradingCategoriesPage from "./screens/PosterGradingCategoriesPage";
 import GrahamHumpreys from "./screens/GrahamHumpreys";
 import WhyFilmPosters from "./screens/WhyFilmPosters";
 import PaymentScreen from "./screens/PaymentScreen";
+import AdvertiseScreen from "./screens/AdvertiseScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -71,6 +72,7 @@ function App() {
             <Route path="/signin" element={<SigninScreen />}></Route>
             <Route path="/register" element={<RegisterScreen />}></Route>
             <Route path="/shipping" element={<ShippingAddressScreen />}></Route>
+            <Route path="/advertise" element={<AdvertiseScreen />}></Route>
             {/* <Route path="/payment" element={<PaymentMethodScreen />}></Route> */}
             <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
             <Route path="/order/:id" element={<OrderScreen />}></Route>

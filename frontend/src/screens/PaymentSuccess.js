@@ -12,7 +12,7 @@ function PaymentSuccess() {
   const [type, setType] = useState("");
 
   useEffect(() => {
-    paymentStatus(session_id, userInfo._id).then((data) => {
+    paymentStatus(session_id.trim(), userInfo._id).then((data) => {
       const { status, type } = data.session;
       setStatus(status);
       setType(type);
@@ -21,8 +21,8 @@ function PaymentSuccess() {
   }, [session_id, userInfo._id]);
 
   return (
-    <div className={"success-container"}>
-      <h1 className={"title"}>Payment Success</h1>
+    <div className={"success-container m-2"}>
+      <h1 className={"title mb-2"}>Payment Success</h1>
       <div className="card">
         <div
           style={{

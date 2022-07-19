@@ -13,6 +13,7 @@ import {
 import Session from "../models/sessionModel.js";
 import Setting from "../models/settingModel.js";
 import Stripe from "stripe";
+import Advertise from "../models/advertiseModel.js";
 
 const orderRouter = express.Router();
 
@@ -104,6 +105,7 @@ orderRouter.post(
         allowedToPay: true,
         user: req.user._id,
       });
+
       const createdOrder = await order.save();
       res
         .status(201)
@@ -227,13 +229,25 @@ orderRouter.put(
 orderRouter.post("/create-checkout-session", async (req, res) => {
   const { stripe_private_key } = await Setting.findOne();
   const stripe = new Stripe(stripe_private_key);
-  const session = await stripe.checkout.sessions.create({
-    line_items: req.body.line_items,
-    mode: "payment",
-    success_url: `http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}`,
-    cancel_url:
-      "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
-  });
+
+  const session = await stripe.checkout.sessions.create(
+    {
+      line_items: req.body.line_items,
+      mode: "payment",
+      payment_intent_data: {
+        application_fee_amount: req.body.subtotal * 0.5,
+      },
+      success_url:
+        "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
+      cancel_url:
+        "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
+    },
+    {
+      // seller connected account id
+      stripeAccount: req.body.stripe_account_id,
+    }
+  );
+
   const new_session = new Session({
     id: session.id,
     url: session.url,
@@ -252,7 +266,7 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
 
   const { stripe_private_key } = await Setting.findOne();
   const stripe = new Stripe(stripe_private_key);
-  const stripe_session = await stripe.checkout.sessions.retrieve(session_id);
+  // const stripe_session = await stripe.checkout.sessions.retrieve(session_id);
   // select only the adventures name and length
   const session = await Session.findOne(
     { id: session_id },
@@ -263,17 +277,37 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
     const user = await User.findById(user_id);
     user.seller.subscription = session.ref;
     user.seller.subscription_period = session.period;
-
     user.save();
+  } else if (session.type === "advertisement") {
+    const advertisement = await Advertise.findById(session.ref);
+    advertisement.active = true;
+    advertisement.save();
   } else {
     const order = await Order.findById(session.ref).exec();
-    // const order = await Order.findOne({ user: user_id }).exec();
+    const user = await User.findById(order.seller);
+    [].includes(user.seller.orders, order._id);
+    try {
+      if (!user.seller.sessions.includes(session_id)) {
+        user.seller.sessions = [...user.seller.sessions, session.id];
+        if (user.seller.balance) {
+          user.seller.balance =
+            parseFloat(order.totalPrice) + parseFloat(user.seller.balance);
+          await user.save();
+        } else {
+          user.seller.balance = parseFloat(order.totalPrice);
+          await user.save();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     order.isPaid = true;
     order.paidAt = Date.now();
     await order.save();
   }
 
-  session.status = stripe_session.payment_status;
+  session.status = "paid";
   await session.save();
   res.send({ session: session });
 });
@@ -281,10 +315,11 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
 orderRouter.post("/transfer", async (req, res) => {
   const order = await Order.findById(req.body.orderId);
 
-  const { stripe_private_key } = await Setting.findOne();
+  const { stripe_private_key, commission } = await Setting.findOne();
+
   const stripe = new Stripe(stripe_private_key);
   const transfer = await stripetransfers.create({
-    amount: parseInt(order.totalPrice - order.totalPrice * 0.07),
+    amount: parseInt(order.totalPrice - order.totalPrice * commission ?? 0.06),
     currency: "gbp",
     destination: "acct_18LHw7GFDcM4wUS8",
     transfer_group: "seller_transfer",

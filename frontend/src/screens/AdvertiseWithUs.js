@@ -1,8 +1,37 @@
 import React from "react";
 import { isMobile } from "react-device-detect";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import HeroSection from "../sections/HeroSection";
 
+const AdvertiseAction = () => {
+  const { userInfo } = useSelector((state) => state.userSignin);
+
+  return userInfo ? (
+    <div className={"mt-3 p-4 text-center"}>
+      <Link className={"link"} to="/advertise">
+        <i className="fa-solid fa-rectangle-ad mb-3"></i> Advertise with us
+      </Link>
+    </div>
+  ) : (
+    <div className={"mt-3 p-4 text-center"}>
+      <span>
+        Please{" "}
+        <Link
+          style={{
+            padding: "4px",
+          }}
+          className={"link"}
+          to="/signin"
+        >
+          sign in
+        </Link>
+        to continue
+      </span>
+    </div>
+  );
+};
 function AdvertiseWithUs() {
   return (
     <div className={"bg-light-dark"}>
@@ -56,6 +85,10 @@ function AdvertiseWithUs() {
                   </a>
                 </p>
               </div>
+              <div>
+                {" "}
+                <AdvertiseAction />
+              </div>
             </div>
 
             <div className="section start col-md-6 col-xs-12">
@@ -86,8 +119,11 @@ function AdvertiseWithUs() {
                   touch to discuss the artwork for your advert.
                 </p>
               </div>
+              <div>
+                {" "}
+                <AdvertiseAction />
+              </div>
             </div>
-
             <div className="section start col-md-6 col-xs-12">
               <div className={isMobile ? "" : "p-2"}>
                 <img
@@ -99,7 +135,6 @@ function AdvertiseWithUs() {
             </div>
           </div>
         </div>
-
         <div className="row start top">
           <div className="section start col-md-6 col-xs-12">
             <div className="p-2">
@@ -124,6 +159,10 @@ function AdvertiseWithUs() {
                   henry@theartoffilm.co.uk
                 </a>
               </p>
+            </div>
+            <div>
+              {" "}
+              <AdvertiseAction />
             </div>
           </div>
 

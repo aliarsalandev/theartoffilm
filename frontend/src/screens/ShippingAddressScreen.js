@@ -122,7 +122,7 @@ export default function ShippingAddressScreen(props) {
         </div>
         <div>
           <label htmlFor="country">Country</label>
-          {user?.country && (
+          {
             <Select
               className="multi-select"
               placeholder={"Select Country of Origin"}
@@ -145,7 +145,7 @@ export default function ShippingAddressScreen(props) {
                 localStorage.setItem("shipping_country", value);
               }}
             />
-          )}
+          }
         </div>
 
         <div>

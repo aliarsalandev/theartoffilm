@@ -1,15 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signout } from "../actions/userActions";
+import { detailsUser, signout } from "../actions/userActions";
 import UploadPoster from "./UploadPoster";
 import { unreadMessages } from "../helpers/media";
+import { useCurrency, useSymbol } from "../hooks/currencyHooks";
+import { stripeBalance, withdrawStripeBalance } from "../helpers/payment";
 function SellerSidebar() {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-  const [unread, setUnread] = useState([]);
-
+  const { userInfo } = useSelector((state) => state.userSignin);
   const dispatch = useDispatch();
+  const [unread, setUnread] = useState([]);
+  const { user } = useSelector((state) => state.userDetails);
+  const [balance, setBalance] = useState();
+  const [, setPayout] = useState();
+  const { currency, rates } = useCurrency();
+  const symbol = useSymbol(currency ?? balance?.available[0]?.currency);
+
+  useEffect(() => {
+    dispatch(detailsUser(userInfo._id));
+  }, [dispatch, userInfo]);
+
+  useEffect(() => {
+    if (user?.seller?.stripe_account_id) {
+      stripeBalance(userInfo, user?.seller?.stripe_account_id).then((data) => {
+        setBalance(data);
+      });
+    }
+  }, [user, userInfo]);
+
+  const withdraw = () => {
+    if (user?.seller?.stripe_account_id) {
+      withdrawStripeBalance(userInfo, user?.seller?.stripe_account_id).then(
+        (data) => {
+          setPayout(data);
+        }
+      );
+    }
+  };
+
   const signoutHandler = () => {
     dispatch(signout());
   };
@@ -28,6 +56,35 @@ function SellerSidebar() {
   return (
     <div className={"seller-sidebar bg-dark"} style={{ height: "100vh" }}>
       <ul className={"list-type-none"}>
+        <li className={"flex flex-column between"}>
+          <div>
+            <div>Available</div>
+            <div>
+              {symbol}{" "}
+              {(
+                rates[currency] *
+                (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
+                  100)
+              ).toFixed(2)}
+            </div>
+          </div>
+          <div>
+            <div>Pending</div>
+            <div>
+              {symbol}{" "}
+              {(
+                rates[currency] *
+                (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) / 100)
+              ).toFixed(2)}
+            </div>
+          </div>
+
+          {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && (
+            <button className={"btn"} onClick={withdraw}>
+              Withdraw
+            </button>
+          )}
+        </li>
         <li className={""}>
           {userInfo && (
             <Link to="/profile">

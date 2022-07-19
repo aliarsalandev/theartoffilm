@@ -59,6 +59,66 @@ userRouter.post(
 );
 
 userRouter.post(
+  "/balance",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const { stripe_private_key } = await Setting.findOne();
+    const stripe = new Stripe(stripe_private_key);
+
+    const { stripe_account_id } = req.body;
+
+    const balance = await stripe.balance.retrieve({
+      stripeAccount: stripe_account_id,
+    });
+
+    res.send({ balance });
+  })
+);
+
+userRouter.post(
+  "/withdraw",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const { stripe_private_key } = await Setting.findOne();
+      const stripe = new Stripe(stripe_private_key);
+
+      const { stripe_account_id } = req.body;
+
+      const balance = await stripe.balance.retrieve({
+        stripeAccount: stripe_account_id,
+      });
+
+      const available_balance = balance?.pending.reduce(
+        (pv, cv) => pv + +cv.amount,
+        0
+      );
+      const currency = balance?.available[0]?.currency;
+      console.log({
+        balance,
+        amount: available_balance,
+        currency: currency,
+        source_type: "bank_account",
+      });
+      const payout = await stripe.payouts.create(
+        {
+          amount: available_balance,
+          currency: currency,
+          source_type: "bank_account",
+        },
+        {
+          stripeAccount: stripe_account_id,
+        }
+      );
+      console.log(payout);
+      res.send({ payout });
+    } catch (error) {
+      console.log(error);
+    }
+  })
+);
+
+userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
     try {

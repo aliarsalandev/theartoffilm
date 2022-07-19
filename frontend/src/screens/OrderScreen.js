@@ -11,22 +11,20 @@ import {
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
 import { processCheckout } from "../helpers/payment";
-import { getMessages, sendMessage } from "../helpers/media";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
+import { CART_EMPTY } from "../constants/cartConstants";
+import { useNavigate } from "../../node_modules/react-router-dom/index";
 
 export default function OrderScreen(props) {
   const params = useParams();
   const { id: orderId } = params;
 
+  const navigate = useNavigate();
   const { currency, rates } = useCurrency();
   const symbol = useSymbol(currency);
 
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-
   const [sdkReady, setSdkReady] = useState(false);
-  const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error } = orderDetails;
+  const { order, loading, error } = useSelector((state) => state.orderDetails);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -74,9 +72,6 @@ export default function OrderScreen(props) {
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
   useEffect(() => {
-    getMessages(orderId, userInfo).then((data) => {
-      setMessages(data);
-    });
     return () => {};
   }, [orderId, userInfo]);
 
@@ -94,7 +89,6 @@ export default function OrderScreen(props) {
     GB: 0,
     JP: 0,
   };
-  const cart = useSelector((state) => state.cart);
   if (localStorage.getItem("shippingCost") !== "undefined") {
     localStorage_shippingCost = JSON.parse(
       localStorage.getItem("shippingCost") ?? {}
@@ -253,15 +247,16 @@ export default function OrderScreen(props) {
                           processCheckout(
                             currency,
                             order._id,
-                            `${(rates[currency] * order.totalPrice).toFixed(
-                              2
-                            )}`,
+                            (rates[currency] * order.totalPrice).toFixed(2),
                             "month",
                             1,
                             "poster",
                             order._id
                           ).then((data) => {
                             window.open(data.session.url, "_blank");
+                            dispatch({ type: CART_EMPTY });
+                            localStorage.removeItem("cartItems");
+                            navigate("/shop/name");
                           });
                         }}
                       >

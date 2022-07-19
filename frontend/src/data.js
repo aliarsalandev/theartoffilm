@@ -4,6 +4,11 @@ const data = {
     JP: "🇯🇵",
     US: "🇺🇸",
   },
+  advert_types: {
+    banner: "Banner",
+    sponsor: "Sponsor",
+    advertorial: "Advertorial",
+  },
   stripe_origins: [
     {
       code: "GB",
