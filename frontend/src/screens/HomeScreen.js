@@ -76,7 +76,8 @@ export default function HomeScreen() {
         style={{
           position: "relative",
           backgroundImage:
-            !advertisements?.length === 0 && `url(/images/home.jpg)`,
+            (advertisements?.length === 0 || !advertisements) &&
+            `url(/images/home.jpg)`,
         }}
       >
         {advertisements?.map((advertisment) => (
