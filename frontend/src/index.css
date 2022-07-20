@@ -1491,3 +1491,10 @@ body>iframe {
 .bebas {
   font-family: 'Bebas Neue', sans-serif !important;
 }
+
+
+.advertisements {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

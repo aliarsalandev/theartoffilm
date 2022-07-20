@@ -11,7 +11,7 @@ const advertiseRouter = express.Router();
 advertiseRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const advertisements = await Advertise.find();
+    const advertisements = await Advertise.find({active:true});
     res.send({ advertisements });
   })
 );

@@ -12,17 +12,19 @@ import Carousel from "react-elastic-carousel";
 import SectionCard from "../components/SectionCard";
 import SearchBox from "../components/SearchBox";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { sellersList } from "../helpers/profile";
 import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import data from "../data";
+import { getAdvertisments } from "../helpers/advertise";
 export default function HomeScreen() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   const [sellers, setSellers] = React.useState([]);
-
+  const { userInfo } = useSelector((state) => state.userSignin);
+  const [advertisements, setAdvertisments] = React.useState([]);
+  const [backgroundImage, setBackgroundImage] = React.useState("");
+  const [backgroundIndex, setBackgroundIndex] = React.useState(0);
   // const {
   //   loading: loadingSellers,
   //   error: errorSellers,
@@ -42,8 +44,33 @@ export default function HomeScreen() {
   }, [dispatch]);
 
   useEffect(() => {
+    getAdvertisments(userInfo).then((data) => {
+      console.log(data?.advertisements);
+
+      setAdvertisments(data?.advertisements);
+      setBackgroundImage(data?.advertisements[0].image);
+    });
+  }, [userInfo]);
+
+  let myIndex = 0;
+
+  const carousel = () => {
+    var i;
+    var x = document.getElementsByClassName("advertisements");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {
+      myIndex = 1;
+    }
+    x[myIndex - 1].style.display = "block";
+    setTimeout(carousel, 6000); // Change image every 2 seconds
+  };
+  useEffect(() => {
     window.onload = () => {
       window.scrollTo(0, 0);
+      carousel();
     };
   }, []);
 
@@ -53,9 +80,40 @@ export default function HomeScreen() {
         className="section fh p-2"
         style={{
           position: "relative",
-          backgroundImage: `url(/images/home.jpg)`,
+          backgroundImage:
+            !advertisements.length === 0 && `url(/images/home.jpg)`,
         }}
       >
+        {advertisements.map((advertisment) => (
+          <div
+            className={"advertisements"}
+            style={{
+              backgroundImage: `url(${advertisment.image})`,
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              overflow: "hidden",
+            }}
+          >
+            <a
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                right: "20px",
+                zIndex: 9999,
+              }}
+              href={advertisment.link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i title="open" className="fa fa-window-maximize" />
+              open
+            </a>
+          </div>
+        ))}
+
         <h1 className={" title-xl"}>
           <span className="selection">The Art Of</span> Film
         </h1>
