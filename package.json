@@ -1,7 +1,6 @@
 {
   "name": "theartoffilm",
   "version": "1.0.0",
-  "description": "# Lessons",
   "main": "index.js",
   "type": "module",
   "scripts": {
