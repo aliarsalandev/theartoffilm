@@ -23,8 +23,6 @@ export default function HomeScreen() {
   const [sellers, setSellers] = React.useState([]);
   const { userInfo } = useSelector((state) => state.userSignin);
   const [advertisements, setAdvertisments] = React.useState([]);
-  const [backgroundImage, setBackgroundImage] = React.useState("");
-  const [backgroundIndex, setBackgroundIndex] = React.useState(0);
   // const {
   //   loading: loadingSellers,
   //   error: errorSellers,
@@ -45,10 +43,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     getAdvertisments(userInfo).then((data) => {
-      console.log(data?.advertisements);
-
       setAdvertisments(data?.advertisements);
-      setBackgroundImage(data?.advertisements[0].image);
     });
   }, [userInfo]);
 
@@ -81,10 +76,10 @@ export default function HomeScreen() {
         style={{
           position: "relative",
           backgroundImage:
-            !advertisements.length === 0 && `url(/images/home.jpg)`,
+            !advertisements?.length === 0 && `url(/images/home.jpg)`,
         }}
       >
-        {advertisements.map((advertisment) => (
+        {advertisements?.map((advertisment) => (
           <div
             className={"advertisements"}
             style={{
