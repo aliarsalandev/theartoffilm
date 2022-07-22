@@ -16,7 +16,7 @@ function UploadPoster({ isLink = false }) {
   const { userInfo } = useSelector((state) => state.userSignin);
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const { products } = productList;
 
   useEffect(() => {
     dispatch(listProducts({ seller: userInfo._id }));
