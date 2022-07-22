@@ -288,7 +288,10 @@ export default function SearchScreen(props) {
                   } `}
                 >
                   {products?.map((product) => {
-                    const show = (product.image.length > 0) & product.visible;
+                    const show =
+                      (product.image.length > 0) &
+                      product.visible &
+                      product.forSale;
                     return (
                       show === 1 && (
                         <Product key={product._id} product={product}></Product>

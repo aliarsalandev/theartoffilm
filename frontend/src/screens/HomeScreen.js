@@ -23,6 +23,11 @@ export default function HomeScreen() {
   const [sellers, setSellers] = React.useState([]);
   const { userInfo } = useSelector((state) => state.userSignin);
   const [advertisements, setAdvertisments] = React.useState([]);
+  // const {
+  //   loading: loadingSellers,
+  //   error: errorSellers,
+  //   users: sellers,
+  // } = userTopSellersList;
 
   useEffect(() => {
     dispatch(listProducts({}));
@@ -54,10 +59,7 @@ export default function HomeScreen() {
     if (myIndex > x.length) {
       myIndex = 1;
     }
-
-    if (x[myIndex - 1]) {
-      x[myIndex - 1].style.display = "block";
-    }
+    x[myIndex - 1].style.display = "block";
     setTimeout(carousel, 6000); // Change image every 2 seconds
   };
   useEffect(() => {

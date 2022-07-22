@@ -221,21 +221,19 @@ export default function ProductScreen() {
                       </td>
                     </tr>
                   )}
-                  <tr
-                    className={"flex align-center"}
-                    style={{
-                      textDecoration: product.salePrice ? "trne-through" : "",
-                    }}
-                  >
-                    <td className="bold td-title text-accent">Price</td>
-                    <td
-                      className={`bold ${
-                        product.forSale > 0 ? "line-through" : ""
-                      } price text-right`}
+                  {product.salePrice > 0 && (
+                    <tr
+                      className={"flex align-center"}
+                      style={{
+                        textDecoration: product.salePrice ? "trne-through" : "",
+                      }}
                     >
-                      {symbol} {(rates[currency] * product.price).toFixed(2)}
-                    </td>
-                  </tr>
+                      <td className="bold td-title text-accent">Price</td>
+                      <td className="bold line-through price text-right">
+                        {symbol} {(rates[currency] * product.price).toFixed(2)}
+                      </td>
+                    </tr>
+                  )}
                   {product.salePrice > 0 && (
                     <tr className={"flex"}>
                       <td className="bold td-title text-accent">Sale Price</td>
@@ -256,12 +254,16 @@ export default function ProductScreen() {
               >
                 {product.countInStock > 0 && (
                   <>
-                    <button
-                      onClick={addToCartHandler}
-                      className="primary block"
-                    >
-                      Add to Cart
-                    </button>
+                    {product.forSale && (
+                      <>
+                        <button
+                          onClick={addToCartHandler}
+                          className="primary block"
+                        >
+                          Add to Cart
+                        </button>
+                      </>
+                    )}
                   </>
                 )}
               </div>

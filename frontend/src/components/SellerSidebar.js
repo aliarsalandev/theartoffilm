@@ -229,7 +229,7 @@ function SellerSidebar() {
           <ul>
             <li>
               <Link className={"link"} to="/shipment-settings">
-                <i className="fa-solid fa-truck"></i> Shipment Settings
+                <i class="fa-solid fa-truck"></i> Shipment Settings
               </Link>
             </li>
           </ul>

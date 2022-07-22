@@ -8,6 +8,7 @@ import NoSideBarLayout from "../layouts/NoSideBarLayout";
 import FAQScreen from "./FAQScreen";
 import { useCurrency } from "../hooks/currencyHooks";
 import HeroSection from "../sections/HeroSection";
+import { Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 function ShowCaseCard({
   before,
