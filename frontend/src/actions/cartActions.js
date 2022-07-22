@@ -18,7 +18,8 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
       payload: `Can't Add To Cart. Buy only from ${cartItems[0].seller.seller.name} in this order`,
     });
   } else {
-    const price = data.forSale ? data.salePrice : data.price;
+    const price =
+      data.forSale && data.salePrice > 0 ? data.salePrice : data.price;
     dispatch({
       type: CART_ADD_ITEM,
       payload: {

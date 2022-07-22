@@ -221,15 +221,14 @@ export default function ProductScreen() {
                       </td>
                     </tr>
                   )}
-                  {product.salePrice > 0 && (
-                    <tr
-                      className={"flex align-center"}
-                      style={{
-                        textDecoration: product.salePrice ? "trne-through" : "",
-                      }}
-                    >
+                  {product.forSale && (
+                    <tr className={"flex align-center"}>
                       <td className="bold td-title text-accent">Price</td>
-                      <td className="bold line-through price text-right">
+                      <td
+                        className={`bold ${
+                          product.salePrice > 0 ? "line-through" : ""
+                        } price text-right`}
+                      >
                         {symbol} {(rates[currency] * product.price).toFixed(2)}
                       </td>
                     </tr>
@@ -252,18 +251,14 @@ export default function ProductScreen() {
                   width: "100%",
                 }}
               >
-                {product.countInStock > 0 && (
+                {product.forSale && (
                   <>
-                    {product.forSale && (
-                      <>
-                        <button
-                          onClick={addToCartHandler}
-                          className="primary block"
-                        >
-                          Add to Cart
-                        </button>
-                      </>
-                    )}
+                    <button
+                      onClick={addToCartHandler}
+                      className="primary block"
+                    >
+                      Add to Cart
+                    </button>
                   </>
                 )}
               </div>
