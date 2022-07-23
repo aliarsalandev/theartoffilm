@@ -8,3 +8,4 @@ CLOUDINARY_API_SECRET=u9PT2614sk7pwSpATGDQvWiVhg0
 CLOUDINARY_API_KEY=563822985559768
 CLOUDINARY_URL=cloudinary://563822985559768:u9PT2614sk7pwSpATGDQvWiVhg0@theartoffilms
 WEB_URL=http://localhost:3000
+STRIPE_SUCCESS_URL=https://theartoffilm.herokuapp.com/payment/success/session/{CHECKOUT_SESSION_ID}

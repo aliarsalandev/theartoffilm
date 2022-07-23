@@ -1,28 +1,28 @@
-import express from "express";
-import expressAsyncHandler from "express-async-handler";
-import { isAuth } from "../utils.js";
-import Advertise from "../models/advertiseModel.js";
-import Stripe from "stripe";
-import Setting from "../models/settingModel.js";
-import Session from "../models/sessionModel.js";
+import express from 'express';
+import expressAsyncHandler from 'express-async-handler';
+import { isAuth } from '../utils.js';
+import Advertise from '../models/advertiseModel.js';
+import Stripe from 'stripe';
+import Setting from '../models/settingModel.js';
+import Session from '../models/sessionModel.js';
 
 const advertiseRouter = express.Router();
 
 advertiseRouter.get(
-  "/",
+  '/',
   expressAsyncHandler(async (req, res) => {
-    const advertisements = await Advertise.find({active:true});
+    const advertisements = await Advertise.find({ active: true });
     res.send({ advertisements });
   })
 );
 
 advertiseRouter.put(
-  "/",
+  '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const advertisment = req.body.advertise;
     try {
-      console.log("put", advertisment);
+      console.log('put', advertisment);
 
       const advertise = await Advertise.findByIdAndUpdate(advertisment._id, {
         ...advertisment,
@@ -38,7 +38,7 @@ advertiseRouter.put(
 );
 
 advertiseRouter.post(
-  "/",
+  '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const { title, image, type } = req.body;
@@ -59,7 +59,7 @@ advertiseRouter.post(
 );
 
 advertiseRouter.delete(
-  "/:id",
+  '/:id',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -76,7 +76,7 @@ advertiseRouter.delete(
 );
 
 advertiseRouter.patch(
-  "/:id",
+  '/:id',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -98,7 +98,7 @@ advertiseRouter.patch(
 );
 
 advertiseRouter.post(
-  "/create-checkout-session",
+  '/create-checkout-session',
   expressAsyncHandler(async (req, res) => {
     try {
       const amount = 1000;
@@ -115,7 +115,7 @@ advertiseRouter.post(
         line_items: [
           {
             price_data: {
-              currency: "gbp",
+              currency: 'gbp',
               product_data: {
                 name: title,
               },
@@ -124,20 +124,18 @@ advertiseRouter.post(
             quantity: 1,
           },
         ],
-        mode: "payment",
-        success_url:
-          "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
-        cancel_url:
-          "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
+        mode: 'payment',
+        success_url: `${process.env.STRIPE_SUCCESS_URL}`,
+        cancel_url: `${process.env.STRIPE_SUCCESS_URL}`,
       });
 
       const new_session = new Session({
         id: session.id,
         url: session.url,
-        type: "advertisement",
-        period: "month",
+        type: 'advertisement',
+        period: 'month',
         ref: advertisement._id,
-        status: "unpaid",
+        status: 'unpaid',
       });
       const createdSession = await new_session.save();
       res.send({ session: createdSession });

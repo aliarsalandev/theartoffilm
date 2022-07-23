@@ -237,10 +237,9 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
       payment_intent_data: {
         application_fee_amount: req.body.subtotal * 0.5,
       },
-      success_url:
-        "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
-      cancel_url:
-        "http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}",
+  
+        success_url: `${process.env.STRIPE_SUCCESS_URL}`,
+        cancel_url:  `${process.env.STRIPE_SUCCESS_URL}`,
     },
     {
       // seller connected account id
