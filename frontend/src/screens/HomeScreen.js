@@ -59,7 +59,9 @@ export default function HomeScreen() {
     if (myIndex > x.length) {
       myIndex = 1;
     }
-    x[myIndex - 1].style.display = "block";
+    if (x[myIndex - 1]) {
+      x[myIndex - 1].style.display = "block";
+    }
     setTimeout(carousel, 6000); // Change image every 2 seconds
   };
   useEffect(() => {
