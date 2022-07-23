@@ -133,10 +133,10 @@ function PricingScreen() {
                       currency={currency ?? _currency}
                       monthPrice={(
                         rates[currency ?? _currency] * monthPrice
-                      ).toFixed(1)}
+                      ).toFixed(2)}
                       yearPrice={(
                         rates[currency ?? _currency] * yearPrice
-                      ).toFixed(1)}
+                      ).toFixed(2)}
                       perks={perks}
                       period={period}
                     />

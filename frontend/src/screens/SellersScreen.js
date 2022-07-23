@@ -72,7 +72,7 @@ export default function SellersScreen(props) {
                               objectFit: "contain",
                               overflow: "hidden",
                             }}
-                            src={"/images/logo.png"}
+                            src={"https://via.placeholder.com/150/fab702/000/"}
                             alt={seller.seller.name}
                           ></img>
                         )}

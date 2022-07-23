@@ -12,6 +12,7 @@ const productRouter = express.Router();
 productRouter.get(
   "/search",
   expressAsyncHandler(async (req, res) => {
+    console.log(req.query);
     const { query } = req;
     const PAGE_SIZE = 10;
 

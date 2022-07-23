@@ -113,8 +113,8 @@ export default function PlaceOrderScreen(props) {
 
                         <div>
                           {item.qty} x {symbol}
-                          {(rates[currency] * item.price).toFixed(1)} ={symbol}
-                          {item.qty * (rates[currency] * item.price).toFixed(1)}
+                          {(rates[currency] * item.price).toFixed(2)} ={symbol}
+                          {item.qty * (rates[currency] * item.price).toFixed(2)}
                         </div>
                       </div>
                     </li>

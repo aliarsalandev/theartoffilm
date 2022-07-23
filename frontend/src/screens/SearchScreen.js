@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -21,6 +21,8 @@ export default function SearchScreen(props) {
   const { directors } = useSelector((state) => state.directorList);
   const { casts } = useSelector((state) => state.castList);
   const { artists } = useSelector((state) => state.artistList);
+
+  const { name: movie_name } = useParams();
 
   const { currency } = useCurrency();
   const symbol = useSymbol(currency);
@@ -47,44 +49,55 @@ export default function SearchScreen(props) {
 
   useEffect(() => {
     dispatch(listProductDirectors());
+
     dispatch(listProductCasts());
     dispatch(listProductArtists());
   }, [dispatch]);
   // category
 
   const [currentPage, setCurrentPage] = React.useState(pageNumber);
-  const updateSearchUrl = (e) => {
-    const { name, value } = e.target;
+  const updateSearchUrl = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    let _search_url = {};
+      let _search_url = {};
 
-    if (localStorage.getItem("search_query") !== "") {
-      _search_url = JSON.parse(localStorage.getItem("search_query"));
-    }
-    if (name !== "") {
-      _search_url = {
-        ..._search_url,
-        [name]: value,
-      };
-      localStorage.setItem("search_query", JSON.stringify(_search_url));
-    }
-    const query = Object.keys(_search_url)
-      .map((k) => `${k}=${_search_url[k]}`)
-      .join("&");
-    dispatch(searchProducts(`pageNumber=${currentPage}&${query}`));
-  };
+      if (localStorage.getItem("search_query") !== "") {
+        _search_url = JSON.parse(localStorage.getItem("search_query"));
+      }
+      if (name !== "") {
+        _search_url = {
+          ..._search_url,
+          [name]: value,
+        };
+        localStorage.setItem("search_query", JSON.stringify(_search_url));
+      }
+      const query = Object.keys(_search_url)
+        .map((k) => `${k}=${_search_url[k]}`)
+        .join("&");
+
+      dispatch(searchProducts(`pageNumber=${currentPage}&${query}`));
+    },
+    [currentPage, dispatch]
+  );
+
+  useEffect(() => {}, [currentPage, dispatch, movie_name]);
 
   useEffect(() => {
-    dispatch(
-      listProducts({
-        pageNumber: currentPage,
-        name: name !== "all" ? name : "",
-        min,
-        max,
-        order,
-      })
-    );
-  }, [currentPage, dispatch, max, min, name, order, rating]);
+    if (movie_name !== undefined) {
+      dispatch(searchProducts(`pageNumber=${currentPage}&name=${movie_name}`));
+    } else {
+      dispatch(
+        listProducts({
+          pageNumber: currentPage,
+          name: name !== "all" ? name : movie_name,
+          min,
+          max,
+          order,
+        })
+      );
+    }
+  }, [currentPage, dispatch, max, min, movie_name, name, order, rating]);
 
   return (
     <NoSideBarLayout>
@@ -122,7 +135,7 @@ export default function SearchScreen(props) {
                 className={"btn btn-primary"}
                 onClick={() => {
                   localStorage.setItem("search_query", "");
-                  window.location.reload();
+                  window.location.href = "/shop/name/";
                 }}
               >
                 clear

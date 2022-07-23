@@ -13,7 +13,7 @@ export default function Product({ product, toshop = false }) {
       >
         <div
           title={product.name}
-          style={{ height: "240px", overflow: "hidden" }}
+          style={{ height: "240px", width: "240px", overflow: "hidden" }}
         >
           <img
             style={{
