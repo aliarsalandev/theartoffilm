@@ -13,12 +13,12 @@ export default function Product({ product, toshop = false }) {
       >
         <div
           title={product.name}
-          style={{ height: "240px", width: "240px", overflow: "hidden" }}
+          style={{ height: "320px", width: "320px", overflow: "hidden" }}
         >
           <img
             style={{
-              height: "240px",
-              width: "240px",
+              height: "320px",
+              width: "320px",
               objectFit: "fill",
               overflow: "hidden",
             }}
