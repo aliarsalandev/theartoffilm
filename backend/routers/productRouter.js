@@ -243,7 +243,7 @@ productRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findById('62d2940fada05438d4ab9a9d');
+    const seller = await User.findById('62dba9e0ddcf1da2a4513ab7');
     if (seller) {
       const products = data.products.map((product) => ({
         ...product,
