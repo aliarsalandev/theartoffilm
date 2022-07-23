@@ -18,6 +18,7 @@ export default function Product({ product, toshop = false }) {
           <img
             style={{
               height: "240px",
+              width: "240px",
               objectFit: "fill",
               overflow: "hidden",
             }}
