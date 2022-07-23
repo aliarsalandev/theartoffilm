@@ -40,7 +40,6 @@ export default function SellersScreen(props) {
           ) : (
             sellers?.map((seller) => (
               <ul
-                key={seller.seller._id}
                 className="card card-body bg-dark"
                 style={{ listStyle: "none" }}
               >
@@ -54,7 +53,7 @@ export default function SellersScreen(props) {
                           overflow: "hidden",
                         }}
                       >
-                        {seller.seller.logo === "" ? (
+                        {seller.seller.logo ? (
                           <img
                             style={{
                               width: "120px",
@@ -62,9 +61,7 @@ export default function SellersScreen(props) {
                               objectFit: "contain",
                               overflow: "hidden",
                             }}
-                            src={
-                              "https://via.placeholder.com/300.png/fab702/000"
-                            }
+                            src={seller.seller.logo}
                             alt={seller.seller.name}
                           ></img>
                         ) : (
@@ -75,7 +72,7 @@ export default function SellersScreen(props) {
                               objectFit: "contain",
                               overflow: "hidden",
                             }}
-                            src={seller.seller.logo}
+                            src={"/images/logo.png"}
                             alt={seller.seller.name}
                           ></img>
                         )}

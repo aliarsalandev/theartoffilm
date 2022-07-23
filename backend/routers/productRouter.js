@@ -185,14 +185,14 @@ productRouter.get(
   })
 );
 productRouter.get(
-  "/:seller_id",
+  "/seller/:id",
   expressAsyncHandler(async (req, res) => {
     const pageSize = 4;
     const page = req.query.pageNumber || 1;
 
     const count = await Product.count().exec();
 
-    const products = await Product.find({ seller: req.params.seller_id })
+    const products = await Product.find({ seller: req.params.id })
       .populate("seller", "seller.name seller.logo")
       .populate("directors")
       .populate("casts")

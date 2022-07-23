@@ -96,7 +96,11 @@ export const listProducts =
         );
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
       } else {
-        const { data } = await Axios.get(`/api/products/${seller}`);
+        console.log("seller", seller);
+        const { data } = await Axios.get(
+          // &category=${category}
+          `/api/products/seller/${seller}`
+        );
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
       }
     } catch (error) {
