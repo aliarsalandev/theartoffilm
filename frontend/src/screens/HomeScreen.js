@@ -62,12 +62,6 @@ export default function HomeScreen() {
     x[myIndex - 1].style.display = "block";
     setTimeout(carousel, 6000); // Change image every 2 seconds
   };
-  useEffect(() => {
-    window.onload = () => {
-      window.scrollTo(0, 0);
-      carousel();
-    };
-  }, []);
 
   return (
     <NoSideBarLayout>

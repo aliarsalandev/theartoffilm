@@ -38,68 +38,78 @@ export default function SellersScreen(props) {
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
-            sellers.map(
-              (seller) =>
-                seller.seller.logo && (
-                  <ul
-                    className="card card-body bg-dark"
-                    style={{ listStyle: "none" }}
-                  >
-                    <li>
-                      <div className="row top">
-                        <Link to={`/seller/${seller._id}`}>
-                          <div
-                            className="p-1"
-                            title={seller.seller.name}
+            sellers?.map((seller) => (
+              <ul
+                className="card card-body bg-dark"
+                style={{ listStyle: "none" }}
+              >
+                <li>
+                  <div className="row top">
+                    <Link to={`/seller/${seller._id}`}>
+                      <div
+                        className="p-1"
+                        title={seller.seller.name}
+                        style={{
+                          overflow: "hidden",
+                        }}
+                      >
+                        {seller.seller.logo ? (
+                          <img
                             style={{
+                              width: "120px",
+                              height: "120px",
+                              objectFit: "contain",
                               overflow: "hidden",
                             }}
-                          >
-                            <img
-                              style={{
-                                width: "120px",
-                                height: "120px",
-                                objectFit: "contain",
-                                overflow: "hidden",
-                              }}
-                              src={seller.seller.logo}
-                              alt={seller.seller.name}
-                            ></img>
-                          </div>
-                        </Link>
-                        <div className="p-1">
-                          <Link to={`/seller/${seller._id}`}>
-                            <h1>{seller.seller.name}</h1>
-                          </Link>
-                        </div>
+                            src={seller.seller.logo}
+                            alt={seller.seller.name}
+                          ></img>
+                        ) : (
+                          <img
+                            style={{
+                              width: "120px",
+                              height: "120px",
+                              objectFit: "contain",
+                              overflow: "hidden",
+                            }}
+                            src={"/images/logo.png"}
+                            alt={seller.seller.name}
+                          ></img>
+                        )}
                       </div>
-                    </li>
+                    </Link>
+                    <div className="p-1">
+                      <Link to={`/seller/${seller._id}`}>
+                        <h1>{seller.seller.name}</h1>
+                      </Link>
+                    </div>
+                  </div>
+                </li>
 
-                    <li>
-                      <div className={"row between"}>
-                        <div className="row start">
-                          <span className={"mr-2"}>
-                            {
-                              data.stripe_origins.find(
-                                (stripe_origin) =>
-                                  stripe_origin.code === seller?.country
-                              )?.name
-                            }
-                          </span>
-                          <span style={{ fontSize: "2.5rem" }}>
-                            {data.flags[seller?.country]}
-                          </span>
-                        </div>
-                        <div className={"large"}>
-                          <Link to={`/seller/${seller._id}`}>
-                            <i className="fas fa-arrow-right"></i>
-                          </Link>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                )
-            )
+                <li>
+                  <div className={"row between"}>
+                    <div className="row start">
+                      <span className={"mr-2"}>
+                        {
+                          data.stripe_origins.find(
+                            (stripe_origin) =>
+                              stripe_origin.code === seller?.country
+                          )?.name
+                        }
+                      </span>
+                      <span style={{ fontSize: "2.5rem" }}>
+                        {data.flags[seller?.country]}
+                      </span>
+                    </div>
+                    <div className={"large"}>
+                      <Link to={`/seller/${seller._id}`}>
+                        <i className="fas fa-arrow-right"></i>
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            ))
           )}
         </div>
       </div>

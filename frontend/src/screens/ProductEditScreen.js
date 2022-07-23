@@ -83,9 +83,6 @@ export default function ProductEditScreen() {
     productCastsRef.current = product?.casts ?? [];
     productArtistsRef.current = product?.artists ?? [];
 
-    if (successUpdate) {
-      // window.scrollTo(0, 0);
-    }
     if (!product || product._id !== productId || successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));

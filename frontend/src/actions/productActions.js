@@ -89,11 +89,20 @@ export const listProducts =
       type: PRODUCT_LIST_REQUEST,
     });
     try {
-      const { data } = await Axios.get(
-        // &category=${category}
-        `/api/products?pageNumber=${pageNumber}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&order=${order}`
-      );
-      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+      if (seller === "") {
+        const { data } = await Axios.get(
+          // &category=${category}
+          `/api/products?pageNumber=${pageNumber}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&order=${order}`
+        );
+        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+      } else {
+        console.log("seller", seller);
+        const { data } = await Axios.get(
+          // &category=${category}
+          `/api/products/seller/${seller}`
+        );
+        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+      }
     } catch (error) {
       dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
     }

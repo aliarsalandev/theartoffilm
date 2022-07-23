@@ -46,6 +46,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import AdvertiseScreen from "./screens/AdvertiseScreen";
 import AdvertiseListScreen from "./screens/AdvertiseListScreen";
 import ShippingDetailsScreen from "./screens/ShippingDetailsScreen";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -53,227 +54,235 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="">
-        <Header />
-        <main className={""}>
-          <Routes>
-            <Route path="/seller/:id" element={<SellerScreen />}></Route>
-            <Route path="/sellers" element={<SellersScreen />}></Route>
-            <Route path="/cart" element={<CartScreen />}></Route>
-            <Route path="/cart/:id" element={<CartScreen />}></Route>
-            <Route
-              path="/product/:id"
-              element={<ProductScreen />}
-              exact
-            ></Route>
-            <Route
-              path="/product/:id/edit"
-              element={<ProductEditScreen />}
-              exact
-            ></Route>
-            <Route path="/signin" element={<SigninScreen />}></Route>
-            <Route path="/register" element={<RegisterScreen />}></Route>
-            <Route path="/shipping" element={<ShippingAddressScreen />}></Route>
-            <Route
-              path="/shipment-settings"
-              element={<ShippingDetailsScreen />}
-            ></Route>
-            <Route path="/advertise" element={<AdvertiseScreen />}></Route>
-            <Route
-              path="/advertisments"
-              element={<AdvertiseListScreen />}
-            ></Route>
-            {/* <Route path="/payment" element={<PaymentMethodScreen />}></Route> */}
-            <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
-            <Route path="/order/:id" element={<OrderScreen />}></Route>
-            <Route
-              path="/orderhistory"
-              element={<OrderHistoryScreen />}
-            ></Route>
-            <Route
-              path="/payment/success/session/:id"
-              element={<PaymentSuccess />}
-            ></Route>
-            <Route path="/shop/name" element={<SearchScreen />} exact></Route>
-            <Route
-              path="/shop/name/:name"
-              element={<SearchScreen />}
-              exact
-            ></Route>
-            <Route
-              path="/shop/category/:category"
-              element={<SearchScreen />}
-              exact
-            ></Route>
-            <Route
-              path="/shop/category/:category/name/:name"
-              element={<SearchScreen />}
-              exact
-            ></Route>
-            <Route
-              path="/shop/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
-              element={<SearchScreen />}
-              exact
-            ></Route>
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <ProfileScreen />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/map"
-              element={
-                <PrivateRoute>
-                  <MapScreen />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/posters"
-              element={
-                <AdminRoute>
-                  <ProductListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/subscriptions/:id/edit"
-              element={
-                <AdminRoute>
-                  <SubscriptionEditScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <AdminRoute>
-                  <SettingScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path={"/payment"}
-              element={
-                <PrivateRoute>
-                  <PaymentScreen />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={"/user/subscriptions"}
-              element={<UserSubscriptionScreen />}
-            />
-            <Route
-              path="/subscriptions/create"
-              element={
-                <AdminRoute>
-                  <SubscriptionEditScreen />
-                </AdminRoute>
-              }
-            />
+      <ScrollToTop>
+        <div className="">
+          <Header />
+          <main className={""}>
+            <Routes>
+              <Route path="/seller/:id" element={<SellerScreen />}></Route>
+              <Route path="/sellers" element={<SellersScreen />}></Route>
+              <Route path="/cart" element={<CartScreen />}></Route>
+              <Route path="/cart/:id" element={<CartScreen />}></Route>
+              <Route
+                path="/product/:id"
+                element={<ProductScreen />}
+                exact
+              ></Route>
+              <Route
+                path="/product/:id/edit"
+                element={<ProductEditScreen />}
+                exact
+              ></Route>
+              <Route path="/signin" element={<SigninScreen />}></Route>
+              <Route path="/register" element={<RegisterScreen />}></Route>
+              <Route
+                path="/shipping"
+                element={<ShippingAddressScreen />}
+              ></Route>
+              <Route
+                path="/shipment-settings"
+                element={<ShippingDetailsScreen />}
+              ></Route>
+              <Route path="/advertise" element={<AdvertiseScreen />}></Route>
+              <Route
+                path="/advertisments"
+                element={<AdvertiseListScreen />}
+              ></Route>
+              {/* <Route path="/payment" element={<PaymentMethodScreen />}></Route> */}
+              <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
+              <Route path="/order/:id" element={<OrderScreen />}></Route>
+              <Route
+                path="/orderhistory"
+                element={<OrderHistoryScreen />}
+              ></Route>
+              <Route
+                path="/payment/success/session/:id"
+                element={<PaymentSuccess />}
+              ></Route>
+              <Route path="/shop/name" element={<SearchScreen />} exact></Route>
+              <Route
+                path="/shop/name/:name"
+                element={<SearchScreen />}
+                exact
+              ></Route>
+              <Route
+                path="/shop/category/:category"
+                element={<SearchScreen />}
+                exact
+              ></Route>
+              <Route
+                path="/shop/category/:category/name/:name"
+                element={<SearchScreen />}
+                exact
+              ></Route>
+              <Route
+                path="/shop/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
+                element={<SearchScreen />}
+                exact
+              ></Route>
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <ProfileScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/map"
+                element={
+                  <PrivateRoute>
+                    <MapScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/posters"
+                element={
+                  <AdminRoute>
+                    <ProductListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/subscriptions/:id/edit"
+                element={
+                  <AdminRoute>
+                    <SubscriptionEditScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <AdminRoute>
+                    <SettingScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path={"/payment"}
+                element={
+                  <PrivateRoute>
+                    <PaymentScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path={"/user/subscriptions"}
+                element={<UserSubscriptionScreen />}
+              />
+              <Route
+                path="/subscriptions/create"
+                element={
+                  <AdminRoute>
+                    <SubscriptionEditScreen />
+                  </AdminRoute>
+                }
+              />
 
-            <Route
-              path="/subscriptions"
-              element={
-                <AdminRoute>
-                  <SubscriptionListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route path="/page/subscriptions" element={<PricingScreen />} />
+              <Route
+                path="/subscriptions"
+                element={
+                  <AdminRoute>
+                    <SubscriptionListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route path="/page/subscriptions" element={<PricingScreen />} />
 
-            <Route
-              path="/posters/seller/pageNumber/:pageNumber"
-              element={
-                <PrivateRoute>
-                  <ProductListScreen />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/orderlist"
-              element={
-                <AdminRoute>
-                  <OrderListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/userlist"
-              element={
-                <AdminRoute>
-                  <UserListScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/user/:id/edit"
-              element={
-                <AdminRoute>
-                  <UserEditScreen />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <AdminRoute>
-                  <DashboardScreen />
-                </AdminRoute>
-              }
-            />
+              <Route
+                path="/posters/seller/pageNumber/:pageNumber"
+                element={
+                  <PrivateRoute>
+                    <ProductListScreen />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/orderlist"
+                element={
+                  <AdminRoute>
+                    <OrderListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/userlist"
+                element={
+                  <AdminRoute>
+                    <UserListScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/user/:id/edit"
+                element={
+                  <AdminRoute>
+                    <UserEditScreen />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <AdminRoute>
+                    <DashboardScreen />
+                  </AdminRoute>
+                }
+              />
 
-            <Route
-              path="/posters/seller"
-              element={
-                <SellerRoute>
-                  <ProductListScreen />
-                </SellerRoute>
-              }
-            />
-            <Route
-              path="/orderlist/seller"
-              element={
-                <SellerRoute>
-                  <OrderListScreen />
-                </SellerRoute>
-              }
-            />
-            <Route path="/" element={<HomeScreen />} exact></Route>
+              <Route
+                path="/posters/seller"
+                element={
+                  <SellerRoute>
+                    <ProductListScreen />
+                  </SellerRoute>
+                }
+              />
+              <Route
+                path="/orderlist/seller"
+                element={
+                  <SellerRoute>
+                    <OrderListScreen />
+                  </SellerRoute>
+                }
+              />
+              <Route path="/" element={<HomeScreen />} exact></Route>
 
-            <Route
-              path="/advertise-with-us"
-              element={<AdvertiseWithUs />}
-            ></Route>
+              <Route
+                path="/advertise-with-us"
+                element={<AdvertiseWithUs />}
+              ></Route>
 
-            <Route path="/blog-page" element={<BlogPage />}></Route>
-            <Route path="/grahamhumpreys" element={<GrahamHumpreys />}></Route>
-            <Route
-              path={"/why-film-posters"}
-              element={<WhyFilmPosters />}
-            ></Route>
+              <Route path="/blog-page" element={<BlogPage />}></Route>
+              <Route
+                path="/grahamhumpreys"
+                element={<GrahamHumpreys />}
+              ></Route>
+              <Route
+                path={"/why-film-posters"}
+                element={<WhyFilmPosters />}
+              ></Route>
 
-            <Route path="/about-us" element={<AboutUS />}></Route>
+              <Route path="/about-us" element={<AboutUS />}></Route>
 
-            <Route path="/faq" element={<FAQScreen />}></Route>
-            <Route path="/privacy" element={<PrivacyPolicy />}></Route>
-            <Route
-              path="/poster-grading-categories"
-              element={<PosterGradingCategoriesPage />}
-            ></Route>
+              <Route path="/faq" element={<FAQScreen />}></Route>
+              <Route path="/privacy" element={<PrivacyPolicy />}></Route>
+              <Route
+                path="/poster-grading-categories"
+                element={<PosterGradingCategoriesPage />}
+              ></Route>
 
-            <Route path="/terms" element={<Terms />}></Route>
-            <Route path="/contact" element={<ContactScreen />}></Route>
-          </Routes>
-        </main>
-        <div className={"pt-2"}>
-          <Footer userInfo={userInfo} />
+              <Route path="/terms" element={<Terms />}></Route>
+              <Route path="/contact" element={<ContactScreen />}></Route>
+            </Routes>
+          </main>
+          <div className={"pt-2"}>
+            <Footer userInfo={userInfo} />
+          </div>
         </div>
-      </div>
+      </ScrollToTop>
     </BrowserRouter>
   );
 }
