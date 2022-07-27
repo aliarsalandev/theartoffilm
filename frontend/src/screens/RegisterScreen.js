@@ -33,10 +33,11 @@ export default function RegisterScreen(props) {
   };
   useEffect(() => {
     if (userInfo) {
-      window.open(userInfo.seller?.account_link, "_blank");
+      // window.open(userInfo.seller?.account_link, "_blank");
       navigate("/payment");
     }
   }, [navigate, userInfo]);
+
   return (
     <div className={"bg-light-dark"} style={{ padding: "4em 0" }}>
       <form className="form" onSubmit={submitHandler}>

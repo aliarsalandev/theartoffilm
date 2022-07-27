@@ -17,7 +17,7 @@ export function CurrencyRates({ onResult, onError }) {
       .then((response) => response.text())
       .then(onResult)
       .catch(onError);
-  } catch (error) {}
+  } catch (error) { }
 }
 
 export const processCheckout = async (
@@ -30,8 +30,7 @@ export const processCheckout = async (
   ref
 ) => {
   const cartItems = JSON.parse(localStorage.getItem("cartItems"));
-  const stripe_account_id = cartItems[0].seller.seller.stripe_account_id;
-  const subtotal = cartItems.reduce((pv, cv) => pv + cv.price, 0);
+  // const subtotal = cartItems?.reduce((pv, cv) => pv + cv.price, 0);
 
   const { data } = await Axios.post(
     "/api/orders/create-checkout-session",
@@ -51,8 +50,6 @@ export const processCheckout = async (
       type,
       period,
       ref,
-      stripe_account_id,
-      subtotal,
     },
     { headers: {} }
   );

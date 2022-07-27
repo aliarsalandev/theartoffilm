@@ -122,29 +122,29 @@ userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
     try {
-      const { stripe_private_key } = await Setting.findOne();
-      const stripe = new Stripe(stripe_private_key);
-      const account = await stripe.accounts.create({
-        type: "custom",
-        country: "GB",
-        email: req.body.email,
-        capabilities: {
-          card_payments: {
-            requested: true,
-          },
-          transfers: {
-            requested: true,
-          },
-        },
-      });
+      // const { stripe_private_key } = await Setting.findOne();
+      // const stripe = new Stripe(stripe_private_key);
+      // const account = await stripe.accounts.create({
+      //   type: "custom",
+      //   country: "GB",
+      //   email: req.body.email,
+      //   capabilities: {
+      //     card_payments: {
+      //       requested: true,
+      //     },
+      //     transfers: {
+      //       requested: true,
+      //     },
+      //   },
+      // });
 
-      const accountLink = await stripe.accountLinks.create({
-        account: account.id,
-        success_url: "http://localhost:3000/stripe/link",
-        failure_url: "http://localhost:3000/stripe/link",
-        type: "custom_account_verification",
-        collect: "eventually_due",
-      });
+      // const accountLink = await stripe.accountLinks.create({
+      //   account: account.id,
+      //   success_url: "http://localhost:3000/stripe/link",
+      //   failure_url: "http://localhost:3000/stripe/link",
+      //   type: "custom_account_verification",
+      //   collect: "eventually_due",
+      // });
 
       const subscription = await Subscription.findOne({ monthPrice: 0 }).exec();
       const user = new User({
@@ -154,8 +154,7 @@ userRouter.post(
         seller:
           {
             ...req.body.seller,
-            stripe_account_id: account.id,
-            account_link: accountLink.url,
+            // stripe_account_id: account.id,
             subscription: subscription._id,
             subscription_period: "year",
           } ?? {},

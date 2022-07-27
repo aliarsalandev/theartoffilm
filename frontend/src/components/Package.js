@@ -68,7 +68,7 @@ function Package({
                     processCheckout(
                       currency,
                       name,
-                      period === "month" ? `${monthPrice}0` : `${yearPrice}0`,
+                      period === "month" ? `${monthPrice}` : `${yearPrice}`,
                       period,
                       1,
                       "subscription",

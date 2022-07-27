@@ -164,7 +164,7 @@ orderRouter.put(
               }
             }
           );
-      } catch (err) {}
+      } catch (err) { }
 
       res.send({ message: "Order Paid", order: updatedOrder });
     } else {
@@ -234,17 +234,17 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
     {
       line_items: req.body.line_items,
       mode: "payment",
-      payment_intent_data: {
-        application_fee_amount: req.body.subtotal * 0.5,
-      },
-  
-        success_url: `${process.env.STRIPE_SUCCESS_URL}`,
-        cancel_url:  `${process.env.STRIPE_SUCCESS_URL}`,
+      // payment_intent_data: {
+      //   application_fee_amount: req.body.subtotal * 0.5,
+      // },
+
+      success_url: `${process.env.STRIPE_SUCCESS_URL ?? 'http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}'}`,
+      cancel_url: `${process.env.STRIPE_SUCCESS_URL ?? 'http://localhost:3000/payment/success/session/{CHECKOUT_SESSION_ID}'}`,
     },
-    {
-      // seller connected account id
-      stripeAccount: req.body.stripe_account_id,
-    }
+    // {
+    //   // seller connected account id
+    //   stripeAccount: req.body.stripe_account_id,
+    // }
   );
 
   const new_session = new Session({

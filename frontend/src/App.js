@@ -47,6 +47,7 @@ import AdvertiseScreen from "./screens/AdvertiseScreen";
 import AdvertiseListScreen from "./screens/AdvertiseListScreen";
 import ShippingDetailsScreen from "./screens/ShippingDetailsScreen";
 import ScrollToTop from "./components/ScrollToTop";
+import WithdrawScreen from "./screens/WithdrawScreen";
 
 function App() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -168,6 +169,15 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route
+                path={"/withdraw-requests"}
+                element={
+                  <PrivateRoute>
+                    <WithdrawScreen />
+                  </PrivateRoute>
+                }
+              />
+
               <Route
                 path={"/user/subscriptions"}
                 element={<UserSubscriptionScreen />}

@@ -6,6 +6,7 @@ import UploadPoster from "./UploadPoster";
 import { unreadMessages } from "../helpers/media";
 import { useCurrency, useSymbol } from "../hooks/currencyHooks";
 import { stripeBalance, withdrawStripeBalance } from "../helpers/payment";
+import { requestAWithdrawal } from "../helpers/withdraw";
 function SellerSidebar() {
   const { userInfo } = useSelector((state) => state.userSignin);
   const dispatch = useDispatch();
@@ -29,13 +30,16 @@ function SellerSidebar() {
   }, [user, userInfo]);
 
   const withdraw = () => {
-    if (user?.seller?.stripe_account_id) {
-      withdrawStripeBalance(userInfo, user?.seller?.stripe_account_id).then(
-        (data) => {
-          setPayout(data);
-        }
-      );
-    }
+    // if (user?.seller?.stripe_account_id) {
+    const amount = filterNAN(
+      rates[currency] *
+        (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) / 100)
+    );
+    requestAWithdrawal(userInfo, amount, symbol).then((data) => {
+      alert("Withdrawal request sent");
+      console.log(data);
+    });
+    // }
   };
 
   const signoutHandler = () => {
@@ -50,6 +54,9 @@ function SellerSidebar() {
     return () => {};
   }, [userInfo]);
 
+  const filterNAN = (value) => {
+    return isNaN(value) ? 0 : value;
+  };
   // const createHandler = () => {
   //   dispatch(createProduct());
   // };
@@ -62,30 +69,30 @@ function SellerSidebar() {
               <div className={"bebas"}>Available</div>
               <div className={"bebas"}>
                 {symbol}{" "}
-                {(
+                {filterNAN(
                   rates[currency] *
-                  (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
-                    100)
-                ).toFixed(2)}
+                    (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
+                      100)
+                )}
               </div>
             </div>
             <div>
               <div className={"bebas"}>Pending</div>
               <div className={"bebas"}>
                 {symbol}{" "}
-                {(
+                {filterNAN(
                   rates[currency] *
-                  (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) /
-                    100)
-                ).toFixed(2)}
+                    (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) /
+                      100)
+                )}
               </div>
             </div>
 
-            {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && (
-              <button className={"btn"} onClick={withdraw}>
-                Withdraw
-              </button>
-            )}
+            {/* {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && ( */}
+            <button className={"btn"} onClick={withdraw}>
+              Withdraw
+            </button>
+            {/* )} */}
           </li>
         )}
         <li className={""}>
@@ -219,6 +226,23 @@ function SellerSidebar() {
             <li>
               <Link className={"link"} to="/payment">
                 <i className={"fas fa-credit-card"}></i> Payment Settings
+              </Link>
+            </li>
+            <li>
+              <Link className={"link"} to="/withdraw-requests">
+                <i className={"fas fa-credit-card"}></i> Withdraw Requests
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {userInfo?.isAdmin && (
+        <div className="subscription-section">
+          <ul>
+            <li>
+              <Link className={"link"} to="/withdraw-requests">
+                <i className={"fas fa-credit-card"}></i> Withdraw Requests
               </Link>
             </li>
           </ul>

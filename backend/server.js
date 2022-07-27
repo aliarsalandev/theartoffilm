@@ -25,6 +25,7 @@ import {
 import messageRouter from "./routers/messageRouter.js";
 import paymentRouter from "./routers/paymentRouter.js";
 import advertiseRouter from "./routers/advertiseRouter.js";
+import withdrawRouter from "./routers/withdrawRouter.js";
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use("/api/messages", messageRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/settings", settingsRouter);
 app.use("/api/payments", paymentRouter);
+app.use("/api/withdraw", withdrawRouter);
 app.use("/api/advertise", advertiseRouter);
 app.use("/api/payment-info", paymentRouter);
 app.get("/api/config/paypal", (req, res) => {
