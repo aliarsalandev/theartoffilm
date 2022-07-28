@@ -35,6 +35,7 @@ export const updateWithdraw = async (userInfo, status, id) => {
     `/api/withdraw/${id}`,
     {
       status,
+      user: userInfo._id
     },
     { headers: { Authorization: `Bearer ${userInfo.token}` } }
   );

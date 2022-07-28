@@ -41,10 +41,8 @@ export default function PlaceOrderScreen(props) {
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
 
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.shippingCost = +shippingCost[shipping_country];
-  cart.totalPrice =
-    cart.itemsPrice + +shippingCost[shipping_country] + +cart.taxPrice;
+  cart.shippingCost = (isNaN(shippingCost[shipping_country]) ? 0 : +shippingCost[shipping_country])
+  cart.totalPrice = cart.itemsPrice + (isNaN(shippingCost[shipping_country]) ? 0 : +shippingCost[shipping_country]);
 
   const dispatch = useDispatch();
 
@@ -83,20 +81,13 @@ export default function PlaceOrderScreen(props) {
                 </p>
               </div>
             </li>
-            <li>
-              <div className="card card-body">
-                <h2 className={"title2"}>Payment</h2>
-                <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
-                </p>
-              </div>
-            </li>
+
             <li>
               <div className="card card-body">
                 <h2 className={"title2"}>Order Items</h2>
                 <ul className={"list-type-none"}>
-                  {cart.cartItems.map((item) => (
-                    <li key={item.product.product}>
+                  {cart.cartItems.map((item, index) => (
+                    <li key={index}>
                       <div className="row">
                         <div>
                           <img
@@ -113,8 +104,7 @@ export default function PlaceOrderScreen(props) {
 
                         <div>
                           {item.qty} x {symbol}
-                          {(rates[currency] * item.price).toFixed(2)} ={symbol}
-                          {item.qty * (rates[currency] * item.price).toFixed(2)}
+                          {(rates[currency] * item.price).toFixed(2)} = {symbol}{(rates[currency] * item.price).toFixed(2)}
                         </div>
                       </div>
                     </li>
@@ -145,20 +135,11 @@ export default function PlaceOrderScreen(props) {
 
                   <div>
                     {symbol}{" "}
-                    {(rates[currency] * shippingCost[shipping_country]).toFixed(
-                      2
-                    )}
+                    {(rates[currency] * (isNaN(shippingCost[shipping_country]) ? 0 : +shippingCost[shipping_country])).toFixed(2)}
                   </div>
                 </div>
               </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>
-                    {symbol} {(rates[currency] * cart.taxPrice).toFixed(2)}
-                  </div>
-                </div>
-              </li>
+
               <li>
                 <div className="row">
                   <div>

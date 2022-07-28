@@ -37,7 +37,7 @@ export default function ProductScreen() {
 
   useEffect(() => {
     dispatch(detailsUser(product?.seller._id));
-    return () => {};
+    return () => { };
   }, [dispatch, product]);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ProductScreen() {
       JSON.stringify(seller?.seller?.shipping_cost)
     );
 
-    return () => {};
+    return () => { };
   }, [seller]);
 
   const addToCartHandler = () => {
@@ -58,9 +58,8 @@ export default function ProductScreen() {
   };
   return (
     <div
-      className={`bg-light-dark ${
-        isMobile ? "mobile-page-padding" : "page-padding"
-      }`}
+      className={`bg-light-dark ${isMobile ? "mobile-page-padding" : "page-padding"
+        }`}
     >
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -225,11 +224,10 @@ export default function ProductScreen() {
                     <tr className={"flex align-center"}>
                       <td className="bold td-title text-accent">Price</td>
                       <td
-                        className={`bold ${
-                          product.salePrice > 0 ? "line-through" : ""
-                        } price text-right`}
+                        className={`bold ${product.salePrice > 0 ? "line-through" : ""
+                          } price text-right`}
                       >
-                        {symbol} {(rates[currency] * product.price).toFixed(2)}
+                        {symbol} {(rates[currency] * product.salePrice).toFixed(2)}
                       </td>
                     </tr>
                   )}
@@ -251,7 +249,7 @@ export default function ProductScreen() {
                   width: "100%",
                 }}
               >
-                {product.forSale && (
+                {product.forSale && product.salePrice > 0 && (
                   <>
                     <button
                       onClick={addToCartHandler}

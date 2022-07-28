@@ -11,24 +11,24 @@ export default function PaymentScreen() {
   const [updated] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [account_link, setAccount_link] = useState("");
   const [details_submitted, setDetails_submitted] = useState(false);
 
   const [info, setInfo] = useState({
     routing_number: "",
     account_number: "",
+    paypal_email: "",
     country: "GB",
     currency: "GBP",
   });
 
   useEffect(() => {
     getPaymentInfo(userInfo).then(({ payment_info }) => {
-      const { account_info, account_link } = payment_info;
+      console.log(payment_info);
+
+      const { account_info } = payment_info;
       setDetails_submitted(account_info.details_submitted);
       if (!account_info.details_submitted) {
-        setAccount_link(account_link);
         console.log(account_info);
-
         if (account_info.account_number || account_info.routing_number) {
           setInfo(account_info);
         }
@@ -44,7 +44,7 @@ export default function PaymentScreen() {
   const submitPaymentInfo = (e) => {
     e.preventDefault();
     setLoading(true);
-    const { routing_number, account_number, country, currency } = info;
+    const { routing_number, account_number, country, currency, paypal_email } = info;
 
     const paymentInfo = {
       bank_account: {
@@ -52,6 +52,7 @@ export default function PaymentScreen() {
         account_number,
         country,
         currency,
+        paypal_email
       },
     };
     updatePaymentInfo(paymentInfo, userInfo).then((data) => {
@@ -63,13 +64,7 @@ export default function PaymentScreen() {
   return (
     <PageLayout>
       {updated && <div className="alert alert-success">Settings Updated</div>}
-      {!details_submitted && (
-        <div className="container">
-          <a href={account_link} target={"_blank"} rel="noreferrer">
-            Submit Details
-          </a>
-        </div>
-      )}
+
       <form className="form" onSubmit={submitPaymentInfo}>
         <div>
           <h1>Settings</h1>
@@ -106,6 +101,19 @@ export default function PaymentScreen() {
             onChange={updateInfo}
           />
         </div>
+
+
+        <div>
+          <label htmlFor="name">Paypal Email</label>
+          <input
+            id="paypal_email"
+            name={"paypal_email"}
+            defaultValue={info?.paypal_email}
+            type="text"
+            onChange={updateInfo}
+          />
+        </div>
+
 
         <div>
           <label htmlFor="name">Routing Number</label>

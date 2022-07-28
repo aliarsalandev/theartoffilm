@@ -19,7 +19,8 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
     });
   } else {
     const price =
-      data.forSale && data.salePrice > 0 ? data.salePrice : data.price;
+      data.forSale && data.salePrice > 0 ? data.salePrice : 0;
+
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
@@ -32,6 +33,7 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
         qty,
       },
     });
+
     localStorage.setItem(
       "cartItems",
       JSON.stringify(getState().cart.cartItems)

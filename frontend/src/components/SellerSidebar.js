@@ -15,7 +15,7 @@ function SellerSidebar() {
   const [balance, setBalance] = useState();
   const [, setPayout] = useState();
   const { currency, rates } = useCurrency();
-  const symbol = useSymbol(currency ?? balance?.available[0]?.currency);
+  const symbol = useSymbol(currency);
 
   useEffect(() => {
     dispatch(detailsUser(userInfo._id));
@@ -30,16 +30,14 @@ function SellerSidebar() {
   }, [user, userInfo]);
 
   const withdraw = () => {
-    // if (user?.seller?.stripe_account_id) {
     const amount = filterNAN(
       rates[currency] *
-        (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) / 100)
+      (user?.seller?.balance)
     );
     requestAWithdrawal(userInfo, amount, symbol).then((data) => {
       alert("Withdrawal request sent");
       console.log(data);
     });
-    // }
   };
 
   const signoutHandler = () => {
@@ -51,7 +49,7 @@ function SellerSidebar() {
       setUnread(data.messages);
     });
 
-    return () => {};
+    return () => { };
   }, [userInfo]);
 
   const filterNAN = (value) => {
@@ -65,33 +63,24 @@ function SellerSidebar() {
       <ul className={"list-type-none"}>
         {userInfo?.isSeller && (
           <li className={"flex flex-column between link bebas"}>
+
             <div>
               <div className={"bebas"}>Available</div>
               <div className={"bebas"}>
                 {symbol}{" "}
                 {filterNAN(
                   rates[currency] *
-                    (balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) /
-                      100)
-                )}
-              </div>
-            </div>
-            <div>
-              <div className={"bebas"}>Pending</div>
-              <div className={"bebas"}>
-                {symbol}{" "}
-                {filterNAN(
-                  rates[currency] *
-                    (balance?.pending.reduce((pv, cv) => pv + +cv.amount, 0) /
-                      100)
+                  (user?.seller?.balance)
                 )}
               </div>
             </div>
 
             {/* {balance?.available.reduce((pv, cv) => pv + +cv.amount, 0) > 0 && ( */}
-            <button className={"btn"} onClick={withdraw}>
-              Withdraw
-            </button>
+            {
+              user?.seller?.balance > 0 ? <button className={"btn"} onClick={withdraw}>
+                Withdraw
+              </button> : <></>
+            }
             {/* )} */}
           </li>
         )}

@@ -1,5 +1,6 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
+import User from "../models/userModel.js";
 import Withdraw from "../models/withdrawModel.js";
 import { isAuth } from "../utils.js";
 
@@ -10,8 +11,7 @@ withdrawRouter.get(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     try {
-      const withdraws = await Withdraw.find()
-        .where("status", "unpaid")
+      const withdraws = await Withdraw.find().sort({ status: -1 })
         .populate("user", "name email");
       res.send({ withdraws });
     } catch (error) {
@@ -28,7 +28,8 @@ withdrawRouter.get(
   expressAsyncHandler(async (req, res) => {
     const { id: user } = req.params;
     try {
-      const withdraws = await Withdraw.find({ user }).where("status", "unpaid");
+      const withdraws = await Withdraw.find({ user })
+        .populate("user", "name email");
       res.send({ withdraws });
     } catch (error) {
       console.log(error);
@@ -68,9 +69,17 @@ withdrawRouter.put(
   expressAsyncHandler(async (req, res) => {
     console.log(req.body);
     const { id } = req.params;
-    const { status } = req.body;
+    const { user: user_id, status } = req.body;
     try {
       const withdraw = await Withdraw.findByIdAndUpdate(id, { status });
+      const user = await User.findById(withdraw.user);
+
+      console.log(user.seller.balance)
+      if (status === "paid") {
+        user.seller.balance = +user.seller?.balance - withdraw.amount;
+        user.save();
+      }
+
       res.send({
         withdraw,
       });

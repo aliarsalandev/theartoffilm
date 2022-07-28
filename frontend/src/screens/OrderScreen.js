@@ -72,7 +72,7 @@ export default function OrderScreen(props) {
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
 
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, [orderId, userInfo]);
 
   // const successPaymentHandler = (paymentResult) => {
@@ -126,21 +126,7 @@ export default function OrderScreen(props) {
                 )}
               </div>
             </li>
-            <li>
-              <div className="card card-body">
-                <h2 className={"title3 selection text-start"}>Payment</h2>
-                <p>
-                  <strong>Method:</strong> {order.paymentMethod}
-                </p>
-                {order.isPaid ? (
-                  <MessageBox variant="success">
-                    Paid at {order.paidAt}
-                  </MessageBox>
-                ) : (
-                  <MessageBox variant="danger">Not Paid</MessageBox>
-                )}
-              </div>
-            </li>
+
             <li>
               <div className="card card-body">
                 <h2 className={"title3 selection text-start"}>Order Items</h2>
@@ -164,7 +150,7 @@ export default function OrderScreen(props) {
                         <div>
                           {item.qty} x {symbol}{" "}
                           {(rates[currency] * item.price).toFixed(2)} = {symbol}
-                          {item.qty * (rates[currency] * item.price).toFixed(2)}
+                          {(item.qty * (rates[currency] * item.price)).toFixed(2)}
                         </div>
                       </div>
                     </li>
@@ -198,14 +184,7 @@ export default function OrderScreen(props) {
                 </div>
               </li>
 
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>
-                    {symbol} {(rates[currency] * order.taxPrice).toFixed(2)}
-                  </div>
-                </div>
-              </li>
+
               <li>
                 <div className="row">
                   <div>

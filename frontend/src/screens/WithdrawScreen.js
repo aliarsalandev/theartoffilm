@@ -68,20 +68,26 @@ export default function WithdrawScreen() {
                   <td>{currency}</td>
                   <td>{status}</td>
                   <td>{createdAt?.slice(0, 10)}</td>
-                  <td>
-                    <select
-                      onChange={(e) => {
-                        updateWithdraw(userInfo, e.target.value, _id).then(
-                          (data) => {
-                            console.log(data);
-                          }
-                        );
-                      }}
-                    >
-                      <option value="paid">Approve</option>
-                      <option value="unpaid">Reject</option>
-                    </select>
-                  </td>
+                  {
+                    userInfo?.isAdmin && status === "unpaid" ? (
+                      <td>
+                        <select
+                          onChange={(e) => {
+                            updateWithdraw(userInfo, e.target.value, _id).then(
+                              (data) => {
+                                console.log(data);
+                              }
+                            );
+                          }}
+                        >
+                          <option >Approve or Reject</option>
+                          <option value="paid">Approve</option>
+                          <option value="unpaid">Reject</option>
+                        </select>
+                      </td>) : (
+                      <td></td>
+                    )
+                  }
                 </tr>
               )
             )}

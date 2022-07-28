@@ -100,7 +100,7 @@ orderRouter.post(
         paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
         shippingCost: req.body.shippingCost,
-        taxPrice: req.body.taxPrice,
+        taxPrice: 0,
         totalPrice: req.body.totalPrice,
         allowedToPay: true,
         user: req.user._id,
@@ -214,7 +214,7 @@ orderRouter.put(
     const order = await Order.findById(req.params.id);
     if (order) {
       order.allowedToPay = req.body.allowedToPay;
-      order.totalPrice = order.itemsPrice + order.taxPrice;
+      order.totalPrice = order.itemsPrice;
       const updatedOrder = await order.save();
       res.send({
         message: "Order Shipping Price Updated",
@@ -227,6 +227,7 @@ orderRouter.put(
 );
 
 orderRouter.post("/create-checkout-session", async (req, res) => {
+
   const { stripe_private_key } = await Setting.findOne();
   const stripe = new Stripe(stripe_private_key);
 
@@ -262,8 +263,7 @@ orderRouter.post("/create-checkout-session", async (req, res) => {
 orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
   const session_id = req.params.session_id;
   const user_id = req.params.user_id;
-
-  const { stripe_private_key } = await Setting.findOne();
+  const { stripe_private_key, commission } = await Setting.findOne();
   const stripe = new Stripe(stripe_private_key);
   // const stripe_session = await stripe.checkout.sessions.retrieve(session_id);
   // select only the adventures name and length
@@ -288,12 +288,14 @@ orderRouter.get("/payment-status/:session_id/:user_id", async (req, res) => {
     try {
       if (!user.seller.sessions.includes(session_id)) {
         user.seller.sessions = [...user.seller.sessions, session.id];
+        const commission_ammount = +order.itemsPrice * +(commission / 100)
+
         if (user.seller.balance) {
           user.seller.balance =
-            parseFloat(order.totalPrice) + parseFloat(user.seller.balance);
+            parseFloat(order.totalPrice - commission_ammount) + parseFloat(user.seller.balance);
           await user.save();
         } else {
-          user.seller.balance = parseFloat(order.totalPrice);
+          user.seller.balance = parseFloat(order.totalPrice - commission_ammount);
           await user.save();
         }
       }

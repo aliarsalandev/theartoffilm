@@ -558,8 +558,9 @@ export default function ProductEditScreen() {
                   <input
                     id="salePrice"
                     type="number"
+                    min={1}
                     placeholder="Enter Sale Price"
-                    value={salePrice}
+                    defaultValue={salePrice}
                     onChange={(e) => setSalePrice(+e.target.value)}
                   ></input>
                 </div>
