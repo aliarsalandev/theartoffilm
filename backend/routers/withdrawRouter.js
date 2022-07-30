@@ -69,7 +69,7 @@ withdrawRouter.put(
   expressAsyncHandler(async (req, res) => {
     console.log(req.body);
     const { id } = req.params;
-    const { user: user_id, status } = req.body;
+    const { status } = req.body;
     try {
       const withdraw = await Withdraw.findByIdAndUpdate(id, { status });
       const user = await User.findById(withdraw.user);

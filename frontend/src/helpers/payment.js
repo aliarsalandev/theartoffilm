@@ -98,6 +98,13 @@ export const getPaymentInfo = async (userInfo) => {
   return data;
 };
 
+
+export const getSellerPaymentInfo = async (email) => {
+  const { data } = await Axios.get(`/api/payment-info/${email}`, {
+  });
+  return data;
+};
+
 export const updatePaymentInfo = async (info, userInfo) => {
   const { _id } = userInfo;
   const { data } = await Axios.put(
