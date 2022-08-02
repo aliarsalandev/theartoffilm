@@ -88,7 +88,7 @@ export default function SellerScreen(props) {
           {products.length === 0 && <MessageBox>No Poster Found</MessageBox>}
 
           {currentProduct && (
-            <div className="flex top p-2 poster-details">
+            <div className="flex justify-center top p-2 poster-details">
               <div>
                 <img
                   className={"w-80  m-2"}
@@ -97,7 +97,7 @@ export default function SellerScreen(props) {
                 />
               </div>
               <div className={"flex column"}>
-                <table style={{ width: "50%" }} className="product-page-table">
+                <table style={{ width: "100%" }} className="product-page-table">
                   <tbody>
                     <tr className={"flex row start"} style={{ width: "100%" }}>
                       <td className={"bold td-title text-accent"}>
@@ -221,7 +221,7 @@ export default function SellerScreen(props) {
                         </td>
                       </tr>
                     )}
-                    {currentProduct.forSale && (
+                    {/* {currentProduct.forSale && (
                       <tr className={"flex align-center"}>
                         <td className="bold td-title text-accent">Price</td>
                         <td
@@ -232,8 +232,8 @@ export default function SellerScreen(props) {
                           {(rates[currency] * currentProduct.price).toFixed(2)}
                         </td>
                       </tr>
-                    )}
-                    {currentProduct.forSale && (
+                    )} */}
+                    {/* {currentProduct.forSale && (
                       <tr className={"flex"}>
                         <td className="bold td-title text-accent">
                           Sale Price
@@ -245,7 +245,7 @@ export default function SellerScreen(props) {
                           )}
                         </td>
                       </tr>
-                    )}
+                    )} */}
                   </tbody>
                 </table>
                 {currentProduct.forSale && (

@@ -40,11 +40,11 @@ productRouter.get(
       var nameFilter =
         name && name !== ""
           ? {
-              name: {
-                $regex: name,
-                $options: "i",
-              },
-            }
+            name: {
+              $regex: name,
+              $options: "i",
+            },
+          }
           : {};
     }
 
@@ -52,10 +52,10 @@ productRouter.get(
       var directorFilter =
         directors && directors.length > 0
           ? {
-              directors: {
-                $in: directors,
-              },
-            }
+            directors: {
+              $in: directors,
+            },
+          }
           : {};
     }
 
@@ -63,10 +63,10 @@ productRouter.get(
       var castFilter =
         casts && casts.length > 0
           ? {
-              casts: {
-                $in: casts,
-              },
-            }
+            casts: {
+              $in: casts,
+            },
+          }
           : {};
     }
 
@@ -74,10 +74,10 @@ productRouter.get(
       var artistFilter =
         artists && artists.length > 0
           ? {
-              artists: {
-                $in: artists,
-              },
-            }
+            artists: {
+              $in: artists,
+            },
+          }
           : {};
     }
 
@@ -85,11 +85,11 @@ productRouter.get(
       var originFilter =
         origin && origin !== ""
           ? {
-              origin: {
-                $regex: origin,
-                $options: "i",
-              },
-            }
+            origin: {
+              $regex: origin,
+              $options: "i",
+            },
+          }
           : {};
     }
 
@@ -97,11 +97,11 @@ productRouter.get(
       var formatFilter =
         format && format !== ""
           ? {
-              format: {
-                $regex: format,
-                $options: "i",
-              },
-            }
+            format: {
+              $regex: format,
+              $options: "i",
+            },
+          }
           : {};
     }
 
@@ -109,11 +109,11 @@ productRouter.get(
       var rolledFoldedFilter =
         rolledFolded && rolledFolded !== ""
           ? {
-              rolledFolded: {
-                $regex: rolledFolded,
-                $options: "i",
-              },
-            }
+            rolledFolded: {
+              $regex: rolledFolded,
+              $options: "i",
+            },
+          }
           : {};
     }
 
@@ -121,11 +121,11 @@ productRouter.get(
       var conditionFilter =
         condition && condition !== ""
           ? {
-              condition: {
-                $regex: condition,
-                $options: "i",
-              },
-            }
+            condition: {
+              $regex: condition,
+              $options: "i",
+            },
+          }
           : {};
     }
 
@@ -133,11 +133,11 @@ productRouter.get(
       var priceFilter =
         price && price !== 0
           ? {
-              price: {
-                $gte: Number(price.split("-")[0]),
-                $lte: Number(price.split("-")[1]),
-              },
-            }
+            price: {
+              $gte: Number(price.split("-")[0]),
+              $lte: Number(price.split("-")[1]),
+            },
+          }
           : {};
     }
 
@@ -171,29 +171,38 @@ productRouter.get(
 productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 4;
-    const page = req.query.pageNumber || 1;
+    const pageSize = 6;
+    const page = +req.query.pageNumber || 1;
 
     const count = await Product.count().exec();
 
-    const products = await Product.find()
+    const products = await Product.find().
+      limit(pageSize)
+      .skip(pageSize * (page - 1))
       .populate("seller", "seller.name seller.logo")
       .populate("directors")
       .populate("casts")
       .populate("artists");
 
+    console.log(Math.ceil(count / pageSize));
+
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
+
+
+
   })
 );
 productRouter.get(
   "/seller/:id",
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 4;
-    const page = req.query.pageNumber || 1;
+    const pageSize = 6;
+    const page = +req.query.pageNumber || 1;
 
     const count = await Product.count().exec();
 
     const products = await Product.find({ seller: req.params.id })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
       .populate("seller", "seller.name seller.logo")
       .populate("directors")
       .populate("casts")
@@ -310,12 +319,13 @@ productRouter.post(
       format: "US Insert",
       condition: "Good",
       rolledFolded: "Rolled",
-      countInStock: 10,
-      price: 12,
-      salePrice: 10,
+      countInStock: 1,
+      marketValue: 0,
+      price: 0,
+      salePrice: 0,
       description: "Lorem ipsum dore",
       rating: 4,
-      numReviews: 10,
+      numReviews: 0,
       visible: false,
       forSale: false,
       reviews: [],
@@ -339,6 +349,7 @@ productRouter.put(
       product.images = req.body.images;
       // product.brand = req.body.brand;
       // product.category = req.body.category;
+      product.marketValue = req.body.marketValue;
       product.casts = req.body.casts;
       product.origin = req.body.origin;
       product.year = req.body.year;

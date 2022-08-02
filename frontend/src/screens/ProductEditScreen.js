@@ -35,6 +35,7 @@ export default function ProductEditScreen() {
   const [condition, setCondition] = useState("");
   const [rolledFolded, setRolledFolded] = useState("");
   const [price, setPrice] = useState(0);
+  const [marketValue, setMarketValue] = useState(0);
   const [salePrice, setSalePrice] = useState(0);
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
@@ -91,6 +92,7 @@ export default function ProductEditScreen() {
       setPrice(product.price);
       setImage(product.image);
       setImages(product.images ?? []);
+      setMarketValue(product.marketValue ?? 0);
       // setBrand(product.brand);
       // setCategory(product.category);
       // setDirector(product.director);
@@ -99,6 +101,7 @@ export default function ProductEditScreen() {
       setOrigin(product.origin);
       setFormat(product.format);
       setCondition(product.condition);
+      setSalePrice(product.salePrice);
       setRolledFolded(product.rolledFolded);
       setDescription(product.description);
       setVisible(product.visible);
@@ -139,6 +142,7 @@ export default function ProductEditScreen() {
       updateProduct({
         _id: productId,
         name,
+        marketValue,
         price,
         salePrice,
         image,
@@ -517,13 +521,13 @@ export default function ProductEditScreen() {
                 ></input>
               </div> */}
               <div>
-                <label htmlFor="price">PRODUCT MARKET VALUE</label>
+                <label htmlFor="marketValue">PRODUCT MARKET VALUE</label>
                 <input
-                  id="price"
+                  id="marketValue"
                   type="number"
-                  placeholder="Enter price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="Enter Market Value"
+                  value={marketValue}
+                  onChange={(e) => setMarketValue(e.target.value)}
                 ></input>
               </div>
 
@@ -552,13 +556,30 @@ export default function ProductEditScreen() {
                 </div>
               </div>
 
+
+              {
+                forSale && (
+                  <div>
+                    <label htmlFor="price">Price</label>
+                    <input
+                      id="price"
+                      type="number"
+                      placeholder="Enter price"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    ></input>
+                  </div>)
+              }
               {forSale && (
                 <div>
                   <label htmlFor="salePrice">Sale Price</label>
+
                   <input
                     id="salePrice"
                     type="number"
                     min={1}
+                    max={+price}
+
                     placeholder="Enter Sale Price"
                     defaultValue={salePrice}
                     onChange={(e) => setSalePrice(+e.target.value)}

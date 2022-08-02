@@ -37,8 +37,7 @@ export default function SearchScreen(props) {
     pageNumber = 1,
   } = useParams();
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const { loading, error, products, page, pages } = useSelector((state) => state.productList);
 
   // const productCategoryList = useSelector((state) => state.productCategoryList);
   // const {
@@ -81,7 +80,14 @@ export default function SearchScreen(props) {
     [currentPage, dispatch]
   );
 
-  useEffect(() => {}, [currentPage, dispatch, movie_name]);
+  useEffect(() => { }, [currentPage, dispatch, movie_name]);
+
+  useEffect(() => {
+    if (products) {
+      window.scrollTo(0, 0);
+
+    }
+  }, [products]);
 
   useEffect(() => {
     if (movie_name !== undefined) {
@@ -296,9 +302,8 @@ export default function SearchScreen(props) {
                 )}
 
                 <div
-                  className={`flex ${
-                    isMobile ? "column center" : "row start top plr-2"
-                  } `}
+                  className={`flex ${isMobile ? "column center" : "row start top plr-2"
+                    } `}
                 >
                   {products?.map((product) => {
                     const show =
@@ -313,27 +318,18 @@ export default function SearchScreen(props) {
                   })}
                 </div>
                 <div className="row center pagination">
-                  {products.filter(
-                    (product) =>
-                      (product.image.length > 0) &
-                      product.visible &
-                      product.forSale
-                  ).length > 4 ? (
-                    [...Array(pages).keys()].map((x) => (
-                      <button
-                        className={x + 1 === page ? "active" : ""}
-                        key={x + 1}
-                        onClick={() => {
-                          // navigate(search_url);
-                          setCurrentPage(x + 1);
-                        }}
-                      >
-                        {x + 1}
-                      </button>
-                    ))
-                  ) : (
-                    <></>
-                  )}
+                  {[...Array(pages).keys()].map((x) => (
+                    <button
+                      className={x + 1 === page ? "active" : ""}
+                      key={x + 1}
+                      onClick={() => {
+                        // navigate(search_url);
+                        setCurrentPage(x + 1);
+                      }}
+                    >
+                      {x + 1}
+                    </button>
+                  ))}
                 </div>
               </>
             )}

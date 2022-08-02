@@ -68,7 +68,7 @@ import {
 
 export const listProducts =
   ({
-    pageNumber = "",
+    pageNumber = 1,
     seller = "",
     name = "",
     // category = '',
@@ -84,29 +84,29 @@ export const listProducts =
     max = 0,
     rating = 0,
   }) =>
-  async (dispatch) => {
-    dispatch({
-      type: PRODUCT_LIST_REQUEST,
-    });
-    try {
-      if (seller === "") {
-        const { data } = await Axios.get(
-          // &category=${category}
-          `/api/products?pageNumber=${pageNumber}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&order=${order}`
-        );
-        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-      } else {
-        console.log("seller", seller);
-        const { data } = await Axios.get(
-          // &category=${category}
-          `/api/products/seller/${seller}`
-        );
-        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    async (dispatch) => {
+      dispatch({
+        type: PRODUCT_LIST_REQUEST,
+      });
+      try {
+        if (seller === "") {
+          const { data } = await Axios.get(
+            // &category=${category}
+            `/api/products?pageNumber=${pageNumber}&name=${name}&directors=${directors.name}&casts=${casts.name}&artists=${artists.name}&origin=${origin}&format=${format}&condition=${condition}&rolledFolded=${rolledFolded}&min=${min}&max=${max}&order=${order}`
+          );
+          dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+        } else {
+          console.log("seller", seller);
+          const { data } = await Axios.get(
+            // &category=${category}
+            `/api/products/seller/${seller}?pageNumber=${pageNumber}`
+          );
+          dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+        }
+      } catch (error) {
+        dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
       }
-    } catch (error) {
-      dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
-    }
-  };
+    };
 
 export const searchProducts = (query) => async (dispatch) => {
   dispatch({

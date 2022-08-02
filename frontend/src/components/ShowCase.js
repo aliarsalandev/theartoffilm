@@ -74,7 +74,7 @@ const SlickSlider = ({ filteredProducts, onClick }) => {
   const settings = {
     dots: true,
     className: "center",
-    centerMode: filteredProducts > 3,
+    centerMode: true,
     centerPadding: "60px",
     infinite: true,
     slidesToShow: filteredProducts.length > 3 ? 3 : filteredProducts.length,
@@ -94,7 +94,7 @@ const SlickSlider = ({ filteredProducts, onClick }) => {
 
   return <Slider ref={sliderRef} {...settings} >
     {
-      filteredProducts.map((product, index) => {
+      filteredProducts.filter((product, index) => product.image ?? false).map((product, index) => {
         return (
           <div key={product.id} >
             <img onClick={() => {
@@ -102,8 +102,10 @@ const SlickSlider = ({ filteredProducts, onClick }) => {
                 (product, ind) => ind === index
               );
               onClick(product);
+              sliderRef.current.slickGoTo(index);
+
             }}
-              src={product.image} style={{ maxWidth: "420px", margin: "0 auto" }} />
+              src={product.image} style={{ maxWidth: "384px", margin: "0 auto" }} />
           </div>
         );
       })

@@ -18,7 +18,6 @@ export default function ProductListScreen(props) {
   const { currency, rates } = useCurrency();
   const symbol = useSymbol(currency);
 
-  const { pageNumber = 1 } = useParams();
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf("/seller") >= 0;
   const productList = useSelector((state) => state.productList);
@@ -50,7 +49,7 @@ export default function ProductListScreen(props) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
     dispatch(
-      listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber })
+      listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber: 1 })
     );
   }, [
     createdProduct,
@@ -60,9 +59,13 @@ export default function ProductListScreen(props) {
     successCreate,
     successDelete,
     userInfo._id,
-    pageNumber,
   ]);
 
+  const loadPageProducts = (_pageNumber) => {
+    dispatch(
+      listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber: _pageNumber })
+    );
+  }
   const deleteHandler = (product) => {
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteProduct(product._id));
@@ -154,13 +157,16 @@ export default function ProductListScreen(props) {
               </table>
               <div className="row center pagination">
                 {[...Array(pages).keys()].map((x) => (
-                  <Link
+                  <button
                     className={x + 1 === page ? "active" : ""}
                     key={x + 1}
-                    to={`/posters/seller/pageNumber/${x + 1}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      loadPageProducts(x + 1)
+                    }}
                   >
                     {x + 1}
-                  </Link>
+                  </button>
                 ))}
               </div>
             </>

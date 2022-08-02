@@ -27,6 +27,7 @@ const productSchema = new mongoose.Schema(
     rolledFolded: { type: String },
     countInStock: { type: Number },
     price: { type: Number },
+    marketValue: { type: Number },
     salePrice: { type: Number },
     description: { type: String },
     rating: { type: Number },

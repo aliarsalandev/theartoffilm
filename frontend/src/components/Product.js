@@ -46,7 +46,9 @@ export default function Product({ product, toshop = false }) {
         ></Rating> */}
         <div className="row">
           <div className="price">
-            {symbol} {(rates[currency] * product.salePrice).toFixed(2)}
+            {
+              product.salePrice ? (`${symbol}${(product.salePrice * rates[currency]).toFixed(2)}`) : (`${symbol}${(product.price * rates[currency]).toFixed(2)}`)
+            }
           </div>
         </div>
       </div>

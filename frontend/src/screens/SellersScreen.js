@@ -40,7 +40,7 @@ export default function SellersScreen(props) {
           ) : (
             sellers?.map((seller) => (
               <ul
-                className="card card-body bg-dark"
+                className="card card-body bg-dark fixed-card-xs"
                 style={{ listStyle: "none" }}
               >
                 <li>

@@ -97,7 +97,7 @@ export default function ProductScreen() {
               </div>
             </div>
             <div className="flex start top column end col-3 col-xs-12 product-page-details-box">
-              <table style={{ width: "100%" }} className="product-page-table">
+              <table style={{ width: "100%" }} className="showcase-table product-page-table">
                 <tbody>
                   <tr style={{ width: "100%" }}>
                     <td style={{ width: "100%" }}>
@@ -227,7 +227,8 @@ export default function ProductScreen() {
                         className={`bold ${product.salePrice > 0 ? "line-through" : ""
                           } price text-right`}
                       >
-                        {symbol} {(rates[currency] * product.salePrice).toFixed(2)}
+                        {symbol}
+                        {(rates[currency] * product.price).toFixed(2)}
                       </td>
                     </tr>
                   )}
