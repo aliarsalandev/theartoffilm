@@ -1,19 +1,132 @@
-import React, { useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 
 import propTypes from "prop-types";
 import CoverFlowComponent from "./CoverFlow";
 import { isMobile } from "react-device-detect";
+import Slider from "react-slick";
+import { useRef } from "react";
+
+
+const SlickSlider = ({ filteredProducts, onClick }) => {
+  const sliderRef = useRef();
+
+
+  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
+    <button
+      {...props}
+      className={
+        "slick-prev slick-arrow" +
+        (currentSlide === 0 ? " slick-disabled" : "")
+      }
+      aria-disabled={currentSlide === 0 ? true : false}
+      type="button"
+      onClick={(e) => {
+
+
+        if (currentSlide !== 0) {
+          const product = filteredProducts?.find(
+            (product, ind) => ind === currentSlide - 1
+          );
+
+          sliderRef.current.slickPrev();
+          onClick(product);
+
+        } else {
+          const product = filteredProducts[filteredProducts.length - 1];
+          onClick(product);
+          sliderRef.current.slickGoTo(slideCount - 1);
+        }
+      }}
+    >
+      Previous
+    </button>
+  );
+  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
+    <button
+      {...props}
+      className={
+        "slick-next slick-arrow" +
+        (currentSlide === slideCount - 1 ? " slick-disabled" : "")
+      }
+      aria-disabled={currentSlide === slideCount - 1 ? true : false}
+      type="button"
+      onClick={(e) => {
+
+        if (currentSlide === slideCount - 1) {
+          const product = filteredProducts[0];
+          sliderRef.current.slickGoTo(0);
+          onClick(product);
+          return;
+        };
+        const product = filteredProducts?.find(
+          (product, ind) => ind === currentSlide + 1
+        );
+
+        sliderRef.current.slickNext();
+        onClick(product);
+      }}
+    >
+      Next
+    </button>
+  );
+
+
+  const settings = {
+    dots: true,
+    className: "center",
+    centerMode: filteredProducts > 3,
+    centerPadding: "60px",
+    infinite: true,
+    slidesToShow: filteredProducts.length > 3 ? 3 : filteredProducts.length,
+    slidesToScroll: 1,
+    speed: 500,
+    afterChange: index => {
+      const product = filteredProducts?.find(
+        (product, ind) => ind === index
+      );
+      onClick(product);
+    },
+
+    nextArrow: <SlickArrowLeft />,
+    prevArrow: <SlickArrowRight />
+  };
+
+
+  return <Slider ref={sliderRef} {...settings} >
+    {
+      filteredProducts.map((product, index) => {
+        return (
+          <div key={product.id} >
+            <img onClick={() => {
+              const product = filteredProducts?.find(
+                (product, ind) => ind === index
+              );
+              onClick(product);
+            }}
+              src={product.image} style={{ maxWidth: "420px", margin: "0 auto" }} />
+          </div>
+        );
+      })
+    }
+  </Slider>
+}
 
 function ShowCase({ products = [], onClick }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
+
+
   useEffect(() => {
     setFilteredProducts(products);
-    return () => {};
-  }, [products]);
+    return () => { };
+  }, []);
+
+
 
   return (
     <div className={"flex column center"}>
+
       <div className="row ptb-2 pagination">
+
         <span
           onClick={() => {
             setFilteredProducts(products);
@@ -21,6 +134,7 @@ function ShowCase({ products = [], onClick }) {
         >
           All
         </span>
+
         {Array.from(Array(26).keys()).map((index) => {
           const alphabet = String.fromCharCode(index + 65);
           return (
@@ -47,6 +161,7 @@ function ShowCase({ products = [], onClick }) {
           );
         })}
 
+
         <span
           onClick={() => {
             const _products = products?.filter((product) => {
@@ -67,22 +182,11 @@ function ShowCase({ products = [], onClick }) {
         </span>
       </div>
 
-      <CoverFlowComponent
-        products={filteredProducts ?? []}
-        imagesArr={filteredProducts?.map((product) => product.image)}
-        direction="horizontal"
-        width={`${isMobile ? "100%" : "100%"}`}
-        height={`${isMobile ? "100%" : 425}`}
-        itemRatio="21:14"
-        background="transparent"
-        onClick={onClick}
-        handleSelect={(index) => {
-          const product = filteredProducts?.find(
-            (product, ind) => ind === index
-          );
-          onClick(product);
-        }}
-      />
+      {filteredProducts && <SlickSlider filteredProducts={filteredProducts} onClick={onClick} />}
+
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

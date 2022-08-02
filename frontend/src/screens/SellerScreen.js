@@ -49,6 +49,12 @@ export default function SellerScreen(props) {
     dispatch(listProducts({ seller: sellerId }));
   }, [dispatch, sellerId]);
 
+  useEffect(() => {
+    if (products) {
+      setCurrentProduct(products[0]);
+    }
+  }, [products])
+
   return (
     <div className="bg-light-dark">
       {loading ? (
@@ -219,9 +225,8 @@ export default function SellerScreen(props) {
                       <tr className={"flex align-center"}>
                         <td className="bold td-title text-accent">Price</td>
                         <td
-                          className={`${
-                            currentProduct.salePrice > 0 ? "line-through" : ""
-                          }  price text-right`}
+                          className={`${currentProduct.salePrice > 0 ? "line-through" : ""
+                            }  price text-right`}
                         >
                           {symbol}{" "}
                           {(rates[currency] * currentProduct.price).toFixed(2)}
